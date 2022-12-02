@@ -6,7 +6,7 @@ import { Image } from '../UI/Image'
 
 const LogoContainer = ({height , width}) => {
   return (
-    <Box sx={{height : `${height}`,width : `${width}` , m : 0 , p : 0 }}  component="div">
+    <Box sx={{height : `${height}`,width : `${width}` , m : 10 , p : 0 }}  component="div">
         <Image src = {LogoImg} alt = "EatPizza"/>
     </Box>
   )

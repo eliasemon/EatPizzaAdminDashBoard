@@ -8,11 +8,11 @@ import Routes from '../Routes';
 
 const SidebarBox = styled('div')({
     width : "15vw",
-    height : "93vh"
+    height : "100%"
   });
 
 const RoutesContentsBox = styled('div')({
-    width : "80vw",
+    width : "85vw",
     height : "100%"
   });
 
@@ -28,11 +28,13 @@ const Layout = () => {
         <HeaderBox>
             <Header />
         </HeaderBox>
-        <Box components="div" sx={{display : "flex" ,width:"100vw" }}>
+        <Box components="div" sx={{display : "flex" ,width:"100vw",height:'93vh' }}>
             <SidebarBox>
                 <SideBar />
+                
             </SidebarBox>
             <RoutesContentsBox>
+             
                 <Routes />
             </RoutesContentsBox>
         </Box>

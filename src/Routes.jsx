@@ -1,8 +1,12 @@
+import { Box } from '@mui/system'
 import React from 'react'
+import Dashboard from './components/routesComponent/dashboard/index';
 
 const Routes = () => {
   return (
-     <div>Routes</div>
+     <Box sx = {{width:'100%', height:'100%'}}>
+      <Dashboard />
+     </Box>
   )
 }
 
