@@ -1,3 +1,4 @@
+
 import { Box,Grid } from "@material-ui/core";
 import Boxes from './Boxes'
 import PeopleIcon from '@material-ui/icons/People';
@@ -20,7 +21,7 @@ const LeftContainer = () => {
         <Boxes  fullWidth={true} icon = {<PeopleIcon />} h3typo={128} h2typo='Total User' /> */}
     
 
-    </Box>
+</Box>
   )
 }
 

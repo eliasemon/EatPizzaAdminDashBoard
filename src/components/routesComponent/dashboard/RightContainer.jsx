@@ -1,7 +1,7 @@
 import { Box } from "@material-ui/core";
 
 
-const RightContainer = ({flexgrow}) => {
+const RightContainer = () => {
 
 
   return (
