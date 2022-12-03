@@ -5,7 +5,7 @@ import LeftContainer from './LeftContainer';
 import RightContainer from './RightContainer';
  const Dashboard = () => {
   return (
-   <Box sx={{display:'grid' ,  gridTemplateColumns : "30% 70%" , width:'100%', height:'100%'}}>
+   <Box sx={{display:'grid' ,  gridTemplateColumns : "17.9vw auto" , width:'100%', height:'100%'}}>
     
           <LeftContainer />
        
