@@ -2,14 +2,14 @@
 import { Box } from '@mui/material';
 import React from 'react'
 import LeftContainer from './LeftContainer';
-import RightContainer from './LeftContainer';
+import RightContainer from './RightContainer';
  const Dashboard = () => {
   return (
-   <Box sx={{display:'flex' ,width:'100%', height:'100%'}}>
+   <Box sx={{display:'flex' ,width:'100vw', height:'100vh'}}>
     
-          <LeftContainer flexgrow={1}/>
+          <LeftContainer />
        
-          <RightContainer flexgrow = {2}/>
+          <RightContainer />
 
    </Box>
   )
