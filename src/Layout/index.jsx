@@ -34,7 +34,6 @@ const Layout = () => {
                 
             </SidebarBox>
             <RoutesContentsBox>
-             
                 <Routes />
             </RoutesContentsBox>
         </Box>

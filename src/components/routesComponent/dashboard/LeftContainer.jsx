@@ -1,11 +1,11 @@
 import { Box } from "@material-ui/core";
 
 
-const LeftContainer = ({flexgrow}) => {
+const LeftContainer = () => {
     
 
   return (
-    <Box  sx = {{ flexGrow:flexgrow,background:'green',height:'100%', width :'100%'}}>
+    <Box  sx = {{ background:'green', height:'100%', width : '100%'}}>
         
     </Box>
   )
