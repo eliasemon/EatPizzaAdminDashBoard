@@ -1,17 +1,26 @@
-import { Box } from '@mui/system'
-import React from 'react'
-import LogoContainer from '../logoContainer'
+import { Box } from "@mui/system";
+import React from "react";
+import LogoContainer from "../logoContainer";
 
-LogoContainer
+LogoContainer;
 const Header = () => {
-  
   return (
-    <Box bgcolor="primary.main" sx={{width : "100%" , height : "100%", color:"white", display:'flex', justifyContent:'space-between',alignItems:'center'}} >
-        <Box>
-          <LogoContainer height={"50px"} width={"50px"} />
-        </Box>
-        <Box>logged in as Admin</Box>
+    <Box
+      bgcolor="secondary.deep"
+      sx={{
+        width: "100%",
+        height: "100%",
+        color: "white",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <Box>
+        <LogoContainer height={"50px"} width={"50px"} />
+      </Box>
+      <Box>logged in as Admin</Box>
     </Box>
-  )
-}
-export default Header
+  );
+};
+export default Header;
