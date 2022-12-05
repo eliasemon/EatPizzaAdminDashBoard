@@ -16,8 +16,15 @@ const Header = () => {
         alignItems: "center",
       }}
     >
-      <Box>
-        <LogoContainer height={"50px"} width={"50px"} />
+      <Box
+        sx={{
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <LogoContainer width="180px" />
       </Box>
       <Box>logged in as Admin</Box>
     </Box>

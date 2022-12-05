@@ -67,6 +67,9 @@ const SideBar = () => {
               onClick={(event) => handleListItemClick(event, 0)}
               key={item.id}
               sx={{
+                margin: "15px",
+                padding: "5px",
+                borderRadius: "5px",
                 "&:hover": {
                   backgroundColor: "primary.main",
                   transitionDuration: ".5s",
