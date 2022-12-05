@@ -2,6 +2,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import Categories from "./components/routesComponent/categories";
 import Dashboard from "./components/routesComponent/dashboard/index";
+import ItemList from "./components/routesComponent/items";
 
 const Routes = () => {
   return (
@@ -16,7 +17,7 @@ const Routes = () => {
         backgroundColor: "#212936",
       }}
     >
-      <Categories />
+      <ItemList />
     </Box>
   );
 };
