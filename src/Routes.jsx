@@ -1,10 +1,16 @@
 import { Box } from "@mui/system";
-import React from "react";
+import Addons from "./components/routesComponent/addons";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "./components/routesComponent/dashboard";
 import Categories from "./components/routesComponent/categories";
-import Dashboard from "./components/routesComponent/dashboard/index";
-import ItemList from "./components/routesComponent/items";
+import CreateItem from "./components/routesComponent/createItems";
+import CurrentOrders from "./components/routesComponent/currentOrders";
+import AllItems from "./components/routesComponent/allItems";
+import OrdersHistory from "./components/routesComponent/ordersHistory";
+import Users from "./components/routesComponent/users";
+import Settings from "./components/routesComponent/settings";
 
-const Routes = () => {
+const RoutesComponent = () => {
   return (
     <Box
       sx={{
@@ -17,9 +23,19 @@ const Routes = () => {
         backgroundColor: "#212936",
       }}
     >
-      <ItemList />
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/addons" element={<Addons />} />
+        <Route path="/createitem" element={<CreateItem />} />
+        <Route path="/currentorders" element={<CurrentOrders />} />
+        <Route path="/items" element={<AllItems />} />
+        <Route path="/orderhistory" element={<OrdersHistory />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/settings" element={<Settings />} />
+      </Routes>
     </Box>
   );
 };
 
-export default Routes;
+export default RoutesComponent;

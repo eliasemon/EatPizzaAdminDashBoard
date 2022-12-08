@@ -5,6 +5,7 @@ import Background from "./components/backGround";
 import Layout from "./Layout";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./constants/theme";
+import { BrowserRouter } from "react-router-dom";
 
 const App = () => {
   console.log({ theme });
@@ -13,9 +14,11 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         {/* <Login /> */}
-        <Layout />
-        <Background />
-        <CssBaseline />
+        <BrowserRouter>
+          <Layout />
+          <Background />
+          <CssBaseline />
+        </BrowserRouter>
       </ThemeProvider>
     </>
   );

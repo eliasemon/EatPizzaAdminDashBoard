@@ -80,21 +80,21 @@ function createData(name, code, population, size) {
 }
 
 const rows = [
-  createData("#eatpizza01", "IN", 1324171354, 3287263),
-  createData("#eatpizza02", "CN", 1403500365, 9596961),
-  createData("#eatpizza03", "IT", 60483973, 301340),
-  createData("#eatpizza04", "US", 327167434, 9833520),
-  createData("#eatpizza05", "CA", 37602103, 9984670),
-  createData("#eatpizza06", "AU", 25475400, 7692024),
-  createData("#eatpizza07", "DE", 83019200, 357578),
-  createData("#eatpizza08", "IE", 4857000, 70273),
-  createData("#eatpizza09", "MX", 126577691, 1972550),
-  createData("#eatpizza10", "JP", 126317000, 377973),
-  createData("#eatpizza11", "FR", 67022000, 640679),
-  createData("#eatpizza11", "GB", 67545757, 242495),
-  createData("#eatpizza12", "RU", 146793744, 17098246),
-  createData("#eatpizza13", "NG", 200962417, 923768),
-  createData("#eatpizza14", "BR", 210147125, 8515767),
+  createData("#eatpizza01", 1324171354, 3287263),
+  createData("#eatpizza02", 1403500365, 9596961),
+  createData("#eatpizza03", 60483973, 301340),
+  createData("#eatpizza04", 327167434, 9833520),
+  createData("#eatpizza05", 37602103, 9984670),
+  createData("#eatpizza06", 25475400, 7692024),
+  createData("#eatpizza07", 83019200, 357578),
+  createData("#eatpizza08", 4857000, 70273),
+  createData("#eatpizza09", 126577691, 1972550),
+  createData("#eatpizza10", 126317000, 377973),
+  createData("#eatpizza11", 67022000, 640679),
+  createData("#eatpizza11", 67545757, 242495),
+  createData("#eatpizza12", 146793744, 17098246),
+  createData("#eatpizza13", 200962417, 923768),
+  createData("#eatpizza14", 210147125, 8515767),
 ];
 
 const ItemList = () => {
