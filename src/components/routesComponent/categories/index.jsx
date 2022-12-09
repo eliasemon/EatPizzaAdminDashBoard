@@ -1,58 +1,34 @@
+import { useState } from "react";
 import {
   Box,
-  Button,
-  FilledInput,
-  FormControl,
-  InputLabel,
   List,
   ListItem,
   ListItemText,
-  ListSubheader,
-  TextField,
 } from "@mui/material";
-
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {   showDataWithOutPagination , delteColloctionInstance} from "../../../../utils";
+import { useEffect } from "react";
+import CreateCatgories from "./createCatagories";
+
 
 const Categories = () => {
-  const categoriesList = [
-    {
-      id: "1",
-      title: "Burger",
-    },
-    {
-      id: "2",
-      title: "Pizza",
-    },
-    {
-      id: "3",
-      title: "Sandwich",
-    },
-    {
-      id: "4",
-      title: "Coffee",
-    },
-    {
-      id: "5",
-      title: "Juice",
-    },
-    {
-      id: "6",
-      title: "Kacchi",
-    },
-    {
-      id: "7",
-      title: "Biriyani",
-    },
-    {
-      id: "8",
-      title: "Khichuri",
-    },
-    {
-      id: "9",
-      title: "Tehari",
-    },
-  ];
+
+  const [showData , setShowData] = useState("")
+
+  useEffect(()=>{
+    showDataWithOutPagination( setShowData ,"catagories")
+  },[])
+
+  const deleteItems = (itemsID) =>{
+    if(window.confirm(`******************************************** \n\n Wait:= \n\n Do You Wanna Delete "${itemsID}" Catagory Item!!! \n\n ********************************************`)){
+      delteColloctionInstance( itemsID ,"catagories")
+    }
+    
+  }
+
+
+
   return (
     <Box
       sx={{
@@ -64,33 +40,9 @@ const Categories = () => {
         padding: "3%",
       }}
     >
-      <TextField
-        color="common"
-        label="Create a new category"
-        id="filled-size-normal"
-        variant="filled"
-        sx={{
-          ".MuiInputBase-root": {
-            backgroundColor: "secondary",
-            border: "1px solid grey",
-            width: "100%",
-          },
-          input: {
-            color: "white",
-          },
-          label: {
-            color: "white",
-          },
-        }}
-      />
-      <Box sx={{ marginTop: "3%", display: "flex", gap: "2%" }}>
-        <Button variant="contained" size="large">
-          Create
-        </Button>
-        <Button variant="outlined" size="large">
-          Discard
-        </Button>
-      </Box>
+      
+      <CreateCatgories />
+
       <Box>
         <List
           sx={{
@@ -108,16 +60,19 @@ const Categories = () => {
         >
           {
             <ul>
-              {categoriesList.map((item) => (
+              {showData && showData.map((doc) =>
+              {
+              const item = doc.data()
+              return(
                 <ListItem
-                  key={item.id}
+                  key={doc.id}
                   sx={{
                     backgroundColor: "secondary.dark",
                     marginBottom: "5px",
                     borderRadius: "5px",
                   }}
                 >
-                  <ListItemText primary={item.title} />
+                  <ListItemText primary={item.name} />
                   <Box sx={{ display: "flex", gap: "10px" }}>
                     <Box>
                       <EditIcon
@@ -131,6 +86,7 @@ const Categories = () => {
                     </Box>
                     <Box>
                       <DeleteIcon
+                        onClick={() => deleteItems(doc.id)}
                         sx={{
                           "&:hover": {
                             color: "secondary.light",
@@ -141,7 +97,7 @@ const Categories = () => {
                     </Box>
                   </Box>
                 </ListItem>
-              ))}
+              )})}
             </ul>
           }
         </List>

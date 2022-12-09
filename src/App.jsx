@@ -6,19 +6,38 @@ import Layout from "./Layout";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./constants/theme";
 import { BrowserRouter } from "react-router-dom";
+import { auth } from "../firebaseConfig";
+import { showLoading } from "./components/loading/loading";
+
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const App = () => {
-  console.log({ theme });
-
+  const [ui , setUi] = useState(<BrowserRouter>
+    <Layout />
+  </BrowserRouter>)
+  // auth.onAuthStateChanged(user=>{
+  //   if(user){
+  //     setUi(
+  //       <BrowserRouter>
+  //         <Layout />
+  //       </BrowserRouter>
+  //     )
+  //   }else{
+  //     setUi(<Login />)
+  //   }
+  // })
+  // showLoading()
   return (
     <>
       <ThemeProvider theme={theme}>
-        {/* <Login /> */}
-        <BrowserRouter>
-          <Layout />
+          {ui}
+          
           <Background />
           <CssBaseline />
-        </BrowserRouter>
+          <ToastContainer theme="dark" />
       </ThemeProvider>
     </>
   );

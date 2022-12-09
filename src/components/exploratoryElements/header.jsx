@@ -1,5 +1,7 @@
+import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import { auth } from "../../../firebaseConfig";
 import LogoContainer from "../logoContainer";
 
 LogoContainer;
@@ -26,7 +28,9 @@ const Header = () => {
       >
         <LogoContainer width="180px" />
       </Box>
-      <Box>logged in as Admin</Box>
+      <Button onClick={()=> auth.signOut()}>
+        Logout
+      </Button>
     </Box>
   );
 };

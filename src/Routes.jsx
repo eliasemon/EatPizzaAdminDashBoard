@@ -20,7 +20,6 @@ const RoutesComponent = () => {
         width: "97%",
         height: "96%",
         borderRadius: "5px",
-        backgroundColor: "#212936",
       }}
     >
       <Routes>
