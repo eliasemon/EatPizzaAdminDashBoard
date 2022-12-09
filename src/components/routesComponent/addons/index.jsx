@@ -1,58 +1,71 @@
 import {
   Box,
-  Button,
-  FilledInput,
-  FormControl,
-  InputLabel,
   List,
   ListItem,
   ListItemText,
-  ListSubheader,
-  TextField,
 } from "@mui/material";
-
+const addonsList = [
+  {
+    id: "1",
+    title: "Burger",
+  },
+  {
+    id: "2",
+    title: "Pizza",
+  },
+  {
+    id: "3",
+    title: "Sandwich",
+  },
+  {
+    id: "4",
+    title: "Coffee",
+  },
+  {
+    id: "5",
+    title: "Juice",
+  },
+  {
+    id: "6",
+    title: "Kacchi",
+  },
+  {
+    id: "7",
+    title: "Biriyani",
+  },
+  {
+    id: "8",
+    title: "Khichuri",
+  },
+  {
+    id: "9",
+    title: "Tehari",
+  },
+];
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useEffect, useState } from "react";
+import CreateAddons from "./createAddons";
+// import { showDataWithPagination } from "../../../../utils";
+
+
+
 
 const Addons = () => {
-  const addonsList = [
-    {
-      id: "1",
-      title: "Burger",
-    },
-    {
-      id: "2",
-      title: "Pizza",
-    },
-    {
-      id: "3",
-      title: "Sandwich",
-    },
-    {
-      id: "4",
-      title: "Coffee",
-    },
-    {
-      id: "5",
-      title: "Juice",
-    },
-    {
-      id: "6",
-      title: "Kacchi",
-    },
-    {
-      id: "7",
-      title: "Biriyani",
-    },
-    {
-      id: "8",
-      title: "Khichuri",
-    },
-    {
-      id: "9",
-      title: "Tehari",
-    },
-  ];
+ const [data , setData] = useState("")
+
+
+
+  useEffect(()=>{
+    // showDataWithPagination(setData , "Addons" , 0 , 10)
+    
+  },[])
+
+  if(data){
+    // console.log(data.docs.length)
+  }
+
+
   return (
     <Box
       sx={{
@@ -64,69 +77,8 @@ const Addons = () => {
         padding: "3%",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <TextField
-          color="common"
-          label="Create a new Addons"
-          id="filled-size-normal"
-          variant="filled"
-          sx={{
-            width: "70%",
-            ".MuiInputBase-root": {
-              backgroundColor: "secondary",
-              border: "1px solid grey",
-            },
-            input: {
-              color: "white",
-            },
-            label: {
-              color: "white",
-            },
-          }}
-        />
-        <TextField
-          color="common"
-          label="Price"
-          id="filled-size-normal"
-          variant="filled"
-          sx={{
-            width: "25%",
-            ".MuiInputBase-root": {
-              backgroundColor: "secondary",
-              border: "1px solid grey",
-            },
-            input: {
-              color: "white",
-            },
-            label: {
-              color: "white",
-            },
-          }}
-        />
-      </Box>
-      <Box
-        sx={{
-          marginTop: "2%",
-        }}
-      >
-        <Button variant="contained" component="label">
-          Upload Addons Image here
-          <input hidden accept="image/*" multiple type="file" />
-        </Button>
-      </Box>
-      <Box sx={{ marginTop: "3%", display: "flex", gap: "2%" }}>
-        <Button variant="contained" size="large">
-          Create
-        </Button>
-        <Button variant="outlined" size="large">
-          Discard
-        </Button>
-      </Box>
+      <CreateAddons />
+
       <Box>
         <List
           sx={{
@@ -144,7 +96,9 @@ const Addons = () => {
         >
           {
             <ul>
-              {addonsList.map((item) => (
+              {
+              
+              addonsList.map((item) => (
                 <ListItem
                   key={item.id}
                   sx={{
