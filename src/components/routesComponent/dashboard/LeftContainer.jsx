@@ -28,43 +28,37 @@ const InfoCardArray = [
 ]
 const LeftContainer = () => {
   return (
-    <Box  sx = {{background:'green', height:'100%', width : '100%'}}>
-      <Box  sx ={{display : "grid" , justifyContent:"space-between", gridTemplateColumns : "48% 48%"  }}>
-        {InfoCardArray.map( v => (
-          <Box sx={{marginBottom: "2" , width : "100%"}}>
+    <Box sx={{ background: "green", height: "100%", width: "100%" }}>
+      <Box
+        sx={{
+          display: "grid",
+          justifyContent: "space-between",
+          gridTemplateColumns: "48% 48%",
+        }}
+      >
+        {InfoCardArray.map((value, index) => (
+          <Box sx={{ marginBottom: "2", width: "100%" }} key={index}>
             <ContentCarrier bgColor="red" flexDirection={"column"}>
-              {v.icon}
-              <Typography>
-                {v.number}
-              </Typography> 
-              <Typography >
-                {v.text}
-              </Typography>
+              {value.icon}
+              <Typography>{value.number}</Typography>
+              <Typography>{value.text}</Typography>
             </ContentCarrier>
           </Box>
         ))}
       </Box>
       <ContentCarrier bgColor="red" flexDirection={"column"}>
-              <PeopleIcon/>
-              <Typography>
-              450000
-              </Typography> 
-              <Typography >
-                Monthly Sell
-              </Typography>
+        <PeopleIcon />
+        <Typography>450000</Typography>
+        <Typography>Monthly Sell</Typography>
       </ContentCarrier>
-      <Box mt={2} ></Box>
+      <Box mt={2}></Box>
       <ContentCarrier bgColor="red" flexDirection={"column"}>
-              <PeopleIcon/>
-              <Typography>
-                  450000
-              </Typography> 
-              <Typography >
-                  Total Sell
-              </Typography>
+        <PeopleIcon />
+        <Typography>450000</Typography>
+        <Typography>Total Sell</Typography>
       </ContentCarrier>
-</Box>
-  )
+    </Box>
+  );
 }
 
 export default LeftContainer;
