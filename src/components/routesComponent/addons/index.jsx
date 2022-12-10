@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect, useState } from "react";
 import CreateAddons from "./createAddons";
 import SelectedCatagories from '../../UI/SelectedCatagories';
-import { showDataByArrayQuers , showDataWithOutPagination } from "../../../../utils";
+import { showDataByArrayQuers , showDataWithOutPagination ,  delteColloctionInstance} from "../../../../utils";
 
 const itemsModel = {
   name : "",
