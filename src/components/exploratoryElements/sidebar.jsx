@@ -76,7 +76,7 @@ const SideBar = () => {
   ];
 
   return (
-    <Box bgcolor="secondary.deep" sx={{ width: "100%", height: "100%" }}>
+    <Box bgcolor="secondary.deep" sx={{ width: "15%", height: "100%" }}>
       <Box bgcolor="secondary.deep" sx={{ width: "100%", maxWidth: 360 }}>
         <List component="nav" aria-label="main  folders">
           {categories.map((item) => (

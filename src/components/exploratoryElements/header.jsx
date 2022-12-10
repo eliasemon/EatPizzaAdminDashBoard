@@ -11,7 +11,7 @@ const Header = () => {
       bgcolor="secondary.deep"
       sx={{
         width: "100%",
-        height: "100%",
+        height: "10%",
         color: "white",
         display: "flex",
         justifyContent: "space-between",
@@ -28,9 +28,7 @@ const Header = () => {
       >
         <LogoContainer width="180px" />
       </Box>
-      <Button onClick={()=> auth.signOut()}>
-        Logout
-      </Button>
+      <Button onClick={() => auth.signOut()}>Logout</Button>
     </Box>
   );
 };

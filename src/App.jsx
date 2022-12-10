@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import "react-toastify/dist/ReactToastify.css";
 
 import Layout from "./Layout";

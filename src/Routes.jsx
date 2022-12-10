@@ -17,9 +17,13 @@ const RoutesComponent = () => {
         pt: "1.5vw",
         pl: "1.5vw",
         boxSizing: "border-box",
-        width: "97%",
-        height: "96%",
+        width: "80%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         borderRadius: "5px",
+        margin: "0 auto",
       }}
     >
       <Routes>
