@@ -11,22 +11,33 @@ import {   showDataWithOutPagination , delteColloctionInstance} from "../../../.
 import { useEffect } from "react";
 import CreateCatgories from "./createCatagories";
 
+const cataGoryModel = {
+  name : ""
+}
 
 const Categories = () => {
 
   const [showData , setShowData] = useState("")
+  const [createDtaUI , setcreateDtaUI] = useState( <CreateCatgories EditAbleItem={cataGoryModel} status = {false}/>)
 
   useEffect(()=>{
     showDataWithOutPagination( setShowData ,"catagories")
   },[])
 
-  const deleteItems = (itemsID) =>{
-    if(window.confirm(`******************************************** \n\n Wait:= \n\n Do You Wanna Delete "${itemsID}" Catagory Item!!! \n\n ********************************************`)){
+  const deleteItems = (itemsID , itemName) =>{
+    if(window.confirm(`******************************************** \n\n Wait:= \n\n Do You Wanna Delete \n**"${itemName}"**\nCatagory Item!!! \n\n ********************************************`)){
       delteColloctionInstance( itemsID ,"catagories")
     }
     
   }
-
+  const clearUi = () =>{
+    setcreateDtaUI(<CreateCatgories EditAbleItem={cataGoryModel} status = {false} />)
+  }
+  const handelEditDataUi = (item) =>{
+    setcreateDtaUI(<CreateCatgories EditAbleItem={item} status = {true} clearUi = {clearUi}  />)
+  }
+  
+  
 
 
   return (
@@ -41,8 +52,10 @@ const Categories = () => {
       }}
     >
       
-      <CreateCatgories />
-
+     
+      {
+        createDtaUI
+      }
       <Box>
         <List
           sx={{
@@ -63,6 +76,7 @@ const Categories = () => {
               {showData && showData.map((doc) =>
               {
               const item = doc.data()
+              item.id = doc.id ;
               return(
                 <ListItem
                   key={doc.id}
@@ -76,6 +90,7 @@ const Categories = () => {
                   <Box sx={{ display: "flex", gap: "10px" }}>
                     <Box>
                       <EditIcon
+                        onClick = {()=> handelEditDataUi(item)}
                         sx={{
                           "&:hover": {
                             color: "secondary.light",
@@ -86,7 +101,7 @@ const Categories = () => {
                     </Box>
                     <Box>
                       <DeleteIcon
-                        onClick={() => deleteItems(doc.id)}
+                        onClick={() => deleteItems(doc.id , item.name)}
                         sx={{
                           "&:hover": {
                             color: "secondary.light",

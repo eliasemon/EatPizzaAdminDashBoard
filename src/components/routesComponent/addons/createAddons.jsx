@@ -1,23 +1,62 @@
-import { Button , Box , TextField } from '@mui/material'
-import {useState} from 'react'
-import { addDataToCollection } from "../../../../utils";
-//firebase import
-import { db } from '../../../../firebaseConfig'
-import { collection, addDoc } from "firebase/firestore";
+import { Button , Box , TextField ,Typography} from '@mui/material'
+import {useState , useEffect} from 'react'
+import { addDataToCollection  , setDataToCollection } from "../../../../utils";
+import SelectedCatagories from '../../UI/SelectedCatagories';
+import { toast } from 'react-toastify';
 
 
 const itemsModel = {
     name : "",
-    price : ""
+    price : "",
+    selectedCatagories : [] 
   }
 
 
-const CreateAddons = () => {
-  const [items , setItems] = useState(itemsModel);
+const CreateAddons = ({EditAbleItem , status , clearUi}) => {
+  const [items , setItems] = useState(EditAbleItem);
+  const [selectedCatagories , setSelectedCatagories] = useState([])
+  
 
+  useEffect(()=>{
+    setItems(EditAbleItem)
+    setSelectedCatagories([...EditAbleItem.selectedCatagories])
+  },[EditAbleItem])
 
+  useEffect(()=>{
+    setItems(prv => ({...prv , selectedCatagories : [...selectedCatagories]}))
+  },[selectedCatagories])
+  
+  const discardHandle = () =>{
+    if(clearUi){
+      clearUi()
+    }
+    setItems(itemsModel)
+    setSelectedCatagories([])
+  } 
+  const updateFireStoreValue = async() =>{
+    if(items.name == "" || items.price == "" ){
+      toast.error("Empty Field Can't added!!");
+      return
+    }
+    await setDataToCollection( items , "Addons" , false);
+    discardHandle()
+  }
+  const creatHandle = async() =>{
+    if(items.name == "" || items.price == ""){
+      toast.error("Empty Field Can't added!!");
+      return
+    }
+    await addDataToCollection(items , "Addons")
+    setItems(itemsModel)
+    setSelectedCatagories([])
+  }
+  
+  
   return (
     <Box >
+      <Typography>
+          { status ? `Update The ***"${items.name}"*** Addons Item` : `Create new Catagory`}
+      </Typography>
         <TextField
           color="common"
           label="Create a new Addons"
@@ -61,13 +100,23 @@ const CreateAddons = () => {
             },
           }}
         />
+        <Typography>
+          Select Any Catagory
+        </Typography>
+        <SelectedCatagories selectedCatagories={selectedCatagories} setSelectedCatagories= {setSelectedCatagories}  />
         <Box sx={{ marginTop: "3%", display: "flex", gap: "2%" }}>
-            <Button onClick={(e) => {addDataToCollection(items , "Addons") ; setItems(itemsModel) }} variant="contained" size="large">
-            Create
+          {status?
+              <Button onClick = {updateFireStoreValue} variant="contained" size="large">
+              Update
             </Button>
-            <Button variant="outlined" size="large">
+            : 
+            <Button onClick = {creatHandle } variant="contained" size="large">
+                Create
+            </Button>
+          }
+          <Button onClick = {discardHandle} variant="outlined" size="large">
             Discard
-            </Button>
+          </Button>
       </Box>
     </Box>    
   )

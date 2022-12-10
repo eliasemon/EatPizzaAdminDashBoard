@@ -3,68 +3,49 @@ import {
   List,
   ListItem,
   ListItemText,
+  Typography
 } from "@mui/material";
-const addonsList = [
-  {
-    id: "1",
-    title: "Burger",
-  },
-  {
-    id: "2",
-    title: "Pizza",
-  },
-  {
-    id: "3",
-    title: "Sandwich",
-  },
-  {
-    id: "4",
-    title: "Coffee",
-  },
-  {
-    id: "5",
-    title: "Juice",
-  },
-  {
-    id: "6",
-    title: "Kacchi",
-  },
-  {
-    id: "7",
-    title: "Biriyani",
-  },
-  {
-    id: "8",
-    title: "Khichuri",
-  },
-  {
-    id: "9",
-    title: "Tehari",
-  },
-];
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect, useState } from "react";
 import CreateAddons from "./createAddons";
-// import { showDataWithPagination } from "../../../../utils";
+import SelectedCatagories from '../../UI/SelectedCatagories';
+import { showDataByArrayQuers , showDataWithOutPagination } from "../../../../utils";
 
+const itemsModel = {
+  name : "",
+  price : "",
+  selectedCatagories : [] 
+}
 
 
 
 const Addons = () => {
- const [data , setData] = useState("")
-
-
+ const [items , setItems] = useState("")
+ const [selectedCatagories , setSelectedCatagories] = useState([])
+ const [createDtaUI , setcreateDtaUI] = useState( <CreateAddons EditAbleItem={itemsModel} status = {false}/>)
 
   useEffect(()=>{
-    // showDataWithPagination(setData , "Addons" , 0 , 10)
+    if(selectedCatagories.length > 0){
+      showDataByArrayQuers(setItems , "Addons" , selectedCatagories , "selectedCatagories")
+    }else{
+      showDataWithOutPagination(setItems , "Addons" )
+    }
     
-  },[])
+  },[selectedCatagories])
 
-  if(data){
-    // console.log(data.docs.length)
+  const clearUi = () =>{
+    setcreateDtaUI(<CreateAddons EditAbleItem={itemsModel} status = {false} />)
+  }
+  const handelEditDataUi = (item) =>{
+    setcreateDtaUI(<CreateAddons EditAbleItem={item} status = {true} clearUi = {clearUi}  />)
   }
 
+  const deleteItems = (itemsID , itemName) =>{
+    if(window.confirm(`******************************************** \n\n Wait:= \n\n Do You Wanna Delete \n**"${itemName}"**\nAddons Item!!! \n\n ********************************************`)){
+      delteColloctionInstance( itemsID ,"Addons")
+    }
+  }
 
   return (
     <Box
@@ -77,8 +58,14 @@ const Addons = () => {
         padding: "3%",
       }}
     >
-      <CreateAddons />
+     {createDtaUI}
 
+      <Box>
+      <Typography>
+        Filter By Catagories
+      </Typography>
+      <SelectedCatagories selectedCatagories={selectedCatagories} setSelectedCatagories= {setSelectedCatagories}  />
+      </Box>
       <Box>
         <List
           sx={{
@@ -97,8 +84,11 @@ const Addons = () => {
           {
             <ul>
               {
-              
-              addonsList.map((item) => (
+              items && items.map((doc) =>
+              {
+                const item = doc.data()
+                item.id = doc.id
+               return(
                 <ListItem
                   key={item.id}
                   sx={{
@@ -107,10 +97,11 @@ const Addons = () => {
                     borderRadius: "5px",
                   }}
                 >
-                  <ListItemText primary={item.title} />
+                  <ListItemText primary={item.name} />
                   <Box sx={{ display: "flex", gap: "10px" }}>
                     <Box>
                       <EditIcon
+                        onClick = {()=> handelEditDataUi(item)}
                         sx={{
                           "&:hover": {
                             color: "secondary.light",
@@ -121,6 +112,7 @@ const Addons = () => {
                     </Box>
                     <Box>
                       <DeleteIcon
+                      onClick = {() => deleteItems(item.id , item.name)}
                         sx={{
                           "&:hover": {
                             color: "secondary.light",
@@ -131,7 +123,7 @@ const Addons = () => {
                     </Box>
                   </Box>
                 </ListItem>
-              ))}
+              )})}
             </ul>
           }
         </List>

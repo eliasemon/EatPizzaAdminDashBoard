@@ -1,5 +1,19 @@
 import { toast } from 'react-toastify';
-import {deleteDoc ,doc, setDoc, addDoc, getDoc, getDocs, collection, onSnapshot, query, orderBy, startAt, endAt, limit } from "firebase/firestore";
+import {  
+   where ,
+   deleteDoc ,
+   doc,
+  setDoc,
+  addDoc,
+  getDoc,
+  getDocs,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  startAt,
+  endAt,
+  limit } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 export const showDataWithPagination = (setState, collectionRef, startingPoint, limitation, fristAttemp) => {
@@ -22,25 +36,47 @@ export const showDataWithOutPagination = (setState, collectionRef) => {
   })
 }
 
+export const showDataByArrayQuers = (setState , collectionRef , queryArray , queryField ) => {
+  const q = query(collection(db, `${collectionRef}`), where(`${queryField}`, 'array-contains-any', queryArray));
+  onSnapshot(q, (snapshot) => {
+    setState(snapshot.docs)
+  })
+}
+
 export const addDataToCollection = async (items, collectionRef) => {
 
   try {
-    const q = doc(db, `${collectionRef}`, `${items.name}`)
-    if(await isExist(q)){
+    const colRef = collection(db, `${collectionRef}`)
+    if(await isExist(colRef , items.name)){
       toast.error("Data Is Already In the Store");
       return
     }
-    await setDoc( q , { ...items });
+    await addDoc( colRef , { ...items });
     toast.success(`${collectionRef} Created Succesfully!`)
   } catch (e) {
     toast.error("Server Connection Faild ");
   }
 }
 
-const isExist = async (q) =>{
-  const docSnap = await getDoc(q)
-  console.log()
-  if(docSnap.data() == undefined){
+
+export const setDataToCollection = async (items , collectionRef , isSingle) => {
+  try {
+    if(isSingle && await isExist(collection(db, `${collectionRef}`) , items.name)){
+      toast.error("Data Is Already In the Store");
+      return
+    }
+    const colRef = doc(db, `${collectionRef}` , `${items.id}`)
+    await setDoc( colRef , { ...items });
+    toast.success(`${collectionRef} Update Succesfully!`)
+  } catch (e) {
+    toast.error("Server Connection Faild ");
+  }
+}
+
+const isExist = async (colRef , itemsName) =>{
+  const q = query(colRef, where("name", "==", itemsName));
+  const docSnap = await getDocs(q)
+  if(docSnap.docs.length == 0){
     return false
   }
   return true
