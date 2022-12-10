@@ -4,11 +4,15 @@ import {   Box  ,Typography , Checkbox , FormControlLabel } from '@mui/material'
 
 
 
- const SelectedCatagories = ({setSelectedCatagories , selectedCatagories }) => {
+ const SelectedCatagories = ({setSelectedCatagories , selectedCatagories , collectionRef }) => {
     const [catagoriesSelectionView , setCatagoriesSelectionView] = useState("")
     
     useEffect(()=>{
-        showDataWithOutPagination(setCatagoriesSelectionView , "catagories")
+        if(collectionRef){
+          showDataWithOutPagination(setCatagoriesSelectionView , `${collectionRef}`)
+        }else{
+          showDataWithOutPagination(setCatagoriesSelectionView , "catagories")
+        }
       },[])
     
 
