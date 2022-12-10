@@ -1,20 +1,14 @@
-import { Box } from "@mui/system";
+import { styled } from "@mui/system";
 
-const Background = () => {
-  return (
-    <Box
-      component="div"
-      sx={{
-        background: "#434f63",
-        zIndex: -1,
-        width: "100vw",
-        height: "100vh",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-      }}
-    />
-  );
-};
+const Background = styled("div")({
+  background: "#434f63",
+  zIndex: -1,
+  width: "100vw",
+  height: "100vh",
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+});
+
 export default Background;
