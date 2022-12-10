@@ -32,7 +32,7 @@ const Addons = () => {
       showDataWithOutPagination(setItems , "Addons" )
     }
     
-  },[selectedCatagories])
+  },[selectedCatagories , items])
 
   const clearUi = () =>{
     setcreateDtaUI(<CreateAddons EditAbleItem={itemsModel} status = {false} />)

@@ -52,9 +52,9 @@ export const addDataToCollection = async (items, collectionRef) => {
       return
     }
     await addDoc( colRef , { ...items });
-    toast.success(`${collectionRef} Created Succesfully!`)
+    await toast.success(`${collectionRef} Created Succesfully!`)
   } catch (e) {
-    toast.error("Server Connection Faild ");
+    await toast.error("Server Connection Faild ");
   }
 }
 
@@ -67,9 +67,9 @@ export const setDataToCollection = async (items , collectionRef , isSingle = tru
     }
     const colRef = doc(db, `${collectionRef}` , `${items.id}`)
     await setDoc( colRef , { ...items });
-    toast.success(`${collectionRef} Update Succesfully!`)
+    await toast.success(`${collectionRef} Update Succesfully!`)
   } catch (e) {
-    toast.error("Server Connection Faild ");
+    await toast.error("Server Connection Faild ");
   }
 }
 
@@ -87,9 +87,9 @@ const isExist = async (colRef , itemsName) =>{
 export const delteColloctionInstance = async (itemsID, collectionRef) => {
   try {
     await deleteDoc(doc(db, `${collectionRef}`, `${itemsID}`));
-    toast.success(`${collectionRef} Item deleted Succesfully!`)
+    await toast.success(`${collectionRef} Item deleted Succesfully!`)
   } catch (e) {
-    toast.error("Server Connection Faild ");
+    await toast.error("Server Connection Faild ");
   }
   
 }
