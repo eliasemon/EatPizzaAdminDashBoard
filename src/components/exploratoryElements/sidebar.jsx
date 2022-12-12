@@ -20,6 +20,7 @@ const SideBar = () => {
       {categories.map((item) => (
         <ListButton
           onClick={(event) => handleListItemClick(event, 0)}
+          selected={selectedIndex === 0}
           key={item.id}
         >
           <StyledLink to={item.link}>
