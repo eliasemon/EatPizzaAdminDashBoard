@@ -10,8 +10,7 @@ import {   Box  ,Typography , Checkbox , FormControlLabel } from '@mui/material'
     useEffect(()=>{
       if(preAddedArray){
         setCatagoriesSelectionView([...preAddedArray])
-      }
-        if(collectionRef){
+      }else if(collectionRef){
           showDataWithOutPagination(setCatagoriesSelectionView , `${collectionRef}`)
         }else{
           showDataWithOutPagination(setCatagoriesSelectionView , "catagories")
