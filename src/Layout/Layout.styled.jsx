@@ -21,3 +21,10 @@ export const RoutesWrapper = styled("div")({
   margin: "auto auto",
   borderRadius: "5px",
 });
+
+export const ContentBackground = styled("div")(({ theme }) => ({
+  width: "100%",
+  height: "100%",
+  borderRadius: "5px",
+  backgroundColor: theme.palette.secondary.deep,
+}));

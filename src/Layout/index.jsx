@@ -1,7 +1,12 @@
 import Header from "../components/exploratoryElements/header";
 import SideBar from "../components/exploratoryElements/sidebar";
 import RoutesComponent from "../Routes";
-import { LayoutContainer, BodyContainer, RoutesWrapper } from "./Layout.styled";
+import {
+  LayoutContainer,
+  BodyContainer,
+  RoutesWrapper,
+  ContentBackground,
+} from "./Layout.styled";
 
 const Layout = () => {
   return (
@@ -10,7 +15,9 @@ const Layout = () => {
       <BodyContainer>
         <SideBar />
         <RoutesWrapper>
-          <RoutesComponent />
+          <ContentBackground>
+            <RoutesComponent />
+          </ContentBackground>
         </RoutesWrapper>
       </BodyContainer>
     </LayoutContainer>

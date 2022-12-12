@@ -6,17 +6,14 @@ export const DashboardContainer = styled("div")({
   height: "100%",
 });
 
-export const LeftContainer = styled("div")(({ theme }) => ({
+export const LeftContainer = styled("div")({
   height: "auto",
   width: "30%",
-  borderRadius: "5px 0 0 5px",
   padding: "2.5%",
-  backgroundColor: theme.palette.secondary.deep,
-}));
+});
 
 export const RightContainer = styled("div")(({ theme }) => ({
   height: "auto",
   width: "70%",
-  borderRadius: "0 5px 5px 0",
   backgroundColor: theme.palette.secondary.light,
 }));

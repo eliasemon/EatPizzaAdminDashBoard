@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import { Box } from "@mui/system";
 import React from "react";
 import { auth } from "../../../firebaseConfig";
 import LogoContainer from "../logoContainer";
