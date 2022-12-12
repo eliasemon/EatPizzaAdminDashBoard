@@ -1,25 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  FilledInput,
   FormControl,
-  InputLabel,
-  List,
-  ListItem,
-  ListItemText,
-  ListSubheader,
   TextField,
   MenuItem,
   Select,
+  Typography
 } from "@mui/material";
+import AddVariantsAndVariantsListLoader from "./AddVariantsAndVariantsListLoader";
 
-const AllItems = () => {
-  const [age, setAge] = useState("");
+const CreateItems = () => {
+  const [items , setItems] = useState("");
+  const [variants , setVariants] = useState({})
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+
+  // const handleChange = (event) => {
+  //   // setAge(event.target.value);
+  // }
 
   return (
     <Box
@@ -34,6 +32,7 @@ const AllItems = () => {
     >
       <TextField
         color="common"
+        onChange = {(e)=> setItems(prv => ({...prv , name : e.target.value}))}
         label="Product Name"
         id="filled-size-normal"
         variant="filled"
@@ -52,6 +51,17 @@ const AllItems = () => {
           },
         }}
       />
+
+      <AddVariantsAndVariantsListLoader variants = {variants}  setVariants = {setVariants} />
+
+
+        {/* Catagories Select Option  */}
+        <Box>
+          <Typography>
+            Please Select  Catagory
+          </Typography>
+          
+        </Box>
       <Box
         sx={{
           marginTop: "1%",
@@ -80,9 +90,9 @@ const AllItems = () => {
               },
             }}
           />
-          <FormControl sx={{ marginTop: "1%", minWidth: 120 }}>
+          {/* <FormControl sx={{ marginTop: "1%", minWidth: 120 }}>
             <Select
-              value={age}
+              // value={age}
               onChange={handleChange}
               displayEmpty
               sx={{
@@ -109,7 +119,7 @@ const AllItems = () => {
               <MenuItem value={20}>Twenty</MenuItem>
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
           <TextField
             id="outlined-multiline-static"
             multiline
@@ -149,4 +159,4 @@ const AllItems = () => {
     </Box>
   );
 };
-export default AllItems;
+export default CreateItems;

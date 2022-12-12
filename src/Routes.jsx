@@ -3,7 +3,7 @@ import Addons from "./components/routesComponent/addons";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/routesComponent/dashboard";
 import Categories from "./components/routesComponent/categories";
-import CreateItem from "./components/routesComponent/createItems";
+import CreateItems from "./components/routesComponent/createItems";
 import CurrentOrders from "./components/routesComponent/currentOrders";
 import AllItems from "./components/routesComponent/allItems";
 import OrdersHistory from "./components/routesComponent/ordersHistory";
@@ -26,7 +26,7 @@ const RoutesComponent = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/addons" element={<Addons />} />
-        <Route path="/createitem" element={<CreateItem />} />
+        <Route path="/createitem" element={<CreateItems />} />
         <Route path="/currentorders" element={<CurrentOrders />} />
         <Route path="/items" element={<AllItems />} />
         <Route path="/orderhistory" element={<OrdersHistory />} />
