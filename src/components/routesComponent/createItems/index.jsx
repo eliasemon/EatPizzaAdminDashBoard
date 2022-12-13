@@ -9,12 +9,16 @@ import {
   Typography
 } from "@mui/material";
 import AddVariantsAndVariantsListLoader from "./AddVariantsAndVariantsListLoader";
+import SelectedCatagories from "../../UI/SelectedCatagories";
+import ShowAddonsList from "./ShowAddonsList";
+
 
 const CreateItems = () => {
   const [items , setItems] = useState("");
   const [variants , setVariants] = useState({})
-
-
+  const [selectedCatagories  , setSelectedCatagories] = useState([])
+  const [selectedAddons , setSelectedAddons] = useState([])
+  console.log(selectedAddons)
   // const handleChange = (event) => {
   //   // setAge(event.target.value);
   // }
@@ -60,7 +64,14 @@ const CreateItems = () => {
           <Typography>
             Please Select  Catagory
           </Typography>
-          
+          <SelectedCatagories setSelectedCatagories = {setSelectedCatagories}  selectedCatagories = {selectedCatagories}  />
+        </Box>
+
+
+        {/* showing Addons Section  */}
+
+        <Box>
+          <ShowAddonsList  selectedAddons={selectedAddons}   setSelectedAddons={setSelectedAddons} />
         </Box>
       <Box
         sx={{

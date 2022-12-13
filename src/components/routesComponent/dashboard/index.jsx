@@ -1,8 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { toast } from "react-toastify";
 import LeftContainer from "./LeftContainer";
 import RightContainer from "./RightContainer";
+
 const Dashboard = () => {
+  toast.dismiss("LoadingScreen");
   return (
     <Box
       sx={{

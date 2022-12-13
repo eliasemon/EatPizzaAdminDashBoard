@@ -7,11 +7,11 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./constants/theme";
 import { BrowserRouter } from "react-router-dom";
 import { auth } from "../firebaseConfig";
-import { showLoading } from "./components/loading/loading";
 
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import "./App.css";
 
 
 const App = () => {
@@ -29,7 +29,6 @@ const App = () => {
   //     setUi(<Login />)
   //   }
   // })
-  // showLoading()
   return (
     <>
       <ThemeProvider theme={theme}>

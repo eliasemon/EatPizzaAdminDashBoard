@@ -12,10 +12,10 @@ import {   Box  ,Typography , Checkbox , FormControlLabel } from '@mui/material'
         setCatagoriesSelectionView([...preAddedArray])
       }else if(collectionRef){
           showDataWithOutPagination(setCatagoriesSelectionView , `${collectionRef}`)
-        }else{
+      }else{
           showDataWithOutPagination(setCatagoriesSelectionView , "catagories")
-        }
-      },[])
+      }
+      },[preAddedArray])
     
 
       const checkBoxHandleChange = (index , id) =>{
@@ -32,8 +32,8 @@ import {   Box  ,Typography , Checkbox , FormControlLabel } from '@mui/material'
      <Box>
           {catagoriesSelectionView && catagoriesSelectionView.map((doc)=>{
             const item = doc.data()
-            item.id = doc.id
-            const index = selectedCatagories.findIndex(v => v == item.id)
+            item.id = doc.id;
+            const index =  selectedCatagories.findIndex(v => v == item.id)
             return(
               <FormControlLabel
                 key={item.id}
