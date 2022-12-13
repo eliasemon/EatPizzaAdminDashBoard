@@ -19,12 +19,19 @@ export const CategoryList = styled(List)(({ theme }) => ({
   position: "relative",
   overflow: "auto",
   color: "common.white",
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
   "& ul": {
     padding: 0,
     "& li": {
       marginBottom: "4%",
     },
   },
+}));
+
+export const InputSection = styled("div")(({ theme }) => ({
+  marginBottom: "20%",
 }));
 
 export const InputText = styled(TextField)(({ theme }) => ({
@@ -47,7 +54,8 @@ export const ButtonGroup = styled("div")({
 });
 
 export const ListElement = styled(ListItem)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.main,
+  backgroundColor: theme.palette.secondary.dark,
   marginBottom: "5px",
   borderRadius: "5px",
+  color: theme.palette.secondary.text,
 }));

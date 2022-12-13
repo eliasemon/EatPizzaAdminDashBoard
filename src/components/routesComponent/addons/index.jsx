@@ -1,10 +1,4 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Typography
-} from "@mui/material";
+import { Box, ListItemText } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useEffect, useState } from "react";
