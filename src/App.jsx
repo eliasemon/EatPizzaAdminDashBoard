@@ -1,10 +1,16 @@
 import { useState } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Login from "./pages/Login";
-import Background from "./components/backGround";
-import Layout from "./Layout";
+
+import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import "react-toastify/dist/ReactToastify.css";
+
+import Layout from "./Layout";
 import theme from "./constants/theme";
+
+import Background from "./components/background";
+
 import { BrowserRouter } from "react-router-dom";
 import { auth } from "../firebaseConfig";
 
@@ -14,10 +20,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 
 
+
 const App = () => {
-  const [ui , setUi] = useState(<BrowserRouter>
-    <Layout />
-  </BrowserRouter>)
+  const [ui, setUi] = useState(
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
+  );
   // auth.onAuthStateChanged(user=>{
   //   if(user){
   //     setUi(
@@ -32,11 +41,10 @@ const App = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
-          {ui}
-          
-          <Background />
-          <CssBaseline />
-          <ToastContainer theme="dark" />
+        {ui}
+        <Background />
+        <CssBaseline />
+        <ToastContainer theme="dark" />
       </ThemeProvider>
     </>
   );

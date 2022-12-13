@@ -1,24 +1,53 @@
-import { Box } from "@mui/material";
-import React from "react";
-import { toast } from "react-toastify";
-import LeftContainer from "./LeftContainer";
-import RightContainer from "./RightContainer";
+import {
+  DashboardContainer,
+  LeftContainer,
+  RightContainer,
+} from "./Dashboard.styled";
+
+import PeopleIcon from "@material-ui/icons/People";
+import { Box } from "@mui/system";
+import ContentCarrier from "../../UI/ContentCarrier";
+import { Typography } from "@material-ui/core";
+
+import infocardArray from "./../../../constants/dashboardInfoArray";
+
 
 const Dashboard = () => {
   toast.dismiss("LoadingScreen");
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "17.9vw auto",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <LeftContainer />
-
+    <DashboardContainer>
+      <LeftContainer>
+        <Box
+          sx={{
+            display: "grid",
+            justifyContent: "space-between",
+            gridTemplateColumns: "48% 48%",
+          }}
+        >
+          {infocardArray.map((value, index) => (
+            <Box sx={{ marginBottom: "2", width: "100%" }} key={index}>
+              <ContentCarrier bgColor="red" flexDirection={"column"}>
+                {value.icon}
+                <Typography>{value.number}</Typography>
+                <Typography>{value.text}</Typography>
+              </ContentCarrier>
+            </Box>
+          ))}
+        </Box>
+        <ContentCarrier bgColor="red" flexDirection={"column"}>
+          <PeopleIcon />
+          <Typography>450000</Typography>
+          <Typography>Monthly Sell</Typography>
+        </ContentCarrier>
+        <Box mt={2}></Box>
+        <ContentCarrier bgColor="red" flexDirection={"column"}>
+          <PeopleIcon />
+          <Typography>450000</Typography>
+          <Typography>Total Sell</Typography>
+        </ContentCarrier>
+      </LeftContainer>
       <RightContainer />
-    </Box>
+    </DashboardContainer>
   );
 };
 export default Dashboard;
