@@ -11,13 +11,20 @@ const SelectedCatagories = ({
 }) => {
   const [catagoriesSelectionView, setCatagoriesSelectionView] = useState("");
 
-  useEffect(() => {
-    if (collectionRef) {
-      showDataWithOutPagination(setCatagoriesSelectionView, `${collectionRef}`);
-    } else {
-      showDataWithOutPagination(setCatagoriesSelectionView, "catagories");
-    }
-  }, []);
+
+ const SelectedCatagories = ({setSelectedCatagories , selectedCatagories , collectionRef , preAddedArray }) => {
+    const [catagoriesSelectionView , setCatagoriesSelectionView] = useState("")
+    
+    useEffect(()=>{
+      if(preAddedArray){
+        setCatagoriesSelectionView([...preAddedArray])
+      }else if(collectionRef){
+          showDataWithOutPagination(setCatagoriesSelectionView , `${collectionRef}`)
+      }else{
+          showDataWithOutPagination(setCatagoriesSelectionView , "catagories")
+      }
+      },[preAddedArray])
+
 
   const checkBoxHandleChange = (index, id) => {
     if (index == -1) {
@@ -53,5 +60,6 @@ const SelectedCatagories = ({
     </SelectCategoriesStyle>
   );
 };
+
 
 export default SelectedCatagories

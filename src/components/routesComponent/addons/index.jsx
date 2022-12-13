@@ -39,16 +39,15 @@ const Addons = () => {
     } else {
       showDataWithOutPagination(setItems, "Addons");
     }
-  }, [selectedCatagories, items]);
 
-  const clearUi = () => {
-    setcreateDtaUI(<CreateAddons EditAbleItem={itemsModel} status={false} />);
-  };
-  const handelEditDataUi = (item) => {
-    setcreateDtaUI(
-      <CreateAddons EditAbleItem={item} status={true} clearUi={clearUi} />
-    );
-  };
+  },[selectedCatagories])
+  
+  const clearUi = () =>{
+    setcreateDtaUI(<CreateAddons EditAbleItem={itemsModel} status = {false} />)
+  }
+  const handelEditDataUi = (item) =>{
+    setcreateDtaUI(<CreateAddons EditAbleItem={item} status = {true} clearUi = {clearUi}  />)
+  }
 
   const deleteItems = (itemsID, itemName) => {
     if (

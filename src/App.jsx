@@ -8,7 +8,18 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Layout from "./Layout";
 import theme from "./constants/theme";
+
 import Background from "./components/background";
+
+import { BrowserRouter } from "react-router-dom";
+import { auth } from "../firebaseConfig";
+
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+import "./App.css";
+
+
 
 const App = () => {
   const [ui, setUi] = useState(
@@ -27,7 +38,6 @@ const App = () => {
   //     setUi(<Login />)
   //   }
   // })
-  // showLoading()
   return (
     <>
       <ThemeProvider theme={theme}>

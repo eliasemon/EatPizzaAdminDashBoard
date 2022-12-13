@@ -11,7 +11,9 @@ import { Typography } from "@material-ui/core";
 
 import infocardArray from "./../../../constants/dashboardInfoArray";
 
+
 const Dashboard = () => {
+  toast.dismiss("LoadingScreen");
   return (
     <DashboardContainer>
       <LeftContainer>
