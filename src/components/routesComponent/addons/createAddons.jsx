@@ -3,7 +3,12 @@ import { useState, useEffect } from "react";
 import { addDataToCollection, setDataToCollection } from "../../../../utils";
 import SelectedCatagories from "../../UI/SelectedCatagories";
 import { toast } from "react-toastify";
-import { LabelText, InputText, ButtonGroup } from "./Addons.styled";
+import {
+  LabelText,
+  InputText,
+  ButtonGroup,
+  CreateAddonsStyle,
+} from "./Addons.styled";
 
 const itemsModel = {
   name: "",
@@ -56,7 +61,7 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
   };
 
   return (
-    <Box>
+    <CreateAddonsStyle>
       <Box>
         <LabelText>
           {status
@@ -72,19 +77,6 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
           onChange={(e) =>
             setItems((prv) => ({ ...prv, name: e.target.value }))
           }
-          sx={{
-            width: "70%",
-            ".MuiInputBase-root": {
-              backgroundColor: "secondary",
-              border: "1px solid grey",
-            },
-            input: {
-              color: "white",
-            },
-            label: {
-              color: "white",
-            },
-          }}
         />
       </Box>
       <Box>
@@ -113,11 +105,13 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
           }}
         />
       </Box>
-      <LabelText>Select any category</LabelText>
-      <SelectedCatagories
-        selectedCatagories={selectedCatagories}
-        setSelectedCatagories={setSelectedCatagories}
-      />
+      <Box>
+        <LabelText>Select any category for addons</LabelText>
+        <SelectedCatagories
+          selectedCatagories={selectedCatagories}
+          setSelectedCatagories={setSelectedCatagories}
+        />
+      </Box>
       <ButtonGroup>
         {status ? (
           <Button
@@ -136,7 +130,7 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
           Discard
         </Button>
       </ButtonGroup>
-    </Box>
+    </CreateAddonsStyle>
   );
 };
 //

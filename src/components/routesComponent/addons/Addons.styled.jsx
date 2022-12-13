@@ -5,22 +5,40 @@ export const AddonsContainer = styled("div")({
   width: "100%",
   height: "100%",
   display: "flex",
-  justifyContent: "space-between",
 });
+
+export const HalfBox = styled("div")({
+  width: "50%",
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+});
+
+export const FilterSection = styled("div")(({ theme }) => ({
+  borderRadius: "5px",
+  padding: "20px",
+  color: "#fff",
+  // maxHeight: "20%",
+  backgroundColor: theme.palette.secondary.light,
+}));
 
 export const LabelText = styled(Typography)(({ theme }) => ({
   color: theme.palette.secondary.text,
 }));
 
 export const CategoryList = styled(List)(({ theme }) => ({
+  marginTop: "5%",
   width: "100%",
-  maxWidth: 400,
-  //   backgroundColor: theme.palette.secondary.light,
+  maxHeight: "80%",
+  backgroundColor: theme.palette.secondary.light,
   position: "relative",
   overflow: "auto",
   color: "common.white",
-  "&::-webkit-scrollbar": {
-    display: "none",
+  padding: "20px",
+  borderRadius: "5px",
+  "&::-webkit-scrollbar-thumb": {
+    background: "#000",
+    borderRadius: "10px",
   },
   "& ul": {
     padding: 0,
@@ -58,4 +76,10 @@ export const ListElement = styled(ListItem)(({ theme }) => ({
   marginBottom: "5px",
   borderRadius: "5px",
   color: theme.palette.secondary.text,
+}));
+
+export const CreateAddonsStyle = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: 40,
 }));
