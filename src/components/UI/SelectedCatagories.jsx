@@ -4,16 +4,8 @@ import { Box, Typography, Checkbox, FormControlLabel } from "@mui/material";
 
 import { SelectCategoriesStyle } from "./SelectedCategories.styled";
 
-const SelectedCatagories = ({
-  setSelectedCatagories,
-  selectedCatagories,
-  collectionRef,
-}) => {
-  const [catagoriesSelectionView, setCatagoriesSelectionView] = useState("");
-
-
- const SelectedCatagories = ({setSelectedCatagories , selectedCatagories , collectionRef , preAddedArray }) => {
-    const [catagoriesSelectionView , setCatagoriesSelectionView] = useState("")
+const SelectedCatagories = ({setSelectedCatagories , selectedCatagories , collectionRef , preAddedArray }) => {
+  const [catagoriesSelectionView , setCatagoriesSelectionView] = useState("")
     
     useEffect(()=>{
       if(preAddedArray){
@@ -23,7 +15,7 @@ const SelectedCatagories = ({
       }else{
           showDataWithOutPagination(setCatagoriesSelectionView , "catagories")
       }
-      },[preAddedArray])
+      },[])
 
 
   const checkBoxHandleChange = (index, id) => {
@@ -60,6 +52,7 @@ const SelectedCatagories = ({
     </SelectCategoriesStyle>
   );
 };
+
 
 
 export default SelectedCatagories

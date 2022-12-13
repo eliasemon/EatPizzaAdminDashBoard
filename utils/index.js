@@ -31,12 +31,12 @@ export const showDataWithPagination = (setState, collectionRef, startingPoint, l
 }
 
 export const showDataWithOutPagination = async (setState, collectionRef) => {
-  showLoading()
+  // showLoading()
   const q = query(collection(db, `${collectionRef}`));
   onSnapshot(q, (snapshot) => {
     // closeLoading()
     setState(() => {
-      closeLoading()
+      // closeLoading()
       return snapshot.docs
     })
     //   .forEach(doc => console.log(doc.data()))
@@ -45,11 +45,11 @@ export const showDataWithOutPagination = async (setState, collectionRef) => {
 
 export const showDataByArrayQuers = (setState , collectionRef , queryArray , queryField ) => {
   const q = query(collection(db, `${collectionRef}`), where(`${queryField}`, 'array-contains-any', queryArray));
-  showLoading()
+  // showLoading()
   onSnapshot(q, (snapshot) => {
     
     setState(() => {
-      closeLoading()
+      // closeLoading()
       return snapshot.docs
     })
   })

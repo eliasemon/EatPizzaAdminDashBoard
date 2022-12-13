@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import CreateAddons from "./createAddons";
 import SelectedCatagories from '../../UI/SelectedCatagories';
 import { showDataByArrayQuers , showDataWithOutPagination ,  delteColloctionInstance} from "../../../../utils";
-
 import {
   HalfBox,
   FilterSection,
@@ -14,6 +13,7 @@ import {
   CategoryList,
   ListElement,
 } from "./Addons.styled";
+import FilterView from "../../UI/FilterView";
 
 const itemsModel = {
   name: "",
@@ -24,6 +24,11 @@ const itemsModel = {
 const Addons = () => {
   const [items, setItems] = useState("");
   const [selectedCatagories, setSelectedCatagories] = useState([]);
+ const clearFilterfun = () =>{
+  setSelectedCatagories([])
+ } 
+
+
   const [createDtaUI, setcreateDtaUI] = useState(
     <CreateAddons EditAbleItem={itemsModel} status={false} />
   );
@@ -64,11 +69,13 @@ const Addons = () => {
       <HalfBox>{createDtaUI}</HalfBox>
       <HalfBox>
         <FilterSection>
-          <LabelText>Filter By Catagories</LabelText>
-          <SelectedCatagories
+          <FilterView  
             selectedCatagories={selectedCatagories}
             setSelectedCatagories={setSelectedCatagories}
+            clearFilterfun = {clearFilterfun}
+            heading = "Filter By Catagories"
           />
+          
         </FilterSection>
         <CategoryList subheader={<li />}>
           <ul>
