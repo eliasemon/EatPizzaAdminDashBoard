@@ -2,9 +2,14 @@ import { Box  , Typography} from '@mui/material'
 import {useState , useEffect} from 'react'
 import SelectedCatagories from '../../UI/SelectedCatagories'
 import { showDataWithOutPagination , showDataByArrayQuers } from "../../../../utils";
+import FilterView from '../../UI/FilterView';
 
 const ShowAddonsList = ({selectedAddons , setSelectedAddons}) => {
     const [selectedCatagories , setSelectedCatagories] = useState([])
+
+    const clearFilterfun = () =>{
+      setSelectedCatagories([])
+    } 
     const [items , setItems] = useState("")
 
     useEffect(()=>{
@@ -19,10 +24,12 @@ const ShowAddonsList = ({selectedAddons , setSelectedAddons}) => {
 
         {/* for Addons Filtering  */}
         <Box>
-            <Typography>
-                Filter The Addons List By Catagories
-            </Typography>
-            <SelectedCatagories selectedCatagories={selectedCatagories} setSelectedCatagories={setSelectedCatagories} />
+          <FilterView  
+              selectedCatagories={selectedCatagories}
+              setSelectedCatagories={setSelectedCatagories}
+              clearFilterfun = {clearFilterfun}
+              heading = "Filter The Addons List By Catagories"
+            />
         </Box>
         {/* itemsLoader */}
         <Box>
