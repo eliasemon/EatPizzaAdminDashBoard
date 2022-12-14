@@ -15,7 +15,7 @@ const SelectedCatagories = ({setSelectedCatagories , selectedCatagories , collec
       }else{
           showDataWithOutPagination(setCatagoriesSelectionView , "catagories")
       }
-      },[])
+      },[preAddedArray])
 
 
   const checkBoxHandleChange = (index, id) => {
