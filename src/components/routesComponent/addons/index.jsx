@@ -5,14 +5,9 @@ import { useEffect, useState } from "react";
 import CreateAddons from "./createAddons";
 import SelectedCatagories from '../../UI/SelectedCatagories';
 import { showDataByArrayQuers , showDataWithOutPagination ,  delteColloctionInstance} from "../../../../utils";
-import {
-  HalfBox,
-  FilterSection,
-  AddonsContainer,
-  LabelText,
-  CategoryList,
-  ListElement,
-} from "./Addons.styled";
+import { HalfBox } from "../../UI/Shape.styled";
+import { FilterSection, AddonsContainer } from "./Addons.styled";
+import { CategoryList, ListElement } from "../../UI/Shape.styled";
 import FilterView from "../../UI/FilterView";
 
 const itemsModel = {
@@ -24,10 +19,9 @@ const itemsModel = {
 const Addons = () => {
   const [items, setItems] = useState("");
   const [selectedCatagories, setSelectedCatagories] = useState([]);
- const clearFilterfun = () =>{
-  setSelectedCatagories([])
- } 
-
+  const clearFilterfun = () => {
+    setSelectedCatagories([]);
+  };
 
   const [createDtaUI, setcreateDtaUI] = useState(
     <CreateAddons EditAbleItem={itemsModel} status={false} />
@@ -44,15 +38,16 @@ const Addons = () => {
     } else {
       showDataWithOutPagination(setItems, "Addons");
     }
+  }, [selectedCatagories]);
 
-  },[selectedCatagories])
-  
-  const clearUi = () =>{
-    setcreateDtaUI(<CreateAddons EditAbleItem={itemsModel} status = {false} />)
-  }
-  const handelEditDataUi = (item) =>{
-    setcreateDtaUI(<CreateAddons EditAbleItem={item} status = {true} clearUi = {clearUi}  />)
-  }
+  const clearUi = () => {
+    setcreateDtaUI(<CreateAddons EditAbleItem={itemsModel} status={false} />);
+  };
+  const handelEditDataUi = (item) => {
+    setcreateDtaUI(
+      <CreateAddons EditAbleItem={item} status={true} clearUi={clearUi} />
+    );
+  };
 
   const deleteItems = (itemsID, itemName) => {
     if (
@@ -69,13 +64,12 @@ const Addons = () => {
       <HalfBox>{createDtaUI}</HalfBox>
       <HalfBox>
         <FilterSection>
-          <FilterView  
+          <FilterView
             selectedCatagories={selectedCatagories}
             setSelectedCatagories={setSelectedCatagories}
-            clearFilterfun = {clearFilterfun}
-            heading = "Filter By Catagories"
+            clearFilterfun={clearFilterfun}
+            heading="Filter By Catagories"
           />
-          
         </FilterSection>
         <CategoryList subheader={<li />}>
           <ul>
@@ -85,7 +79,10 @@ const Addons = () => {
                 item.id = doc.id;
                 return (
                   <ListElement key={item.id}>
-                    <ListItemText primary={item.name} />
+                    <Box>
+                      <ListItemText primary={item.name} />
+                      <ListItemText primary={item.price} />
+                    </Box>
                     <Box sx={{ display: "flex", gap: "10px" }}>
                       <Box>
                         <EditIcon

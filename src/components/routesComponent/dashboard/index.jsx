@@ -10,7 +10,7 @@ import ContentCarrier from "../../UI/ContentCarrier";
 import { Typography } from "@material-ui/core";
 
 import infocardArray from "./../../../constants/dashboardInfoArray";
-
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   toast.dismiss("LoadingScreen");

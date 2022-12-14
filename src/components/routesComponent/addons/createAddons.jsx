@@ -1,14 +1,15 @@
-import { Button, Box, TextField } from "@mui/material";
+import { Button, Box, TextField, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { addDataToCollection, setDataToCollection } from "../../../../utils";
 import SelectedCatagories from "../../UI/SelectedCatagories";
 import { toast } from "react-toastify";
+import { CreateAddonsStyle } from "./Addons.styled";
 import {
   LabelText,
   InputText,
   ButtonGroup,
-  CreateAddonsStyle,
-} from "./Addons.styled";
+  HighlightText,
+} from "./../../UI/Forms.styled";
 
 const itemsModel = {
   name: "",
@@ -64,15 +65,18 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
     <CreateAddonsStyle>
       <Box>
         <LabelText>
-          {status
-            ? `Update The ***"${items.name}"*** Addons Item`
-            : `Create new Catagory`}
+          {status ? (
+            <Typography>
+              Update the <HighlightText>{items.name}</HighlightText> addons item
+            </Typography>
+          ) : (
+            <Typography>Create new addons</Typography>
+          )}
         </LabelText>
         <InputText
           color="common"
           id="filled-size-normal"
-          placeholder="Enter category name"
-          // variant="filled"
+          placeholder="Enter addons name"
           value={items.name}
           onChange={(e) =>
             setItems((prv) => ({ ...prv, name: e.target.value }))
