@@ -53,12 +53,12 @@ const Categories = () => {
 
   return (
     <CategoryContainer>
-      <HalfBox color="#449CCD">
-        <TitleBar title="Creation View" color="#449CCD" />
+      <HalfBox color="blue">
+        <TitleBar title="Creation View" color="blue" />
         {createDtaUI}
       </HalfBox>
-      <HalfBox color="#8AE32C">
-        <TitleBar title="List View" color="#8AE32C" />
+      <HalfBox color="green">
+        <TitleBar title="List View" color="green" />
         <CategoryList subheader={<li />}>
           {
             <ul>

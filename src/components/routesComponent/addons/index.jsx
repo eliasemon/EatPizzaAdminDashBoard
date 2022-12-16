@@ -68,7 +68,7 @@ const Addons = () => {
           {createDtaUI}
         </HalfBox>
         <HalfBox color="green">
-          <TitleBar title="Addons On The Store" color="orange" />
+          <TitleBar title="Addons On The Store" color="green" />
           <FilterSection>
             <FilterView
               selectedCatagories={selectedCatagories}
@@ -87,7 +87,7 @@ const Addons = () => {
                     <ListElement key={item.id}>
                       <Box>
                         <ListItemText primary={item.name} />
-                        <ListItemText primary={item.price} />
+                        <ListItemText primary={`${item.price} ৳`} />
                       </Box>
                       <Box sx={{ display: "flex", gap: "10px" }}>
                         <Box>

@@ -10,7 +10,8 @@ export const FilterSection = styled("div")(({ theme }) => ({
   borderRadius: "5px",
   padding: "20px",
   color: "#fff",
-  backgroundColor: theme.palette.secondary.light,
+  backgroundColor: theme.palette.surface.dp03,
+  boxShadow: theme.shadows[5],
 }));
 
 export const CreateAddonsStyle = styled("div")(({ theme }) => ({

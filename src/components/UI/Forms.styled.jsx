@@ -3,7 +3,8 @@ import { Typography, TextField } from "@mui/material";
 
 export const LabelText = styled(Typography)(({ theme }) => ({
   fontSize: "1.2rem",
-  color: theme.palette.secondary.text,
+  color: theme.palette.common.white,
+  marginBottom: ".75rem",
 }));
 
 export const InputSection = styled("div")(({ theme }) => ({

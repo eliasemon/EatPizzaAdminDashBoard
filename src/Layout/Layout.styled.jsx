@@ -14,8 +14,5 @@ export const BodyContainer = styled("div")(({ theme }) => ({
 export const RoutesWrapper = styled("div")({
   width: "85%",
   height: "98%",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
   margin: "auto auto",
 });
