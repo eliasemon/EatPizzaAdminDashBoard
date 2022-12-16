@@ -64,15 +64,14 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
   return (
     <CreateAddonsStyle>
       <Box>
-        <LabelText>
-          {status ? (
-            <Typography>
-              Update the <HighlightText>{items.name}</HighlightText> addons item
-            </Typography>
-          ) : (
-            <Typography>Name</Typography>
-          )}
-        </LabelText>
+        {status ? (
+          <LabelText>
+            Update the <HighlightText>{items.name}</HighlightText> addons item
+          </LabelText>
+        ) : (
+          <LabelText>Name </LabelText>
+        )}
+
         <InputText
           color="common"
           id="filled-size-normal"
@@ -96,12 +95,17 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
           type="number"
           sx={{
             width: "25%",
+            "&:focus": {
+              border: "none",
+            },
             ".MuiInputBase-root": {
-              backgroundColor: "secondary",
-              border: "1px solid grey",
+              border: "1px solid #989898",
             },
             input: {
               color: "white",
+              "&:focus": {
+                outline: "none",
+              },
             },
             label: {
               color: "white",
