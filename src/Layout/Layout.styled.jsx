@@ -27,5 +27,5 @@ export const ContentBackground = styled("div")(({ theme }) => ({
   height: "100%",
   borderRadius: "5px",
   backgroundColor: theme.palette.secondary.deep,
-  padding: "3% 5%",
+  padding: "1%",
 }));

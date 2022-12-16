@@ -1,12 +1,18 @@
 import { styled } from "@mui/system";
 import { List, ListItem, TextField, Typography } from "@mui/material";
 
-export const HalfBox = styled("div")({
+export const HalfBox = styled("div")((props) => ({
   width: "50%",
-  height: "100%",
+  height: "95%",
+  padding: "2%",
   display: "flex",
   flexDirection: "column",
-});
+  border: `2px solid ${props.color}`,
+  borderRadius: "5px",
+  marginLeft: "1%",
+  marginRight: "1%",
+  marginTop: "2%",
+}));
 
 export const CategoryList = styled(List)(({ theme }) => ({
   marginTop: "5%",

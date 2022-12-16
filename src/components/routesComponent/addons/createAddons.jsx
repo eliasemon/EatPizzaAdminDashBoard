@@ -70,7 +70,7 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
               Update the <HighlightText>{items.name}</HighlightText> addons item
             </Typography>
           ) : (
-            <Typography>Create new addons</Typography>
+            <Typography>Name</Typography>
           )}
         </LabelText>
         <InputText

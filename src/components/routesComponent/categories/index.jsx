@@ -15,6 +15,7 @@ import { CategoryContainer } from "./Category.styled";
 import { CategoryList, ListElement } from "../../UI/Shape.styled";
 
 import { HalfBox } from "../../UI/Shape.styled";
+import TitleBar from "../../UI/TitleBar";
 
 const cataGoryModel = {
   name: "",
@@ -52,8 +53,12 @@ const Categories = () => {
 
   return (
     <CategoryContainer>
-      <HalfBox>{createDtaUI}</HalfBox>
-      <HalfBox>
+      <HalfBox color="#449CCD">
+        <TitleBar title="Creation View" color="#449CCD" />
+        {createDtaUI}
+      </HalfBox>
+      <HalfBox color="#8AE32C">
+        <TitleBar title="List View" color="#8AE32C" />
         <CategoryList subheader={<li />}>
           {
             <ul>
