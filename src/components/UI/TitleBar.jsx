@@ -1,22 +1,13 @@
 import { styled } from "@mui/system";
 
-// const TitlebarStyle = styled("div")({
-//   //   backgroundColor: ({ status }) =>
-//   //     status === "primary" ? "#449CCD" : "#8AE32C",
-//   borderRadius: "5px",
-//   padding: "1% 2%",
-//   marginTop: "-50px",
-//   zIndex: 1,
-//   alignSelf: "center",
-// });
-
 const TitlebarStyle = styled("div")((props) => ({
-  backgroundColor: props.color,
+  backgroundColor: `${props.theme.palette.color[props.color] ?? "#fff"}`,
   borderRadius: "5px",
   padding: "1% 2%",
   marginTop: "-50px",
   zIndex: 1,
   alignSelf: "center",
+  marginBottom: 10,
 }));
 
 const Text = styled("p")({

@@ -3,15 +3,15 @@ import { List, ListItem, TextField, Typography } from "@mui/material";
 
 export const HalfBox = styled("div")((props) => ({
   width: "50%",
-  height: "95%",
   padding: "2%",
   display: "flex",
   flexDirection: "column",
-  border: `2px solid ${props.color}`,
+  border: `2px solid ${props.theme.palette.color[props.color] ?? "#fff"}`,
   borderRadius: "5px",
   marginLeft: "1%",
   marginRight: "1%",
   marginTop: "2%",
+  backgroundColor: props.theme.palette.surface.dp01,
 }));
 
 export const CategoryList = styled(List)(({ theme }) => ({

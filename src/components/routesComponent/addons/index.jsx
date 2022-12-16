@@ -63,12 +63,12 @@ const Addons = () => {
   return (
     <>
       <AddonsContainer>
-        <HalfBox color="#449CCD">
-          <TitleBar title="Creation Section" color="#449CCD" />
+        <HalfBox color="blue">
+          <TitleBar title="Creation Section" color="blue" />
           {createDtaUI}
         </HalfBox>
-        <HalfBox color="#8AE32C">
-          <TitleBar title="Addons On The Store" color="#8AE32C" />
+        <HalfBox color="green">
+          <TitleBar title="Addons On The Store" color="orange" />
           <FilterSection>
             <FilterView
               selectedCatagories={selectedCatagories}

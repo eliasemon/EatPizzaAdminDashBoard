@@ -11,6 +11,8 @@ export const HeaderStyle = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "0 2%",
+  backgroundColor: theme.palette.surface.dp01,
+  zIndex: 1,
 }));
 
 export const LogoWrapper = styled(Box)(({ theme }) => ({
@@ -23,7 +25,8 @@ export const LogoWrapper = styled(Box)(({ theme }) => ({
 export const SidebarContainer = styled("div")(({ theme }) => ({
   width: "15%",
   height: "100%",
-  backgroundColor: theme.palette.secondary.deep,
+  backgroundColor: theme.palette.surface.dp01,
+  zIndex: 1,
 }));
 
 export const ListButton = styled(ListItemButton)(({ theme }) => ({
