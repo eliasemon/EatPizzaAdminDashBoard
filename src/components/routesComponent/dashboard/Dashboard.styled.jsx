@@ -15,5 +15,6 @@ export const LeftContainer = styled("div")({
 export const RightContainer = styled("div")(({ theme }) => ({
   height: "auto",
   width: "70%",
+  position : "relative",
   backgroundColor: theme.palette.secondary.light,
 }));

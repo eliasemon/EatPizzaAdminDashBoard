@@ -1,19 +1,18 @@
 import {
   DashboardContainer,
   LeftContainer,
-  RightContainer,
 } from "./Dashboard.styled";
-
 import PeopleIcon from "@material-ui/icons/People";
 import { Box } from "@mui/system";
 import ContentCarrier from "../../UI/ContentCarrier";
 import { Typography } from "@material-ui/core";
 
 import infocardArray from "./../../../constants/dashboardInfoArray";
+import  RightContainerMain  from "./RightContainerMain";
 
 
 const Dashboard = () => {
-  toast.dismiss("LoadingScreen");
+  // toast.dismiss("LoadingScreen");
   return (
     <DashboardContainer>
       <LeftContainer>
@@ -46,7 +45,7 @@ const Dashboard = () => {
           <Typography>Total Sell</Typography>
         </ContentCarrier>
       </LeftContainer>
-      <RightContainer />
+      <RightContainerMain />
     </DashboardContainer>
   );
 };
