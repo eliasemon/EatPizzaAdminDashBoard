@@ -11,68 +11,53 @@ import {
 import AddVariantsAndVariantsListLoader from "./AddVariantsAndVariantsListLoader";
 import SelectedCatagories from "../../UI/SelectedCatagories";
 import ShowAddonsList from "./ShowAddonsList";
-
+import { CreateItemsContainer } from "./CreateItems.styled";
+import { InputSection, InputText, LabelText } from "../../UI/Forms.styled";
 
 const CreateItems = () => {
-  const [items , setItems] = useState("");
-  const [variants , setVariants] = useState({})
-  const [selectedCatagories  , setSelectedCatagories] = useState([])
-  const [selectedAddons , setSelectedAddons] = useState([])
-  console.log(selectedAddons)
+  const [items, setItems] = useState("");
+  const [variants, setVariants] = useState({});
+  const [selectedCatagories, setSelectedCatagories] = useState([]);
+  const [selectedAddons, setSelectedAddons] = useState([]);
+  console.log(selectedAddons);
   // const handleChange = (event) => {
   //   // setAge(event.target.value);
   // }
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        // gridTemplateColumns: "17.9vw auto",
-        width: "100%",
-        height: "100%",
-        padding: "3%",
-      }}
-    >
-      <TextField
-        color="common"
-        onChange = {(e)=> setItems(prv => ({...prv , name : e.target.value}))}
-        label="Product Name"
-        id="filled-size-normal"
-        variant="filled"
-        sx={{
-          marginTop: "1%",
-          ".MuiInputBase-root": {
-            backgroundColor: "secondary",
-            border: "1px solid grey",
-            width: "100%",
-          },
-          input: {
-            color: "white",
-          },
-          label: {
-            color: "white",
-          },
-        }}
+    <CreateItemsContainer>
+      <Box>
+        <LabelText>Product Name</LabelText>
+        <InputText
+          color="common"
+          onChange={(e) =>
+            setItems((prv) => ({ ...prv, name: e.target.value }))
+          }
+          id="filled-size-normal"
+        />
+      </Box>
+      <AddVariantsAndVariantsListLoader
+        variants={variants}
+        setVariants={setVariants}
       />
 
-      <AddVariantsAndVariantsListLoader variants = {variants}  setVariants = {setVariants} />
+      {/* Catagories Select Option  */}
+      <Box>
+        <Typography>Please Select Catagory</Typography>
+        <SelectedCatagories
+          setSelectedCatagories={setSelectedCatagories}
+          selectedCatagories={selectedCatagories}
+        />
+      </Box>
 
+      {/* showing Addons Section  */}
 
-        {/* Catagories Select Option  */}
-        <Box>
-          <Typography>
-            Please Select  Catagory
-          </Typography>
-          <SelectedCatagories setSelectedCatagories = {setSelectedCatagories}  selectedCatagories = {selectedCatagories}  />
-        </Box>
-
-
-        {/* showing Addons Section  */}
-
-        <Box>
-          <ShowAddonsList  selectedAddons={selectedAddons}   setSelectedAddons={setSelectedAddons} />
-        </Box>
+      <Box>
+        <ShowAddonsList
+          selectedAddons={selectedAddons}
+          setSelectedAddons={setSelectedAddons}
+        />
+      </Box>
       <Box
         sx={{
           marginTop: "1%",
@@ -131,7 +116,7 @@ const CreateItems = () => {
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
           </FormControl> */}
-          <TextField
+          {/* <TextField
             id="outlined-multiline-static"
             multiline
             rows={4}
@@ -152,7 +137,7 @@ const CreateItems = () => {
                 },
               },
             }}
-          />
+          /> */}
         </Box>
         <Box>
           <h1>Image Upload</h1>
@@ -167,7 +152,7 @@ const CreateItems = () => {
           Discard
         </Button>
       </Box>
-    </Box>
+    </CreateItemsContainer>
   );
 };
 export default CreateItems;

@@ -5,15 +5,11 @@ import { useEffect, useState } from "react";
 import CreateAddons from "./createAddons";
 import SelectedCatagories from '../../UI/SelectedCatagories';
 import { showDataByArrayQuers , showDataWithOutPagination ,  delteColloctionInstance} from "../../../../utils";
-import {
-  HalfBox,
-  FilterSection,
-  AddonsContainer,
-  LabelText,
-  CategoryList,
-  ListElement,
-} from "./Addons.styled";
+import { HalfBox } from "../../UI/Shape.styled";
+import { FilterSection, AddonsContainer } from "./Addons.styled";
+import { CategoryList, ListElement } from "../../UI/Shape.styled";
 import FilterView from "../../UI/FilterView";
+import TitleBar from "../../UI/TitleBar";
 
 const itemsModel = {
   name: "",
@@ -24,10 +20,9 @@ const itemsModel = {
 const Addons = () => {
   const [items, setItems] = useState("");
   const [selectedCatagories, setSelectedCatagories] = useState([]);
- const clearFilterfun = () =>{
-  setSelectedCatagories([])
- } 
-
+  const clearFilterfun = () => {
+    setSelectedCatagories([]);
+  };
 
   const [createDtaUI, setcreateDtaUI] = useState(
     <CreateAddons EditAbleItem={itemsModel} status={false} />
@@ -44,15 +39,16 @@ const Addons = () => {
     } else {
       showDataWithOutPagination(setItems, "Addons");
     }
+  }, [selectedCatagories]);
 
-  },[selectedCatagories])
-  
-  const clearUi = () =>{
-    setcreateDtaUI(<CreateAddons EditAbleItem={itemsModel} status = {false} />)
-  }
-  const handelEditDataUi = (item) =>{
-    setcreateDtaUI(<CreateAddons EditAbleItem={item} status = {true} clearUi = {clearUi}  />)
-  }
+  const clearUi = () => {
+    setcreateDtaUI(<CreateAddons EditAbleItem={itemsModel} status={false} />);
+  };
+  const handelEditDataUi = (item) => {
+    setcreateDtaUI(
+      <CreateAddons EditAbleItem={item} status={true} clearUi={clearUi} />
+    );
+  };
 
   const deleteItems = (itemsID, itemName) => {
     if (
@@ -65,58 +61,66 @@ const Addons = () => {
   };
 
   return (
-    <AddonsContainer>
-      <HalfBox>{createDtaUI}</HalfBox>
-      <HalfBox>
-        <FilterSection>
-          <FilterView  
-            selectedCatagories={selectedCatagories}
-            setSelectedCatagories={setSelectedCatagories}
-            clearFilterfun = {clearFilterfun}
-            heading = "Filter By Catagories"
-          />
-          
-        </FilterSection>
-        <CategoryList subheader={<li />}>
-          <ul>
-            {items &&
-              items.map((doc) => {
-                const item = doc.data();
-                item.id = doc.id;
-                return (
-                  <ListElement key={item.id}>
-                    <ListItemText primary={item.name} />
-                    <Box sx={{ display: "flex", gap: "10px" }}>
+    <>
+      <AddonsContainer>
+        <HalfBox color="blue">
+          <TitleBar title="Creation Section" color="blue" />
+          {createDtaUI}
+        </HalfBox>
+        <HalfBox color="green">
+          <TitleBar title="Addons On The Store" color="green" />
+          <FilterSection>
+            <FilterView
+              selectedCatagories={selectedCatagories}
+              setSelectedCatagories={setSelectedCatagories}
+              clearFilterfun={clearFilterfun}
+              heading="Filter By Catagories"
+            />
+          </FilterSection>
+          <CategoryList subheader={<li />}>
+            <ul>
+              {items &&
+                items.map((doc) => {
+                  const item = doc.data();
+                  item.id = doc.id;
+                  return (
+                    <ListElement key={item.id}>
                       <Box>
-                        <EditIcon
-                          onClick={() => handelEditDataUi(item)}
-                          sx={{
-                            "&:hover": {
-                              color: "secondary.light",
-                              cursor: "pointer",
-                            },
-                          }}
-                        />
+                        <ListItemText primary={item.name} />
+                        <ListItemText primary={`${item.price} ৳`} />
                       </Box>
-                      <Box>
-                        <DeleteIcon
-                          onClick={() => deleteItems(item.id, item.name)}
-                          sx={{
-                            "&:hover": {
-                              color: "secondary.light",
-                              cursor: "pointer",
-                            },
-                          }}
-                        />
+                      <Box sx={{ display: "flex", gap: "10px" }}>
+                        <Box>
+                          <EditIcon
+                            onClick={() => handelEditDataUi(item)}
+                            sx={{
+                              "&:hover": {
+                                color: "secondary.light",
+                                cursor: "pointer",
+                              },
+                            }}
+                          />
+                        </Box>
+                        <Box>
+                          <DeleteIcon
+                            onClick={() => deleteItems(item.id, item.name)}
+                            sx={{
+                              "&:hover": {
+                                color: "secondary.light",
+                                cursor: "pointer",
+                              },
+                            }}
+                          />
+                        </Box>
                       </Box>
-                    </Box>
-                  </ListElement>
-                );
-              })}
-          </ul>
-        </CategoryList>
-      </HalfBox>
-    </AddonsContainer>
+                    </ListElement>
+                  );
+                })}
+            </ul>
+          </CategoryList>
+        </HalfBox>
+      </AddonsContainer>
+    </>
   );
 };
 export default Addons;
