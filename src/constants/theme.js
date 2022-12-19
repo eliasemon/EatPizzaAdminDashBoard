@@ -2,6 +2,11 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
     palette: {
+        color: {
+            blue: '#1ec1fc',
+            orange: '#fc591e',
+            green: '#1efcc8',
+        },
         common: {
             white: "#fff",
             black: "#000",
@@ -38,6 +43,19 @@ const theme = createTheme({
             light: "#ff5436",
             main: "#ff1507",
             deep: "#da0000"
+        },
+        background: "#121212",
+        surface: {
+            dp00: 'rgba(255,255,255, 0)',
+            dp01: 'rgba(255,255,255, 0.05)',
+            dp02: 'rgba(255,255,255, 0.07)',
+            dp03: 'rgba(255,255,255, 0.08)',
+            dp04: 'rgba(255,255,255, 0.09)',
+            dp06: 'rgba(255,255,255, 0.11)',
+            dp08: 'rgba(255,255,255, 0.12)',
+            dp12: 'rgba(255,255,255, 0.14)',
+            dp16: 'rgba(255,255,255, 0.15)',
+            dp24: 'rgba(255,255,255, 0.16)',
         }
     },
     shape: {

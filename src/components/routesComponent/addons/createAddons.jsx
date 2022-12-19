@@ -1,14 +1,15 @@
-import { Button, Box, TextField } from "@mui/material";
+import { Button, Box, TextField, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { addDataToCollection, setDataToCollection } from "../../../../utils";
 import SelectedCatagories from "../../UI/SelectedCatagories";
 import { toast } from "react-toastify";
+import { CreateAddonsStyle } from "./Addons.styled";
 import {
   LabelText,
   InputText,
   ButtonGroup,
-  CreateAddonsStyle,
-} from "./Addons.styled";
+  HighlightText,
+} from "./../../UI/Forms.styled";
 
 const itemsModel = {
   name: "",
@@ -63,16 +64,18 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
   return (
     <CreateAddonsStyle>
       <Box>
-        <LabelText>
-          {status
-            ? `Update The ***"${items.name}"*** Addons Item`
-            : `Create new Catagory`}
-        </LabelText>
+        {status ? (
+          <LabelText>
+            Update the <HighlightText>{items.name}</HighlightText> addons item
+          </LabelText>
+        ) : (
+          <LabelText>Name </LabelText>
+        )}
+
         <InputText
           color="common"
           id="filled-size-normal"
-          placeholder="Enter category name"
-          // variant="filled"
+          placeholder="Enter addons name"
           value={items.name}
           onChange={(e) =>
             setItems((prv) => ({ ...prv, name: e.target.value }))
@@ -92,12 +95,17 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
           type="number"
           sx={{
             width: "25%",
+            "&:focus": {
+              border: "none",
+            },
             ".MuiInputBase-root": {
-              backgroundColor: "secondary",
-              border: "1px solid grey",
+              border: "1px solid #989898",
             },
             input: {
               color: "white",
+              "&:focus": {
+                outline: "none",
+              },
             },
             label: {
               color: "white",

@@ -27,10 +27,7 @@ const SideBar = () => {
             <ListItemIcon sx={{ color: "secondary.text" }}>
               {item.icon}
             </ListItemIcon>
-            <ListItemText
-              primary={item.title}
-              sx={{ color: "secondary.text" }}
-            />
+            <ListItemText primary={item.title} sx={{ color: "#fff" }} />
           </StyledLink>
         </ListButton>
       ))}

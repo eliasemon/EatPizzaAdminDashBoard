@@ -11,12 +11,10 @@ import Background from "./components/backGround";
 
 import { auth } from "../firebaseConfig";
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-
-
 
 const App = () => {
   const [ui, setUi] = useState(
@@ -38,10 +36,11 @@ const App = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        {ui}
-        <Background />
-        <CssBaseline />
-        <ToastContainer theme="dark" />
+        <Background>
+          {ui}
+          <CssBaseline />
+          <ToastContainer theme="dark" />
+        </Background>
       </ThemeProvider>
     </>
   );

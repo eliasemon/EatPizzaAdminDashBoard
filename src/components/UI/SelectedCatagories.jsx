@@ -41,6 +41,9 @@ const SelectedCatagories = ({setSelectedCatagories , selectedCatagories , collec
               label={`${item.name}`}
               control={
                 <Checkbox
+                  sx={{
+                    color: "#989898",
+                  }}
                   checked={index !== -1}
                   // indeterminate={checked[0] !== checked[1]}
                   onChange={() => checkBoxHandleChange(index, item.id)}
