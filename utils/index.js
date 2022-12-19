@@ -31,17 +31,16 @@ export const showDataWithPagination = (setState, collectionRef, startingPoint, l
 }
 
 export const showDataWithOutPagination = async (setState, collectionRef) => {
-  // showLoading()
-  
+
   const q = query(collection(db, `${collectionRef}`));
   const returnPromise = new Promise((resolve , reject)=>{
-    onSnapshot(q, (snapshot) => {
-      // closeLoading()
+      onSnapshot(q, (snapshot) => {
+
       setState(() => {
         return snapshot.docs
       })
       resolve(snapshot.docs.length)
-      // //   .forEach(doc => console.log(doc.data()))
+        // //   .forEach(doc => console.log(doc.data()))
     })
   })
   return returnPromise
