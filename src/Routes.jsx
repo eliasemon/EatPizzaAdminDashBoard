@@ -10,6 +10,7 @@ import {
   OrdersHistory,
   Settings,
   Users,
+  PromoCode,
 } from "./components/routesComponent";
 
 const RoutesComponent = () => {
@@ -24,6 +25,7 @@ const RoutesComponent = () => {
       <Route path="/orderhistory" element={<OrdersHistory />} />
       <Route path="/users" element={<Users />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/promocode" element={<PromoCode />} />
     </Routes>
   );
 };

@@ -4,11 +4,14 @@ import InfoBox from "../../UI/InfoBox";
 import {
   DashboardContainer,
   LeftContainer,
-  RightContainer,
 } from "./Dashboard.styled";
 
+
+import  RightContainerMain  from "./RightContainerMain";
+
+
 const Dashboard = () => {
-  toast.dismiss("LoadingScreen");
+  // toast.dismiss("LoadingScreen");
   return (
     <DashboardContainer>
       <LeftContainer>
@@ -23,7 +26,7 @@ const Dashboard = () => {
           </InfoBox>
         ))}
       </LeftContainer>
-      <RightContainer />
+      <RightContainerMain />
     </DashboardContainer>
   );
 };

@@ -32,16 +32,22 @@ export const showDataWithPagination = (setState, collectionRef, startingPoint, l
 
 export const showDataWithOutPagination = async (setState, collectionRef) => {
   // showLoading()
+  
   const q = query(collection(db, `${collectionRef}`));
-  onSnapshot(q, (snapshot) => {
-    // closeLoading()
-    setState(() => {
+  const returnPromise = new Promise((resolve , reject)=>{
+    onSnapshot(q, (snapshot) => {
       // closeLoading()
-      return snapshot.docs
+      setState(() => {
+        return snapshot.docs
+      })
+      resolve(snapshot.docs.length)
+      // //   .forEach(doc => console.log(doc.data()))
     })
-    //   .forEach(doc => console.log(doc.data()))
   })
+  return returnPromise
 }
+
+
 
 export const showDataByArrayQuers = (setState , collectionRef , queryArray , queryField ) => {
   const q = query(collection(db, `${collectionRef}`), where(`${queryField}`, 'array-contains-any', queryArray));
@@ -86,14 +92,19 @@ export const setDataToCollection = async (items , collectionRef , isSingle = tru
       return
     }
     const colRef = doc(db, `${collectionRef}` , `${items.id}`)
-    await setDoc( colRef , { ...items });
+    // delete items["id"]
+    await setDoc( colRef ,  {...items});
     closeLoading()
-    await toast.success(`${collectionRef} Update Succesfully!`)
+     toast.success(`${collectionRef} Update Succesfully!`)
   } catch (e) {
     closeLoading()
-    await toast.error("Server Connection Faild ");
+     toast.error("Server Connection Faild ");
   }
 }
+
+
+
+
 
 const isExist = async (colRef , itemsName) =>{
   const q = query(colRef, where("name", "==", itemsName));
