@@ -1,14 +1,10 @@
 import { toast } from "react-toastify";
 import infocardArray from "./../../../constants/dashboardInfoArray";
 import InfoBox from "../../UI/InfoBox";
-import {
-  DashboardContainer,
-  LeftContainer,
-  RightContainer,
-} from "./Dashboard.styled";
+import { DashboardContainer, LeftContainer } from "./Dashboard.styled";
 
 const Dashboard = () => {
-  toast.dismiss("LoadingScreen");
+  // toast.dismiss("LoadingScreen");
   return (
     <DashboardContainer>
       <LeftContainer>
@@ -23,7 +19,7 @@ const Dashboard = () => {
           </InfoBox>
         ))}
       </LeftContainer>
-      <RightContainer />
+      <RightContainerMain />
     </DashboardContainer>
   );
 };
