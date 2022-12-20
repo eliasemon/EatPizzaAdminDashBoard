@@ -18,23 +18,37 @@ const ManualMode = ({forView , setForView}) => {
     }
 
   return (
-    <Box>
-        <hr/>
-        <hr/>
-        <hr/>
-        <hr/>
-        <Typography>
-            Notice
-        </Typography>
-        <TextField value={forView.notice} onChange={onTextFieldChange} type="text" />
-        {
-            forView.manualModeResturentClosed == false ? (<Button onClick={closeTheResturent} sx={{backgroundColor : "red" , color : "#fff"}}>
-            Close The Resturent
-        </Button>) : "The Resturent is Closed Now"
-        }
-        
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "1rem",
+      }}
+    >
+      <Typography variant="h5" align="center">
+        Notice
+      </Typography>
+      <TextField
+        value={forView.notice}
+        onChange={onTextFieldChange}
+        type="text"
+        sx={{
+          width: "100%",
+        }}
+      />
+      {forView.manualModeResturentClosed == false ? (
+        <Button
+          onClick={closeTheResturent}
+          sx={{ backgroundColor: "red", color: "#fff" }}
+        >
+          Close The Resturent
+        </Button>
+      ) : (
+        "The Resturent is Closed Now"
+      )}
     </Box>
-  )
+  );
 }
 
 export default ManualMode
