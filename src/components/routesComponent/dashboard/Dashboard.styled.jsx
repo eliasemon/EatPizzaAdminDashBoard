@@ -16,8 +16,26 @@ export const LeftContainer = styled("div")({
 });
 
 export const RightContainer = styled("div")(({ theme }) => ({
-  height: "auto",
   width: "70%",
-  position : "relative",
-  backgroundColor: theme.palette.secondary.light,
+
+  padding: "1.5rem",
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "space-between",
+
+}));
+
+export const Section = styled("div")((props) => ({
+  width: "100%",
+  minHeight: "30%",
+  padding: props.padding ?? "1rem",
+  margin: props.margin ?? "1rem",
+  backgroundColor: props.theme.palette.surface.dp16,
+  borderRadius: "5px",
+  color: "white",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 }));
