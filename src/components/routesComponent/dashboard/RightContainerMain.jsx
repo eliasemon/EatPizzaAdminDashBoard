@@ -1,6 +1,7 @@
 import { Box , Button  } from '@mui/material'
 
 import {useEffect, useState} from 'react'
+
 import { RightContainer, Section } from "./Dashboard.styled";
 
 import {
@@ -106,4 +107,5 @@ const RightContainerMain = () => {
     </RightContainer>
   );
 };
+
 export default RightContainerMain

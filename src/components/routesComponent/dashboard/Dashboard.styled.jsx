@@ -17,12 +17,14 @@ export const LeftContainer = styled("div")({
 
 export const RightContainer = styled("div")(({ theme }) => ({
   width: "70%",
+
   padding: "1.5rem",
   position: "relative",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "space-between",
+
 }));
 
 export const Section = styled("div")((props) => ({

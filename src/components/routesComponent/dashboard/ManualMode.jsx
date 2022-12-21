@@ -18,6 +18,7 @@ const ManualMode = ({forView , setForView}) => {
     }
 
   return (
+
     <Box
       sx={{
         display: "flex",
@@ -49,6 +50,7 @@ const ManualMode = ({forView , setForView}) => {
       )}
     </Box>
   );
+
 }
 
 export default ManualMode

@@ -81,6 +81,7 @@ const AutometicTimeChange = ({forView , setForView , data}) => {
         setDataToCollection(forView , "ResturentOpeningHr" , false)
     }
   return (
+
     <Box
       sx={{
         width: "100%",
@@ -159,6 +160,7 @@ const AutometicTimeChange = ({forView , setForView , data}) => {
       </Box>
     </Box>
   );
+
 }
 
 export default AutometicTimeChange
