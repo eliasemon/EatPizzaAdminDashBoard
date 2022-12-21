@@ -31,17 +31,16 @@ export const showDataWithPagination = (setState, collectionRef, startingPoint, l
 }
 
 export const showDataWithOutPagination = async (setState, collectionRef) => {
-  // showLoading()
-  
+
   const q = query(collection(db, `${collectionRef}`));
   const returnPromise = new Promise((resolve , reject)=>{
-    onSnapshot(q, (snapshot) => {
-      // closeLoading()
+      onSnapshot(q, (snapshot) => {
+
       setState(() => {
         return snapshot.docs
       })
       resolve(snapshot.docs.length)
-      // //   .forEach(doc => console.log(doc.data()))
+        // //   .forEach(doc => console.log(doc.data()))
     })
   })
   return returnPromise
@@ -138,6 +137,17 @@ export const delteColloctionInstance = async (itemsID, collectionRef) => {
 export const UUID =   () => {
   var dt = new Date().getTime();
   var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      var r = (dt + Math.random()*16)%16 | 0;
+      dt = Math.floor(dt/16);
+      return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+  });
+  return uuid;
+}
+
+
+export const shortUUID =   () => {
+  var dt = new Date().getTime();
+  var uuid = 'xy-xxx-yxy'.replace(/[xy]/g, (c) => {
       var r = (dt + Math.random()*16)%16 | 0;
       dt = Math.floor(dt/16);
       return (c=='x' ? r :(r&0x3|0x8)).toString(16);
