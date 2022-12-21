@@ -13,12 +13,18 @@ import SelectedCatagories from "../../UI/SelectedCatagories";
 import ShowAddonsList from "./ShowAddonsList";
 import { CreateItemsContainer } from "./CreateItems.styled";
 import { InputSection, InputText, LabelText } from "../../UI/Forms.styled";
+import FileUploaderJSX from "../../UI/FileUploader";
+
+
+
+
 
 const CreateItems = () => {
   const [items, setItems] = useState("");
   const [variants, setVariants] = useState({});
   const [selectedCatagories, setSelectedCatagories] = useState([]);
   const [selectedAddons, setSelectedAddons] = useState([]);
+    const [image,setImage]=useState('')
   console.log(selectedAddons);
   // const handleChange = (event) => {
   //   // setAge(event.target.value);
@@ -86,61 +92,10 @@ const CreateItems = () => {
               },
             }}
           />
-          {/* <FormControl sx={{ marginTop: "1%", minWidth: 120 }}>
-            <Select
-              // value={age}
-              onChange={handleChange}
-              displayEmpty
-              sx={{
-                marginTop: "5%",
-                color: "white",
-                border: "1px solid grey",
-                ".MuiInputBase-root": {
-                  backgroundColor: "secondary",
-                  border: "1px solid grey",
-                  width: "100%",
-                },
-                input: {
-                  color: "white",
-                },
-                label: {
-                  color: "white",
-                },
-              }}
-            >
-              <MenuItem value="" disabled>
-                Categories
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl> */}
-          {/* <TextField
-            id="outlined-multiline-static"
-            multiline
-            rows={4}
-            placeholder="Enter Description......."
-            sx={{
-              marginTop: "10%",
-              minWidth: "500px",
-              ".MuiInputBase-root": {
-                backgroundColor: "secondary",
-                border: "1px solid grey",
-                // width: "100%",
-              },
-            }}
-            inputProps={{
-              sx: {
-                "&::placeholder": {
-                  color: "white",
-                },
-              },
-            }}
-          /> */}
+         
         </Box>
         <Box>
-          <h1>Image Upload</h1>
+        <FileUploaderJSX image = {image} setImage = {setImage}  />
         </Box>
       </Box>
 

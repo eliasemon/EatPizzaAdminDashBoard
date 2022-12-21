@@ -1,19 +1,13 @@
-import React from 'react'
-import { Box, TextField } from "@material-ui/core";
-import React, { useState } from "react";
+// import {  } from "@material-ui/core";
+// import  { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Button } from '@mui/material';
-import { Typography } from '@material-ui/core/';
+import { Box, TextField , Button , Typography } from '@mui/material';
 const fileTypes = ["JPG", "PNG", "GIF"];
 
 
-const FileUploader = () => {
- 
-    const [image,setImage]=useState('')
-
-
-    const Width = 800;
+const FileUploaderJSX = ({image,setImage}) => {
+    const Width = 1200;
     const handleChange = (file) => {
       // setFile(file);
       let image_file = file[0]
@@ -25,16 +19,12 @@ const FileUploader = () => {
                 myImage.src = imgUrl;
             myImage.onload=(el)=>{
               const canvas = document.createElement('canvas');
-              const pixelRation = Width/el.target.width;
                     canvas.width = Width;
-                    canvas.height = el.target.height*pixelRation;
+                    canvas.height = 800;
               const context = canvas.getContext('2d')
               context.drawImage(myImage,0,0,canvas.width,canvas.height)
-             const newImageUrl = context.canvas.toDataURL('image/png',90)
+             const newImageUrl = context.canvas.toDataURL('image/jpg',90)
                    setImage(newImageUrl)
-  
-             
-           
             }
            
           
@@ -42,10 +32,6 @@ const FileUploader = () => {
             
     };
   
-  
-  if(file){
-    console.log(file[0].name);
-  }
     return (
       <Box sx={{ background: "red", height: "auto", width: "100%" }}>
         
@@ -73,4 +59,4 @@ const FileUploader = () => {
   
 }
 
-export default FileUploader
+export default FileUploaderJSX
