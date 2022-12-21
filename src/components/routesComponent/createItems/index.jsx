@@ -13,21 +13,36 @@ import SelectedCatagories from "../../UI/SelectedCatagories";
 import ShowAddonsList from "./ShowAddonsList";
 import { CreateItemsContainer } from "./CreateItems.styled";
 import { InputSection, InputText, LabelText } from "../../UI/Forms.styled";
+import { shortUUID } from "../../../../utils";
+
+
 
 const CreateItems = () => {
   const [items, setItems] = useState("");
   const [variants, setVariants] = useState({});
   const [selectedCatagories, setSelectedCatagories] = useState([]);
   const [selectedAddons, setSelectedAddons] = useState([]);
-  console.log(selectedAddons);
+  console.log(items);
   // const handleChange = (event) => {
   //   // setAge(event.target.value);
   // }
+  useEffect(()=>{
+    setItems(prv => ({...prv , id : `EatPizza-${shortUUID()}` }))
+  },[])
+
 
   return (
     <CreateItemsContainer>
       <Box>
-        <LabelText>Product Name</LabelText>
+      <LabelText>Items ID</LabelText>
+      <InputText
+          color="common"
+          disabled = {true}
+          value = {items?.id}
+          id="filled-size-normal"
+        />
+        
+        <LabelText>Items Name</LabelText>
         <InputText
           color="common"
           onChange={(e) =>
@@ -68,9 +83,11 @@ const CreateItems = () => {
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <TextField
             color="common"
-            label="Product Price"
+            label="Descriptions"
             id="filled-size-normal"
             variant="filled"
+            onChange= { (e) => setItems(prv => ({...prv , descriptions : e.target.value}))}
+            value ={items.descriptions || ""}
             sx={{
               marginTop: "1%",
               ".MuiInputBase-root": {

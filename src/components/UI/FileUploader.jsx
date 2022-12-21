@@ -32,9 +32,6 @@ const FileUploader = () => {
               context.drawImage(myImage,0,0,canvas.width,canvas.height)
              const newImageUrl = context.canvas.toDataURL('image/png',90)
                    setImage(newImageUrl)
-  
-             
-           
             }
            
           
