@@ -1,23 +1,27 @@
 import { useState } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Login from "./pages/Login";
-import Background from "./components/backGround";
-import Layout from "./Layout";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "./constants/theme";
+
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
+import Layout from "./Layout";
+import theme from "./constants/theme";
+
+import Background from "./components/backGround";
+
 import { auth } from "../firebaseConfig";
-import { showLoading } from "./components/loading/loading";
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
-
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 const App = () => {
-  const [ui , setUi] = useState(<BrowserRouter>
-    <Layout />
-  </BrowserRouter>)
+  const [ui, setUi] = useState(
+    <BrowserRouter>
+      <Layout />
+    </BrowserRouter>
+  );
   // auth.onAuthStateChanged(user=>{
   //   if(user){
   //     setUi(
@@ -29,15 +33,14 @@ const App = () => {
   //     setUi(<Login />)
   //   }
   // })
-  // showLoading()
   return (
     <>
       <ThemeProvider theme={theme}>
+        <Background>
           {ui}
-          
-          <Background />
           <CssBaseline />
           <ToastContainer theme="dark" />
+        </Background>
       </ThemeProvider>
     </>
   );

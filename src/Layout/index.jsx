@@ -1,46 +1,19 @@
-import { Box } from "@mui/system";
-import React from "react";
-import { styled } from "@mui/system";
 import Header from "../components/exploratoryElements/header";
 import SideBar from "../components/exploratoryElements/sidebar";
-import Routes from "../Routes";
-
-const SidebarBox = styled("div")({
-  width: "15vw",
-  height: "100%",
-});
-
-const RoutesContentsBox = styled("div")({
-  width: "85vw",
-  height: "100%",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
-const HeaderBox = styled("div")({
-  width: "100vw",
-  height: "7vh",
-});
+import RoutesComponent from "../Routes";
+import { LayoutContainer, BodyContainer, RoutesWrapper } from "./Layout.styled";
 
 const Layout = () => {
   return (
-    <Box components="div" sx={{ width: "100vw", height: "100vh" }}>
-      <HeaderBox>
-        <Header />
-      </HeaderBox>
-      <Box
-        components="div"
-        sx={{ display: "flex", width: "100vw", height: "93vh" }}
-      >
-        <SidebarBox>
-          <SideBar />
-        </SidebarBox>
-        <RoutesContentsBox>
-          <Routes />
-        </RoutesContentsBox>
-      </Box>
-    </Box>
+    <LayoutContainer>
+      <Header />
+      <BodyContainer>
+        <SideBar />
+        <RoutesWrapper>
+          <RoutesComponent />
+        </RoutesWrapper>
+      </BodyContainer>
+    </LayoutContainer>
   );
 };
 

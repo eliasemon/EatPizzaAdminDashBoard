@@ -1,57 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  FilledInput,
   FormControl,
-  InputLabel,
-  List,
-  ListItem,
-  ListItemText,
-  ListSubheader,
   TextField,
   MenuItem,
   Select,
+  Typography
 } from "@mui/material";
+import AddVariantsAndVariantsListLoader from "./AddVariantsAndVariantsListLoader";
+import SelectedCatagories from "../../UI/SelectedCatagories";
+import ShowAddonsList from "./ShowAddonsList";
+import { CreateItemsContainer } from "./CreateItems.styled";
+import { InputSection, InputText, LabelText } from "../../UI/Forms.styled";
 
-const AllItems = () => {
-  const [age, setAge] = useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+const CreateItems = () => {
+  const [items, setItems] = useState("");
+  const [variants, setVariants] = useState({});
+  const [selectedCatagories, setSelectedCatagories] = useState([]);
+  const [selectedAddons, setSelectedAddons] = useState([]);
+  console.log(selectedAddons);
+  // const handleChange = (event) => {
+  //   // setAge(event.target.value);
+  // }
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        // gridTemplateColumns: "17.9vw auto",
-        width: "100%",
-        height: "100%",
-        padding: "3%",
-      }}
-    >
-      <TextField
-        color="common"
-        label="Product Name"
-        id="filled-size-normal"
-        variant="filled"
-        sx={{
-          marginTop: "1%",
-          ".MuiInputBase-root": {
-            backgroundColor: "secondary",
-            border: "1px solid grey",
-            width: "100%",
-          },
-          input: {
-            color: "white",
-          },
-          label: {
-            color: "white",
-          },
-        }}
+    <CreateItemsContainer>
+      <Box>
+        <LabelText>Product Name</LabelText>
+        <InputText
+          color="common"
+          onChange={(e) =>
+            setItems((prv) => ({ ...prv, name: e.target.value }))
+          }
+          id="filled-size-normal"
+        />
+      </Box>
+      <AddVariantsAndVariantsListLoader
+        variants={variants}
+        setVariants={setVariants}
       />
+
+      {/* Catagories Select Option  */}
+      <Box>
+        <Typography>Please Select Catagory</Typography>
+        <SelectedCatagories
+          setSelectedCatagories={setSelectedCatagories}
+          selectedCatagories={selectedCatagories}
+        />
+      </Box>
+
+      {/* showing Addons Section  */}
+
+      <Box>
+        <ShowAddonsList
+          selectedAddons={selectedAddons}
+          setSelectedAddons={setSelectedAddons}
+        />
+      </Box>
       <Box
         sx={{
           marginTop: "1%",
@@ -80,9 +86,9 @@ const AllItems = () => {
               },
             }}
           />
-          <FormControl sx={{ marginTop: "1%", minWidth: 120 }}>
+          {/* <FormControl sx={{ marginTop: "1%", minWidth: 120 }}>
             <Select
-              value={age}
+              // value={age}
               onChange={handleChange}
               displayEmpty
               sx={{
@@ -109,8 +115,8 @@ const AllItems = () => {
               <MenuItem value={20}>Twenty</MenuItem>
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
-          </FormControl>
-          <TextField
+          </FormControl> */}
+          {/* <TextField
             id="outlined-multiline-static"
             multiline
             rows={4}
@@ -131,7 +137,7 @@ const AllItems = () => {
                 },
               },
             }}
-          />
+          /> */}
         </Box>
         <Box>
           <h1>Image Upload</h1>
@@ -146,7 +152,7 @@ const AllItems = () => {
           Discard
         </Button>
       </Box>
-    </Box>
+    </CreateItemsContainer>
   );
 };
-export default AllItems;
+export default CreateItems;

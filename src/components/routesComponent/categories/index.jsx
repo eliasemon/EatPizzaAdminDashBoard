@@ -10,99 +10,97 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {   showDataWithOutPagination , delteColloctionInstance} from "../../../../utils";
 import { useEffect } from "react";
 import CreateCatgories from "./createCatagories";
+import { CategoryContainer } from "./Category.styled";
 
+import { CategoryList, ListElement } from "../../UI/Shape.styled";
+
+import { HalfBox } from "../../UI/Shape.styled";
+import TitleBar from "../../UI/TitleBar";
+
+const cataGoryModel = {
+  name: "",
+};
 
 const Categories = () => {
+  const [showData, setShowData] = useState("");
+  const [createDtaUI, setcreateDtaUI] = useState(
+    <CreateCatgories EditAbleItem={cataGoryModel} status={false} />
+  );
 
-  const [showData , setShowData] = useState("")
+  useEffect(() => {
+    showDataWithOutPagination(setShowData, "catagories");
+  }, []);
 
-  useEffect(()=>{
-    showDataWithOutPagination( setShowData ,"catagories")
-  },[])
-
-  const deleteItems = (itemsID) =>{
-    if(window.confirm(`******************************************** \n\n Wait:= \n\n Do You Wanna Delete "${itemsID}" Catagory Item!!! \n\n ********************************************`)){
-      delteColloctionInstance( itemsID ,"catagories")
+  const deleteItems = (itemsID, itemName) => {
+    if (
+      window.confirm(
+        `******************************************** \n\n Wait:= \n\n Do You Wanna Delete \n**"${itemName}"**\nCatagory Item!!! \n\n ********************************************`
+      )
+    ) {
+      delteColloctionInstance(itemsID, "catagories");
     }
-    
-  }
-
-
+  };
+  const clearUi = () => {
+    setcreateDtaUI(
+      <CreateCatgories EditAbleItem={cataGoryModel} status={false} />
+    );
+  };
+  const handelEditDataUi = (item) => {
+    setcreateDtaUI(
+      <CreateCatgories EditAbleItem={item} status={true} clearUi={clearUi} />
+    );
+  };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        // gridTemplateColumns: "17.9vw auto",
-        width: "100%",
-        height: "100%",
-        padding: "3%",
-      }}
-    >
-      
-      <CreateCatgories />
-
-      <Box>
-        <List
-          sx={{
-            width: "100%",
-            maxWidth: 400,
-            marginTop: "5%",
-            bgcolor: "secondary",
-            position: "relative",
-            overflow: "auto",
-            color: "common.white",
-            // maxHeight: 300,
-            "& ul": { padding: 0 },
-          }}
-          subheader={<li />}
-        >
+    <CategoryContainer>
+      <HalfBox color="blue">
+        <TitleBar title="Creation View" color="blue" />
+        {createDtaUI}
+      </HalfBox>
+      <HalfBox color="green">
+        <TitleBar title="List View" color="green" />
+        <CategoryList subheader={<li />}>
           {
             <ul>
-              {showData && showData.map((doc) =>
-              {
-              const item = doc.data()
-              return(
-                <ListItem
-                  key={doc.id}
-                  sx={{
-                    backgroundColor: "secondary.dark",
-                    marginBottom: "5px",
-                    borderRadius: "5px",
-                  }}
-                >
-                  <ListItemText primary={item.name} />
-                  <Box sx={{ display: "flex", gap: "10px" }}>
-                    <Box>
-                      <EditIcon
-                        sx={{
-                          "&:hover": {
-                            color: "secondary.light",
-                            cursor: "pointer",
-                          },
-                        }}
-                      />
-                    </Box>
-                    <Box>
-                      <DeleteIcon
-                        onClick={() => deleteItems(doc.id)}
-                        sx={{
-                          "&:hover": {
-                            color: "secondary.light",
-                            cursor: "pointer",
-                          },
-                        }}
-                      />
-                    </Box>
-                  </Box>
-                </ListItem>
-              )})}
+              {showData &&
+                showData.map((doc) => {
+                  const item = doc.data();
+                  item.id = doc.id;
+                  return (
+                    <ListElement key={doc.id}>
+                      <ListItemText primary={item.name} />
+                      <Box sx={{ display: "flex", gap: "10px" }}>
+                        <Box>
+                          <EditIcon
+                            onClick={() => handelEditDataUi(item)}
+                            sx={{
+                              "&:hover": {
+                                color: "secondary.light",
+                                cursor: "pointer",
+                              },
+                            }}
+                          />
+                        </Box>
+                        <Box>
+                          <DeleteIcon
+                            onClick={() => deleteItems(doc.id, item.name)}
+                            sx={{
+                              "&:hover": {
+                                color: "secondary.light",
+                                cursor: "pointer",
+                              },
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </ListElement>
+                  );
+                })}
             </ul>
           }
-        </List>
-      </Box>
-    </Box>
+        </CategoryList>
+      </HalfBox>
+    </CategoryContainer>
   );
 };
 export default Categories;
