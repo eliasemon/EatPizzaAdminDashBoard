@@ -81,44 +81,86 @@ const AutometicTimeChange = ({forView , setForView , data}) => {
         setDataToCollection(forView , "ResturentOpeningHr" , false)
     }
   return (
-    <Box>
+
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Box>
+        <FormControlLabel
+          control={
+            <Android12Switch
+              onChange={(e) => switchHandeler("automaticMode", e)}
+              checked={forView.automaticMode}
+            />
+          }
+          label="AUTOMATIC MODE"
+        />
+
+        <Box sx={{ position: "relative" }}>
+          {forView.automaticMode == false && (
+            <Box
+              sx={{
+                zIndex: 20,
+                position: "absolute",
+                top: 0,
+                left: 0,
+                height: "100%",
+                width: "100%",
+              }}
+            ></Box>
+          )}
+
+          <Box
+            sx={{
+              zIndex: 10,
+              opacity: `${forView.automaticMode ? "1" : "0.4"}`,
+              display: "flex",
+              flexDirection: "column",
+              gap: ".5rem",
+            }}
+          >
             <Box>
-              <FormControlLabel
-                control={<Android12Switch onChange={(e) => switchHandeler("automaticMode" , e)} checked ={forView.automaticMode}  />}
-                label="AUTOMATIC MODE"
-              />
-
-
-              <Box sx={{position : "relative"}}>
-                {forView.automaticMode == false && (
-                  <Box sx = {{ zIndex : 20  ,position : "absolute" , top : 0 , left : 0 , height : "100%" , width : "100%"}}>
-                  </Box>
-                )}
-                
-                <Box sx={{zIndex : 10 , opacity : `${forView.automaticMode ? "1" : "0.4"}`}}>
-                    <Typography>Automatic Mode Time is Seted From <br/> 
-                        <input disabled value={timeStr(data.openingHR)} type="time" /> 
-                        To 
-                        <input disabled value={timeStr(data.closingHR)} type="time" />
-                    </Typography>
-
-                  <Typography>
-                        OPENING HOURS
-                    </Typography>
-                    <TextField value={timeStr(forView.openingHR)} onChange={(e)=>automaticTimeChangeHandeler(e , "opening")} type="time" id="outlined-basic" variant="outlined" />
-                    <Typography>
-                        {'>'}
-                    </Typography>
-                  
-                    <TextField  onChange={(e)=>automaticTimeChangeHandeler(e)} value={timeStr(forView.closingHR)}  type="time" id="outlined-basic" variant="outlined" />
-                    <Button onClick={automaticModeAdded} variant="contained" >
-                        Set
-                    </Button>
-                </Box>
+              <Typography variant="h6">
+                Automatic Mode Time is Seted From <br />
+              </Typography>
+              <Box sx={{ display: "flex", gap: "3rem" }}>
+                <input disabled value={timeStr(data.openingHR)} type="time" />
+                To
+                <input disabled value={timeStr(data.closingHR)} type="time" />
               </Box>
             </Box>
+
+            <Typography variant="h6">OPENING HOURS</Typography>
+            <TextField
+              value={timeStr(forView.openingHR)}
+              onChange={(e) => automaticTimeChangeHandeler(e, "opening")}
+              type="time"
+              id="outlined-basic"
+              variant="outlined"
+            />
+            <Typography>To</Typography>
+
+            <TextField
+              onChange={(e) => automaticTimeChangeHandeler(e)}
+              value={timeStr(forView.closingHR)}
+              type="time"
+              id="outlined-basic"
+              variant="outlined"
+            />
+            <Button onClick={automaticModeAdded} variant="contained">
+              Set
+            </Button>
+          </Box>
         </Box>
-  )
+      </Box>
+    </Box>
+  );
+
 }
 
 export default AutometicTimeChange
