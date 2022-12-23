@@ -9,6 +9,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -62,6 +63,8 @@ const rows = [
 ];
 
 const AllItems = () => {
+  const navigate = useNavigate();
+  
   return (
     <Box
       sx={{
@@ -83,7 +86,7 @@ const AllItems = () => {
             inputProps={{ "aria-label": "search" }}
           />
         </Search>
-        <Button variant="contained" size="large" color="primary">
+        <Button onClick={() => navigate("/createitem")} variant="contained" size="large" color="primary">
           Create Items
         </Button>
       </Box>

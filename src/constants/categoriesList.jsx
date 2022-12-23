@@ -28,12 +28,12 @@ const categories = [
     link: "/items",
     icon: <DashboardIcon />,
   },
-  {
-    id: 5,
-    title: "Create Items",
-    link: "/createitem",
-    icon: <DashboardIcon />,
-  },
+  // {
+  //   id: 5,
+  //   title: "Create Items",
+  //   link: "/createitem",
+  //   icon: <DashboardIcon />,
+  // },
   {
     id: 6,
     title: "Total User",
