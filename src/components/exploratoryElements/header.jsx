@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <HeaderStyle bgcolor="secondary.deep">
       <LogoWrapper>
-        <LogoContainer width="180px" />
+        <LogoContainer  width="180px" />
       </LogoWrapper>
       <Button onClick={() => auth.signOut()}>Logout</Button>
     </HeaderStyle>
