@@ -17,6 +17,7 @@ import {
   limit } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { closeLoading, showLoading } from '../src/components/loading/loading';
+import { async } from '@firebase/util';
 
 export const showDataWithPagination = (setState, collectionRef, startingPoint, limitation, fristAttemp) => {
   const q = query(collection(db, `${collectionRef}`), orderBy("name"), startAt(startingPoint), limit(limitation));
@@ -46,6 +47,20 @@ export const showDataWithOutPagination = async (setState, collectionRef) => {
   return returnPromise
 }
 
+export const getSingleDataWithOutRealTimeUpdates = async (collectionRef , idRef) => {
+  const docRef = doc(db, `${collectionRef}`, `${idRef}`);
+  const docSnap = await getDoc(docRef);
+  return new Promise((resolve , reject)=>{
+    if (docSnap.exists()) {
+      resolve(docSnap.data())
+    }else{
+      reject("SomeThings went worng don't do piracy")
+    }
+
+
+  })
+   
+}
 
 
 export const showDataByArrayQuers = (setState , collectionRef , queryArray , queryField ) => {
@@ -147,7 +162,7 @@ export const UUID =   () => {
 
 export const shortUUID =   () => {
   var dt = new Date().getTime();
-  var uuid = 'xy-xxx-yxy'.replace(/[xy]/g, (c) => {
+  var uuid = 'xy-xxx-yxy-xxy'.replace(/[xy]/g, (c) => {
       var r = (dt + Math.random()*16)%16 | 0;
       dt = Math.floor(dt/16);
       return (c=='x' ? r :(r&0x3|0x8)).toString(16);
