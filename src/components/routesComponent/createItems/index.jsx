@@ -98,6 +98,7 @@ useEffect(()=>{
         <LabelText>Items Name</LabelText>
         <InputText
           color="common"
+          value={items.name}
           onChange={(e) =>
             setItems((prv) => ({ ...prv, name: e.target.value }))
           }
