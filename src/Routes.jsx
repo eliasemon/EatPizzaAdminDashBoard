@@ -20,6 +20,7 @@ const RoutesComponent = () => {
       <Route path="/categories" element={<Categories />} />
       <Route path="/addons" element={<Addons />} />
       <Route path="/createitem" element={<CreateItem />} />
+      <Route path="/createitem/:itemsIdToBeUpdated" element={<CreateItem update={true}/>} />
       <Route path="/currentorders" element={<CurrentOrders />} />
       <Route path="/items" element={<AllItems />} />
       <Route path="/orderhistory" element={<OrdersHistory />} />

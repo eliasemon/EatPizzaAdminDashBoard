@@ -13,23 +13,92 @@ import SelectedCatagories from "../../UI/SelectedCatagories";
 import ShowAddonsList from "./ShowAddonsList";
 import { CreateItemsContainer } from "./CreateItems.styled";
 import { InputSection, InputText, LabelText } from "../../UI/Forms.styled";
+import { useNavigate  , useParams} from "react-router-dom";
+import { setDataToCollection, shortUUID , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
 
-const CreateItems = () => {
+import useFileUploaderJSX from "../../../hooks/useFileUploader";
+import { toast } from 'react-toastify';
+
+
+
+
+const CreateItems = ({update}) => {
+  const {itemsIdToBeUpdated} = useParams()
+  const navigate = useNavigate();
   const [items, setItems] = useState("");
   const [variants, setVariants] = useState({});
   const [selectedCatagories, setSelectedCatagories] = useState([]);
   const [selectedAddons, setSelectedAddons] = useState([]);
-  console.log(selectedAddons);
-  // const handleChange = (event) => {
-  //   // setAge(event.target.value);
-  // }
+  const  {ui , uploadProcess , image , setImage } = useFileUploaderJSX(update)
+
+    
+console.log(itemsIdToBeUpdated);
+useEffect(()=>{
+  if(update){
+    getSingleDataWithOutRealTimeUpdates("productlist", itemsIdToBeUpdated).then((data)=>{
+      setItems({...data})
+      setVariants({...data.variants})
+      setSelectedCatagories([...data.selectedCatagories])
+      setSelectedAddons([...data.selectedAddons])
+      setImage(data.image.imageDownloadUrl)
+    }).catch((msg) => {
+      navigate("/items")
+      toast.error(msg)
+    })
+  }else{
+    setItems(prv => ({...prv , id : `EatPizza-${shortUUID()}` }))
+  }
+  
+},[])
+
+
+  const createProduct = () => {
+    if(items.name == ""  || Object.keys(variants).length == 0 ){
+      toast.error("You have missed Some required Filed")
+      return
+    }
+    if(image){
+      uploadProcess("product", items.id).then((v) => {
+        const data = {...items}
+        data.variants = {...variants}
+        data.selectedCatagories = [...selectedCatagories]
+        data.selectedAddons = [...selectedAddons]
+        data.image = {...v}
+        setDataToCollection(data , "productlist" , false)
+        navigate("/items")
+      })
+    }else{
+      const data = {...items}
+        data.variants = {...variants}
+        data.selectedCatagories = [...selectedCatagories]
+        data.selectedAddons = [...selectedAddons]
+        data.image = {}
+        setDataToCollection(data , "productlist" , false)
+        navigate("/items")
+      }
+    
+  }
+  
+
 
   return (
     <CreateItemsContainer>
       <Box>
-        <LabelText>Product Name</LabelText>
+        <Typography> {update ? "Update The Items Information" : "Create New Items"}</Typography>
+      </Box>
+      <Box>
+      <LabelText>Items ID</LabelText>
+      <InputText
+          color="common"
+          disabled = {true}
+          value = {items?.id}
+          id="filled-size-normal"
+        />
+        
+        <LabelText>Items Name</LabelText>
         <InputText
           color="common"
+          value={items.name}
           onChange={(e) =>
             setItems((prv) => ({ ...prv, name: e.target.value }))
           }
@@ -68,9 +137,11 @@ const CreateItems = () => {
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <TextField
             color="common"
-            label="Product Price"
+            label="Descriptions"
             id="filled-size-normal"
             variant="filled"
+            onChange= { (e) => setItems(prv => ({...prv , descriptions : e.target.value}))}
+            value ={items.descriptions || ""}
             sx={{
               marginTop: "1%",
               ".MuiInputBase-root": {
@@ -86,69 +157,20 @@ const CreateItems = () => {
               },
             }}
           />
-          {/* <FormControl sx={{ marginTop: "1%", minWidth: 120 }}>
-            <Select
-              // value={age}
-              onChange={handleChange}
-              displayEmpty
-              sx={{
-                marginTop: "5%",
-                color: "white",
-                border: "1px solid grey",
-                ".MuiInputBase-root": {
-                  backgroundColor: "secondary",
-                  border: "1px solid grey",
-                  width: "100%",
-                },
-                input: {
-                  color: "white",
-                },
-                label: {
-                  color: "white",
-                },
-              }}
-            >
-              <MenuItem value="" disabled>
-                Categories
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl> */}
-          {/* <TextField
-            id="outlined-multiline-static"
-            multiline
-            rows={4}
-            placeholder="Enter Description......."
-            sx={{
-              marginTop: "10%",
-              minWidth: "500px",
-              ".MuiInputBase-root": {
-                backgroundColor: "secondary",
-                border: "1px solid grey",
-                // width: "100%",
-              },
-            }}
-            inputProps={{
-              sx: {
-                "&::placeholder": {
-                  color: "white",
-                },
-              },
-            }}
-          /> */}
+         
         </Box>
+
+        {/* For Upload Image  */}
         <Box>
-          <h1>Image Upload</h1>
+            {ui}
         </Box>
       </Box>
 
       <Box sx={{ marginTop: "3%", display: "flex", gap: "2%" }}>
-        <Button variant="contained" size="large">
+        <Button onClick={createProduct} variant="contained" size="large">
           Complete
         </Button>
-        <Button variant="outlined" size="large">
+        <Button onClick ={() => navigate("/items") } variant="outlined" size="large">
           Discard
         </Button>
       </Box>
