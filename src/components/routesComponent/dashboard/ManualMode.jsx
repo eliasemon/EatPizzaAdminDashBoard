@@ -34,8 +34,13 @@ const ManualMode = ({forView , setForView}) => {
         value={forView.notice}
         onChange={onTextFieldChange}
         type="text"
+        placeholder="your notice..."
         sx={{
           width: "100%",
+          border:'1px solid white',
+          input: {
+            color: "white",     
+          }
         }}
       />
       {forView.manualModeResturentClosed == false ? (

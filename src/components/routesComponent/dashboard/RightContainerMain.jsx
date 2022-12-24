@@ -65,7 +65,7 @@ const RightContainerMain = () => {
             sx={{
               width: "100%",
               minHeight: "100%",
-              backgroundColor: "rgba(255,255,255,.5)",
+              backgroundColor: "rgba(255,255,255, 0.11)",
               position: "absolute",
               top: 0,
               left: 0,
@@ -73,10 +73,12 @@ const RightContainerMain = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              
+              
             }}
           >
             <Button variant="contained" size="large" onClick={openResturent}>
-              Open The Resturent
+              Open The Resturent 
             </Button>
           </Box>
         )}
@@ -85,7 +87,7 @@ const RightContainerMain = () => {
             zIndex: 100,
           }}
         >
-          <Section margin="0" padding="0">
+          <Section margin="1rem" padding="1.5rem">
             <AutometicTimeChange
               data={data[0].data()}
               forView={forView}
@@ -99,7 +101,7 @@ const RightContainerMain = () => {
             }}
           ></Box>
 
-          <Section margin="0" padding="0">
+          <Section  margin="1rem" padding="1.5rem">
             <ManualMode forView={forView} setForView={setForView} />
           </Section>
         </Box>

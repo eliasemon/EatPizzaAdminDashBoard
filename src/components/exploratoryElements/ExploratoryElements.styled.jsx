@@ -29,19 +29,40 @@ export const SidebarContainer = styled("div")(({ theme }) => ({
   zIndex: 1,
 }));
 
-export const ListButton = styled(ListItemButton)(({ theme }) => ({
-  margin: "15px",
-  padding: "5px",
+export const ListButton = styled('div')(({ theme }) => ({
+ margin: "30px",
+ padding: "10px",
   borderRadius: "5px",
-  "&:hover": {
+ "&:hover": {
     backgroundColor: theme.palette.primary.main,
-    transitionDuration: ".5s",
-  },
+   transitionDuration: ".5s",
+    
+ },
 }));
 
-export const StyledLink = styled(Link)({
+export const StyledLink = styled(Link)(({ theme }) => ({
   display: "flex",
   textDecoration: "none",
   alignItems: "center",
-  padding: "0 5px",
-});
+  // padding: "10px",
+  // borderRadius: "5px",
+  // "&:hover": {
+  //   backgroundColor: theme.palette.primary.main,
+  //   transitionDuration: ".5s",
+    
+  // },
+  
+}));
+
+// export const StyledLink = styled(Link)(({ theme }) => ({
+//   display: "flex",
+//   textDecoration: "none",
+//   alignItems: "center",
+//   padding: "0 5px",
+//   "&:hover": {
+//     backgroundColor: theme.palette.primary.main,
+//     transitionDuration: ".5s",
+    
+//   },
+  
+// }));
