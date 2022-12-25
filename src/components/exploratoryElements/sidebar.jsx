@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import categories from "./../../constants/categoriesList";
+
 import {
   SidebarContainer,
   ListButton,
@@ -9,9 +10,11 @@ import {
 } from "./ExploratoryElements.styled";
 
 const SideBar = () => {
+ 
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   const handleListItemClick = (event, index) => {
+    event.preventDefault()
     setSelectedIndex(index);
   };
 

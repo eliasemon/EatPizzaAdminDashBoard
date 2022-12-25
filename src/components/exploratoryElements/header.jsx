@@ -8,7 +8,7 @@ const Header = ({openingStatus}) => {
   return (
     <HeaderStyle bgcolor="secondary.deep">
       <LogoWrapper>
-        <LogoContainer width="180px" />
+        <LogoContainer  width="180px" />
       </LogoWrapper>
 
       <Typography color={openingStatus.status ? "green" : "red"}> {openingStatus.message} </Typography> 
