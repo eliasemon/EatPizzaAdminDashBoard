@@ -4,11 +4,11 @@ import AddVariants from "./AddVariants";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const AddButtonAndVariantLoader = ({
+const VariantsItemsLoader = ({
   variants,
   onVariantStateLift,
-  setVariantUI,
   deleteVariantsHandle,
+  setVariantUI
 }) => {
   return (
     <>
@@ -79,15 +79,6 @@ const AddButtonAndVariantLoader = ({
           }
         </List>
       </Box>
-
-      <Button
-        onClick={() =>
-          setVariantUI(<AddVariants onStateLift={onVariantStateLift} />)
-        }
-      >
-        {" "}
-        Add Variant{" "}
-      </Button>
     </>
   );
 };
@@ -102,16 +93,9 @@ const AddVariantsAndVariantsListLoader = ({ setVariants, variants }) => {
         return { ...prv };
       });
 
-      return;
+      // return;
     }
-    setVariantUI(
-      <AddButtonAndVariantLoader
-        variants={variants}
-        onVariantStateLift={onVariantStateLift}
-        setVariantUI={setVariantUI}
-        deleteVariantsHandle={deleteVariantsHandle}
-      />
-    );
+    setVariantUI("");
   };
 
   const deleteVariantsHandle = (itemId) => {
@@ -123,17 +107,50 @@ const AddVariantsAndVariantsListLoader = ({ setVariants, variants }) => {
 
   console.log(variants);
 
-  useEffect(() => {
-    setVariantUI(
-      <AddButtonAndVariantLoader
-        variants={variants}
-        onVariantStateLift={onVariantStateLift}
-        setVariantUI={setVariantUI}
-        deleteVariantsHandle={deleteVariantsHandle}
-      />
-    );
-  }, [variants]);
-  return <Box>{AddvarinatUI}</Box>;
+                  // useEffect(() => {
+                  //   setVariantUI(
+                  //     <VariantsItemsLoader
+                  //       variants={variants}
+                  //       onVariantStateLift={onVariantStateLift}
+                  //       setVariantUI={setVariantUI}
+                  //       deleteVariantsHandle={deleteVariantsHandle}
+                  //     />
+                  //   );
+                  // }, [variants]);
+  return(
+    <Box>
+      {/* UpperBox for Items Load With Scroll View  */}
+      <Box>
+          <VariantsItemsLoader
+            variants={variants}
+            onVariantStateLift={onVariantStateLift}
+            deleteVariantsHandle={deleteVariantsHandle}
+            setVariantUI={setVariantUI}
+          />
+      </Box>
+
+
+      {/* LowerBox For Add Variants  */}
+      {AddvarinatUI}
+      <Box>
+        <Button 
+          onClick={()=> setVariantUI(
+                              <AddVariants
+                                onStateLift={onVariantStateLift}
+                              />
+          )} variant="contained"> Add Variants </Button>
+      </Box>
+
+
+
+
+
+
+
+    </Box>
+
+  ) 
+  // <Box>{AddvarinatUI}</Box>;
 };
 
 export default AddVariantsAndVariantsListLoader;

@@ -31,7 +31,7 @@ export const showDataWithPagination = (setState, collectionRef, startingPoint, l
   })
 }
 
-export const showDataWithOutPagination = async (setState, collectionRef) => {
+export const showDataWithOutPagination =  (setState, collectionRef) => {
 
   const q = query(collection(db, `${collectionRef}`));
   const returnPromise = new Promise((resolve , reject)=>{
@@ -46,6 +46,31 @@ export const showDataWithOutPagination = async (setState, collectionRef) => {
   })
   return returnPromise
 }
+
+                              export const showDataWithOutPaginationForCreation = async (collectionRef) => {
+
+                                const q = query(collection(db, `${collectionRef}`));
+                                const returnPromise = new Promise((resolve , reject)=>{
+                                    onSnapshot(q, (snapshot) => {
+                                    resolve(snapshot.docs)
+                                      // //   .forEach(doc => console.log(doc.data()))
+                                  })
+                                })
+                                return returnPromise
+                              }
+
+
+
+                              export const createProductDumy = () =>{
+                                showDataWithOutPaginationForCreation("productlist").then((docs)=>{
+                                  docs.forEach(  (doc) => {
+                                    const data = doc.data()
+                                    data.id = `EatPizza-${shortUUID()}`
+                                    setDataToCollection(data , "productlist" , false)
+                                    
+                                  });
+                                })
+                              }
 
 export const getSingleDataWithOutRealTimeUpdates = async (collectionRef , idRef) => {
   const docRef = doc(db, `${collectionRef}`, `${idRef}`);

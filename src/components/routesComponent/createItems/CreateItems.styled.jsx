@@ -2,7 +2,7 @@ import { styled } from "@mui/system";
 
 export const CreateItemsContainer = styled("div")(({ theme }) => ({
   display: "flex",
-  flexDirection: "column",
+  flexDirection: "row",
   width: "97%",
   height: "95%",
   padding: "3%",
