@@ -3,14 +3,14 @@ import SideBar from "../components/exploratoryElements/sidebar";
 import RoutesComponent from "../Routes";
 import { LayoutContainer, BodyContainer, RoutesWrapper } from "./Layout.styled";
 
-const Layout = () => {
+const Layout = ({openingStatus}) => {
   return (
     <LayoutContainer>
-      <Header />
+      <Header openingStatus={openingStatus} />
       <BodyContainer>
         <SideBar />
         <RoutesWrapper>
-          <RoutesComponent />
+          <RoutesComponent openingStatus={openingStatus} />
         </RoutesWrapper>
       </BodyContainer>
     </LayoutContainer>

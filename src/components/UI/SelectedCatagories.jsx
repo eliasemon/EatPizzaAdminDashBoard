@@ -4,6 +4,22 @@ import { Box, Typography, Checkbox, FormControlLabel } from "@mui/material";
 
 import { SelectCategoriesStyle } from "./SelectedCategories.styled";
 
+
+const ForSelectUI = ({itemsObj}) =>{
+
+
+
+  return (
+    <Box>
+      <h1>{itemsObj.name}</h1>
+      {itemsObj.price && (<p>Price : {itemsObj.price }</p>)}
+
+    </Box>
+  )
+}
+
+
+
 const SelectedCatagories = ({setSelectedCatagories , selectedCatagories , collectionRef , preAddedArray }) => {
   const [catagoriesSelectionView , setCatagoriesSelectionView] = useState("")
     
@@ -38,7 +54,7 @@ const SelectedCatagories = ({setSelectedCatagories , selectedCatagories , collec
           return (
             <FormControlLabel
               key={item.id}
-              label={`${item.name}`}
+              label={<ForSelectUI key={item.id} itemsObj={item} />}
               control={
                 <Checkbox
                   sx={{

@@ -22,6 +22,7 @@ const dataModel = {
   manualModeResturentClosed: false,
   notice: "",
   serviceTimeZone: "GMT+0600",
+  serviceTimeZoneOffSet : -360
 };
 
 const RightContainerMain = () => {

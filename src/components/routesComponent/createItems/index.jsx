@@ -83,57 +83,31 @@ useEffect(()=>{
 
   return (
     <CreateItemsContainer>
+      {/* LeftContainer Start  */}
       <Box>
-        <Typography> {update ? "Update The Items Information" : "Create New Items"}</Typography>
-      </Box>
-      <Box>
-      <LabelText>Items ID</LabelText>
-      <InputText
-          color="common"
-          disabled = {true}
-          value = {items?.id}
-          id="filled-size-normal"
-        />
-        
-        <LabelText>Items Name</LabelText>
+        <Box>
+          <Typography> {update ? "Update The Items Information" : "Create New Items"}</Typography>
+        </Box>
+        <Box>
+        <LabelText>Items ID</LabelText>
         <InputText
-          color="common"
-          value={items.name}
-          onChange={(e) =>
-            setItems((prv) => ({ ...prv, name: e.target.value }))
-          }
-          id="filled-size-normal"
-        />
-      </Box>
-      <AddVariantsAndVariantsListLoader
-        variants={variants}
-        setVariants={setVariants}
-      />
-
-      {/* Catagories Select Option  */}
-      <Box>
-        <Typography>Please Select Catagory</Typography>
-        <SelectedCatagories
-          setSelectedCatagories={setSelectedCatagories}
-          selectedCatagories={selectedCatagories}
-        />
-      </Box>
-
-      {/* showing Addons Section  */}
-
-      <Box>
-        <ShowAddonsList
-          selectedAddons={selectedAddons}
-          setSelectedAddons={setSelectedAddons}
-        />
-      </Box>
-      <Box
-        sx={{
-          marginTop: "1%",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+            color="common"
+            disabled = {true}
+            value = {items?.id}
+            id="filled-size-normal"
+          />
+          
+          <LabelText>Items Name</LabelText>
+          <InputText
+            color="common"
+            value={items.name}
+            onChange={(e) =>
+              setItems((prv) => ({ ...prv, name: e.target.value }))
+            }
+            id="filled-size-normal"
+          />
+        </Box>
+            {/* DescripTion  */}
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <TextField
             color="common"
@@ -160,20 +134,62 @@ useEffect(()=>{
          
         </Box>
 
+        {/* Catagories Select Option  */}
+        <Box>
+          <Typography>Please Select Catagory</Typography>
+            <SelectedCatagories
+              setSelectedCatagories={setSelectedCatagories}
+              selectedCatagories={selectedCatagories}
+            />
+        </Box>
+
         {/* For Upload Image  */}
         <Box>
             {ui}
         </Box>
       </Box>
+      {/* LeftConTainer End  */}
+      
+      {/* Right Container Start  */}
+      <Box>
+          {/* UpperBox Start  */}
+          <Box>
+              <AddVariantsAndVariantsListLoader
+              variants={variants}
+              setVariants={setVariants}
+        />
+          </Box>
+          {/* UpperBox End  */}
+          
 
-      <Box sx={{ marginTop: "3%", display: "flex", gap: "2%" }}>
-        <Button onClick={createProduct} variant="contained" size="large">
-          Complete
-        </Button>
-        <Button onClick ={() => navigate("/items") } variant="outlined" size="large">
-          Discard
-        </Button>
+          {/* DownBox Start  */}
+          <Box>
+              
+              {/* showing Addons Section  */}
+
+    
+              <ShowAddonsList
+                selectedAddons={selectedAddons}
+                setSelectedAddons={setSelectedAddons}
+                selectedCatagories={selectedCatagories}
+              />
+      
+
+          </Box>
+        {/* DownBox End  */}
+
+          {/* Compleate And DisCard Actions  */}
+        <Box sx={{ marginTop: "3%", display: "flex", gap: "2%" }}>
+          <Button onClick={createProduct} variant="contained" size="large">
+            Complete
+          </Button>
+          <Button onClick ={() => navigate("/items") } variant="outlined" size="large">
+            Discard
+          </Button>
+        </Box>
+        
       </Box>
+      {/* Right Container End  */}
     </CreateItemsContainer>
   );
 };
