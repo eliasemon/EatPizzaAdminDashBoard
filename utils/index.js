@@ -79,15 +79,16 @@ export const showDataWithOutPagination =  (setState, collectionRef) => {
                                     const data = doc.data()
                                     // data.id = `EatPizza-${shortUUID()}`
                                     let lowestPrice = 100000000000;
-                                    let defualtPrice = {}
+                                    let defualtVariant = {}
                                     Object.keys(data.variants).forEach((key)=>{
                                       const variant  =  data.variants[key]
                                       if(lowestPrice > variant.sellingPrice){
                                         lowestPrice = variant.sellingPrice
-                                        defualtPrice = {sellingPrice : variant.sellingPrice, regularPrice : variant.regularPrice}
+                                        defualtVariant = {...variant}
                                       }
                                     })
-                                    data.defualtPrice = defualtPrice
+                                    delete data["defualtPrice"]
+                                    data.defualtVariant = defualtVariant
                                     setDataToCollection(data , "productlist" , false)
                                     
                                   });
