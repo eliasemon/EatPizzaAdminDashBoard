@@ -8,7 +8,8 @@ const VariantsItemsLoader = ({
   variants,
   onVariantStateLift,
   deleteVariantsHandle,
-  setVariantUI
+  setVariantUI,
+  defualtVariant,
 }) => {
   return (
     <>
@@ -41,6 +42,7 @@ const VariantsItemsLoader = ({
                     }}
                   >
                     <ListItemText primary={item.name} />
+                    {defualtVariant.id == id && (<ListItemText primary={"Defualt"} />) }
                     <Box sx={{ display: "flex", gap: "10px" }}>
                       <Box>
                         <EditIcon
@@ -83,11 +85,17 @@ const VariantsItemsLoader = ({
   );
 };
 
-const AddVariantsAndVariantsListLoader = ({ setVariants, variants }) => {
+const AddVariantsAndVariantsListLoader = ({ setVariants, variants , defualtVariant , setDefualtVariant }) => {
   const [AddvarinatUI, setVariantUI] = useState("");
 
   const onVariantStateLift = async (type, liftedState) => {
     if (type) {
+      if(!defualtVariant){
+        setDefualtVariant({...liftedState})
+      }
+      if(defualtVariant && defualtVariant.sellingPrice > liftedState.sellingPrice){
+        setDefualtVariant({...liftedState})
+      }
       await setVariants((prv) => {
         prv[`${liftedState.id}`] = liftedState;
         return { ...prv };
@@ -122,6 +130,7 @@ const AddVariantsAndVariantsListLoader = ({ setVariants, variants }) => {
       {/* UpperBox for Items Load With Scroll View  */}
       <Box>
           <VariantsItemsLoader
+            defualtVariant={defualtVariant}
             variants={variants}
             onVariantStateLift={onVariantStateLift}
             deleteVariantsHandle={deleteVariantsHandle}

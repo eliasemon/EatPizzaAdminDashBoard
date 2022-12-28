@@ -19,7 +19,11 @@ const AddVariants = ({onStateLift , incomingItem}) => {
             toast.error("Can't Added With Empty Field")
             return
         }
-        onStateLift( true ,variantsItem)
+        const data = {...variantsItem}
+        if(data.sellingPrice == ""){
+          data.sellingPrice = data.regularPrice
+        }
+        onStateLift( true ,data)
         setVariantsItem(VariantsModel)
 
     }
