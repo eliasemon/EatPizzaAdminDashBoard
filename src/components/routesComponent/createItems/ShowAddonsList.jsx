@@ -49,8 +49,9 @@ const ShowAddonsList = ({selectedAddons , setSelectedAddons ,  selectedCatagorie
         <Box sx={{display : "flex"}}>
           <Button onClick={() => ViewChange("filtered")}>Defualt Filtered</Button>
           <Button onClick={ViewChange}>All</Button>
+          
         </Box>
-        <Box>
+        <Box sx={{ }}>
             {items && <SelectedCatagories selectedCatagories={selectedAddons} setSelectedCatagories={setSelectedAddons} preAddedArray={items} /> }
         </Box>
     </Box>

@@ -84,9 +84,9 @@ useEffect(()=>{
   return (
     <CreateItemsContainer>
       {/* LeftContainer Start  */}
-      <Box>
+      <Box sx={{width:'50%',padding:'1%',}}>
         <Box>
-          <Typography> {update ? "Update The Items Information" : "Create New Items"}</Typography>
+          <Typography color="white"> {update ? "Update The Items Information" : "Create New Items"}</Typography>
         </Box>
         <Box>
         <LabelText>Items ID</LabelText>
@@ -95,6 +95,8 @@ useEffect(()=>{
             disabled = {true}
             value = {items?.id}
             id="filled-size-normal"
+         
+           
           />
           
           <LabelText>Items Name</LabelText>
@@ -105,6 +107,7 @@ useEffect(()=>{
               setItems((prv) => ({ ...prv, name: e.target.value }))
             }
             id="filled-size-normal"
+          
           />
         </Box>
             {/* DescripTion  */}
@@ -114,6 +117,7 @@ useEffect(()=>{
             label="Descriptions"
             id="filled-size-normal"
             variant="filled"
+          
             onChange= { (e) => setItems(prv => ({...prv , descriptions : e.target.value}))}
             value ={items.descriptions || ""}
             sx={{
@@ -136,7 +140,7 @@ useEffect(()=>{
 
         {/* Catagories Select Option  */}
         <Box>
-          <Typography>Please Select Catagory</Typography>
+          <Typography pt={1} color="white">Please Select Catagory</Typography>
             <SelectedCatagories
               setSelectedCatagories={setSelectedCatagories}
               selectedCatagories={selectedCatagories}
@@ -144,14 +148,14 @@ useEffect(()=>{
         </Box>
 
         {/* For Upload Image  */}
-        <Box>
+        <Box sx={{display:'flex' ,alignItems:'center',justifyContent:'center',marginTop:'1%'}}>
             {ui}
         </Box>
       </Box>
       {/* LeftConTainer End  */}
       
       {/* Right Container Start  */}
-      <Box>
+      <Box sx={{width:'50%',padding:'2%',}}>
           {/* UpperBox Start  */}
           <Box>
               <AddVariantsAndVariantsListLoader
@@ -163,7 +167,7 @@ useEffect(()=>{
           
 
           {/* DownBox Start  */}
-          <Box>
+          <Box >
               
               {/* showing Addons Section  */}
 

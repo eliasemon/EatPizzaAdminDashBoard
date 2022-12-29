@@ -5,7 +5,7 @@ export const CreateItemsContainer = styled("div")(({ theme }) => ({
   flexDirection: "row",
   width: "97%",
   height: "95%",
-  padding: "3%",
+  padding: "1%",
   borderRadius: "5px",
   backgroundColor: theme.palette.surface.dp01,
 }));
