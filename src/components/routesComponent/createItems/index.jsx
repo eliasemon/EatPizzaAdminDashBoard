@@ -31,6 +31,8 @@ const CreateItems = ({update}) => {
   const [selectedAddons, setSelectedAddons] = useState([]);
   const  {ui , uploadProcess , image , setImage } = useFileUploaderJSX(update)
 
+  const [defualtVariant , setDefualtVariant ] = useState("")
+
     
 console.log(itemsIdToBeUpdated);
 useEffect(()=>{
@@ -38,6 +40,7 @@ useEffect(()=>{
     getSingleDataWithOutRealTimeUpdates("productlist", itemsIdToBeUpdated).then((data)=>{
       setItems({...data})
       setVariants({...data.variants})
+      setDefualtVariant({...data.defualtVariant})
       setSelectedCatagories([...data.selectedCatagories])
       setSelectedAddons([...data.selectedAddons])
       setImage(data.image.imageDownloadUrl)
@@ -57,21 +60,21 @@ useEffect(()=>{
       toast.error("You have missed Some required Filed")
       return
     }
-    if(image){
-      uploadProcess("product", items.id).then((v) => {
-        const data = {...items}
+    const data = {...items}
+
         data.variants = {...variants}
         data.selectedCatagories = [...selectedCatagories]
         data.selectedAddons = [...selectedAddons]
+        data.defualtVariant = {...defualtVariant}
+
+    if(image){
+      uploadProcess("product", items.id).then((v) => {
+        
         data.image = {...v}
         setDataToCollection(data , "productlist" , false)
         navigate("/items")
       })
     }else{
-      const data = {...items}
-        data.variants = {...variants}
-        data.selectedCatagories = [...selectedCatagories]
-        data.selectedAddons = [...selectedAddons]
         data.image = {}
         setDataToCollection(data , "productlist" , false)
         navigate("/items")
@@ -161,6 +164,9 @@ useEffect(()=>{
               <AddVariantsAndVariantsListLoader
               variants={variants}
               setVariants={setVariants}
+
+              defualtVariant = {defualtVariant} 
+              setDefualtVariant={setDefualtVariant}
         />
           </Box>
           {/* UpperBox End  */}

@@ -1,4 +1,4 @@
-import { createProductDumy } from "../../../../utils";
+import { createProductDumy , FixedProductDumy } from "../../../../utils";
 
 
 
@@ -8,6 +8,10 @@ const Settings = () => {
     <button onClick={createProductDumy}>
       Add Dummy Data
     </button>
+    <button onClick={FixedProductDumy}>
+      Fixed The Dummy Datas
+    </button>
+
    </div>
   );
 };
