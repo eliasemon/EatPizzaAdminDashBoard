@@ -39,7 +39,7 @@ const AddVariants = ({onStateLift , incomingItem}) => {
       }
     },[])
   return (
-    <Dialog open={true} onClose={Discard}>
+    <Dialog open={true} onClose={Discard} sx={{background:"#121212",opacity:'0.95'}}>
         <TextField
         color="common"
         onChange = {(e)=> setVariantsItem(prv => ({...prv , name : e.target.value}))}

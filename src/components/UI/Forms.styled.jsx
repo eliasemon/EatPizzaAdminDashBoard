@@ -12,10 +12,12 @@ export const InputSection = styled("div")(({ theme }) => ({
 }));
 
 export const InputText = styled(TextField)(({ theme }) => ({
-  width: "70%",
+  width: "100%",
+
   ".MuiInputBase-root": {
     backgroundColor: "secondary",
     border: "1px solid grey",
+   
   },
   input: {
     color: "white",

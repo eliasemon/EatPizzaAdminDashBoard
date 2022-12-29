@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import AddVariants from "./AddVariants";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { CategoryList, ListElement } from "../../UI/Shape.styled";
+
 
 const VariantsItemsLoader = ({
   variants,
@@ -13,36 +15,46 @@ const VariantsItemsLoader = ({
 }) => {
   return (
     <>
-      <Box>
+      <Box sx={{display:'flex',alignItems:'center', justifyContent:'center',}}>
+        
         <List
           sx={{
             width: "100%",
-            maxWidth: 400,
+            maxWidth: 600,
             marginTop: "5%",
             bgcolor: "secondary",
             position: "relative",
             overflow: "auto",
             color: "common.white",
             // maxHeight: 300,
-            "& ul": { padding: 0 },
+            "& ul": { padding: '20px' },
           }}
           subheader={<li />}
         >
+         
           {
             <ul>
               {Object.keys(variants).map((id) => {
                 const item = variants[`${id}`];
+                console.log('item', item)
                 return (
-                  <ListItem
+                  <ListElement
                     key={item.id}
                     sx={{
                       backgroundColor: "secondary.dark",
                       marginBottom: "5px",
                       borderRadius: "5px",
+                      
                     }}
                   >
-                    <ListItemText primary={item.name} />
-                    {defualtVariant.id == id && (<ListItemText primary={"Defualt"} />) }
+
+                  <Box>
+                    {defualtVariant.id == id && (<ListItemText primary={"Defualt"} />) 
+        
+                      <ListItemText primary={item.name} />
+                      <ListItemText primary={`${item.regularPrice} ৳`} />
+                    </Box>
+
                     <Box sx={{ display: "flex", gap: "10px" }}>
                       <Box>
                         <EditIcon
@@ -74,13 +86,15 @@ const VariantsItemsLoader = ({
                         />
                       </Box>
                     </Box>
-                  </ListItem>
+                  </ListElement>
                 );
               })}
             </ul>
           }
-        </List>
-      </Box>
+         {/* </CategoryList> */}
+        
+      </List>
+    </Box>
     </>
   );
 };
@@ -125,18 +139,26 @@ const AddVariantsAndVariantsListLoader = ({ setVariants, variants , defualtVaria
                   //     />
                   //   );
                   // }, [variants]);
+                  console.log('variants ', variants)
   return(
     <Box>
       {/* UpperBox for Items Load With Scroll View  */}
-      <Box>
-          <VariantsItemsLoader
-            defualtVariant={defualtVariant}
-            variants={variants}
-            onVariantStateLift={onVariantStateLift}
-            deleteVariantsHandle={deleteVariantsHandle}
-            setVariantUI={setVariantUI}
-          />
-      </Box>
+
+     {
+       (Object.keys(variants).length >0)&&  <Box sx={{width:'100%',height:'300px',backgroundColor:'rgba(255,255,255, 0.08)', overflowY:'scroll'}}>
+       <VariantsItemsLoader
+        defualtVariant={defualtVariant}
+         variants={variants}
+         onVariantStateLift={onVariantStateLift}
+         deleteVariantsHandle={deleteVariantsHandle}
+         setVariantUI={setVariantUI}
+       />
+     </Box> 
+     }
+
+
+   
+
 
 
       {/* LowerBox For Add Variants  */}
@@ -147,7 +169,7 @@ const AddVariantsAndVariantsListLoader = ({ setVariants, variants , defualtVaria
                               <AddVariants
                                 onStateLift={onVariantStateLift}
                               />
-          )} variant="contained"> Add Variants </Button>
+          )} variant="contained" sx={{marginTop:'16px' ,marginBottom:'10px'}}> Add Variants </Button>
       </Box>
 
 

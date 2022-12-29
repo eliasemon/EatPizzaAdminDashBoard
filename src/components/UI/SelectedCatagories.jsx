@@ -11,8 +11,8 @@ const ForSelectUI = ({itemsObj}) =>{
 
   return (
     <Box>
-      <h1>{itemsObj.name}</h1>
-      {itemsObj.price && (<p>Price : {itemsObj.price }</p>)}
+      <Typography>{itemsObj.name}</Typography>
+      {itemsObj.price && (<Typography>Price : {itemsObj.price }</Typography>)}
 
     </Box>
   )
@@ -53,6 +53,7 @@ const SelectedCatagories = ({setSelectedCatagories , selectedCatagories , collec
           const index = selectedCatagories.findIndex((v) => v == item.id);
           return (
             <FormControlLabel
+              sx={{padding:'2px'}}
               key={item.id}
               label={<ForSelectUI key={item.id} itemsObj={item} />}
               control={

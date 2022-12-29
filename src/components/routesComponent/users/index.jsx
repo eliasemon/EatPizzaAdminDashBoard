@@ -103,6 +103,7 @@ const Users = () => {
         // gridTemplateColumns: "17.9vw auto",
         width: "100%",
         height: "100%",
+     
 
       }}>
         
@@ -158,7 +159,7 @@ const Users = () => {
         data.map(user => dataMaping(user))
       }
 
-      <UserDetails />
+      {/* <UserDetails /> */}
 
 
     </Box>
