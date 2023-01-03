@@ -48,11 +48,13 @@ const VariantsItemsLoader = ({
                     }}
                   >
 
-                  <Box>
-                    {defualtVariant.id == id && (<ListItemText primary={"Defualt"} />) 
+                  <Box sx={{display:'flex',flexDirection:'row',gap:'10px',padding:'10px'}}>
+                    {defualtVariant.id == id && (<ListItemText primary={"Defualt"} sx={{color:'green'}} />) }
         
                       <ListItemText primary={item.name} />
                       <ListItemText primary={`${item.regularPrice} ৳`} />
+                      <ListItemText primary={`${item.sellingPrice} ৳`} />
+                   
                     </Box>
 
                     <Box sx={{ display: "flex", gap: "10px" }}>
