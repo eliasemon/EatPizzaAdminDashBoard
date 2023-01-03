@@ -65,7 +65,7 @@ const CreatePromoCode = ({EditAbleItem , status , clearUi}) => {
   }
   return (
     <Box >
-      <Typography>
+      <Typography color='white' py={1}>
           { status ? `Update The ***"${items.name}"*** promoCode Item` : `Create new PromoCode`}
       </Typography>
         
@@ -81,15 +81,18 @@ const CreatePromoCode = ({EditAbleItem , status , clearUi}) => {
             backgroundColor: "secondary",
             border: "1px solid grey",
             width: "100%",
+            
           },
           input: {
             color: "white",
+            width:'480px',
           },
           label: {
             color: "white",
           },
         }}
       />
+      <Box></Box>
       <TextField
         color="common"
         label="Description"
@@ -102,9 +105,12 @@ const CreatePromoCode = ({EditAbleItem , status , clearUi}) => {
             backgroundColor: "secondary",
             border: "1px solid grey",
             width: "100%",
+            marginTop:'10px'
           },
           input: {
             color: "white",
+            width:'480px',
+            height:'80px'
           },
           label: {
             color: "white",
@@ -112,7 +118,7 @@ const CreatePromoCode = ({EditAbleItem , status , clearUi}) => {
         }}
       />
 
-    <Typography>
+    <Typography color='white' py={1}>
       Validity
     </Typography>
     <TextField
@@ -130,6 +136,7 @@ const CreatePromoCode = ({EditAbleItem , status , clearUi}) => {
               },
               input: {
                 color: "white",
+                width:'480px'
               },
               label: {
                 color: "white",
@@ -137,8 +144,8 @@ const CreatePromoCode = ({EditAbleItem , status , clearUi}) => {
             }}
           />
 
-    <Box sx={{ minWidth: 180 }}>
-      <FormControl fullWidth>
+    <Box sx={{ maxWidth:500 }}>
+      <FormControl sx={{width:'480px'}}>
         <InputLabel id="demo-simple-select-label">Discount Type</InputLabel>
         <Select
           labelId="demo-simple-select-label"

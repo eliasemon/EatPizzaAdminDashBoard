@@ -10,7 +10,8 @@ const VariantsItemsLoader = ({
   variants,
   onVariantStateLift,
   deleteVariantsHandle,
-  setVariantUI
+  setVariantUI,
+  defualtVariant,
 }) => {
   return (
     <>
@@ -46,11 +47,16 @@ const VariantsItemsLoader = ({
                       
                     }}
                   >
-                    <Box>
+
+                  <Box sx={{display:'flex',flexDirection:'row',gap:'10px',padding:'10px'}}>
+                    {defualtVariant.id == id && (<ListItemText primary={"Defualt"} sx={{color:'green'}} />) }
+        
                       <ListItemText primary={item.name} />
                       <ListItemText primary={`${item.regularPrice} ৳`} />
+                      <ListItemText primary={`${item.sellingPrice} ৳`} />
+                   
                     </Box>
-                    
+
                     <Box sx={{ display: "flex", gap: "10px" }}>
                       <Box>
                         <EditIcon
@@ -95,11 +101,17 @@ const VariantsItemsLoader = ({
   );
 };
 
-const AddVariantsAndVariantsListLoader = ({ setVariants, variants }) => {
+const AddVariantsAndVariantsListLoader = ({ setVariants, variants , defualtVariant , setDefualtVariant }) => {
   const [AddvarinatUI, setVariantUI] = useState("");
 
   const onVariantStateLift = async (type, liftedState) => {
     if (type) {
+      if(!defualtVariant){
+        setDefualtVariant({...liftedState})
+      }
+      if(defualtVariant && defualtVariant.sellingPrice > liftedState.sellingPrice){
+        setDefualtVariant({...liftedState})
+      }
       await setVariants((prv) => {
         prv[`${liftedState.id}`] = liftedState;
         return { ...prv };
@@ -133,9 +145,11 @@ const AddVariantsAndVariantsListLoader = ({ setVariants, variants }) => {
   return(
     <Box>
       {/* UpperBox for Items Load With Scroll View  */}
+
      {
        (Object.keys(variants).length >0)&&  <Box sx={{width:'100%',height:'300px',backgroundColor:'rgba(255,255,255, 0.08)', overflowY:'scroll'}}>
        <VariantsItemsLoader
+        defualtVariant={defualtVariant}
          variants={variants}
          onVariantStateLift={onVariantStateLift}
          deleteVariantsHandle={deleteVariantsHandle}
@@ -146,6 +160,7 @@ const AddVariantsAndVariantsListLoader = ({ setVariants, variants }) => {
 
 
    
+
 
 
       {/* LowerBox For Add Variants  */}
