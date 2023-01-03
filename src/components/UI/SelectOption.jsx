@@ -1,5 +1,4 @@
 import { styled } from "@mui/system";
-import { useState } from "react";
 
 const SelectOptionStyle = styled("div")`
   background: rgba(255, 255, 255, 0.56);
@@ -31,20 +30,23 @@ const Option = styled("div")`
   }
 `;
 
-const SelectOption = ({ width, option, activeItem, setActiveItem }) => {
+const SelectOption = ({ width, options, activeItem, setActiveItem }) => {
   const handleClick = (index) => {
     setActiveItem(index);
+    options[index].cb();
   };
 
   return (
     <SelectOptionStyle width={width}>
-      {option.map((item, index) => (
+      {options.map((option, index) => (
         <Option
           key={index}
           isActive={index == activeItem}
-          onClick={() => handleClick(index)}
+          onClick={() => {
+            handleClick(index);
+          }}
         >
-          {item}
+          {option.title}
         </Option>
       ))}
     </SelectOptionStyle>

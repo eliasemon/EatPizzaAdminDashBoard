@@ -17,7 +17,6 @@ export const InputText = styled(TextField)(({ theme }) => ({
   ".MuiInputBase-root": {
     backgroundColor: "secondary",
     border: "1px solid grey",
-   
   },
   input: {
     color: "white",

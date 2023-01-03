@@ -1,10 +1,16 @@
-import { Box, List, ListItem, ListItemText, Button } from "@mui/material";
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+  Typography,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 import AddVariants from "./AddVariants";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CategoryList, ListElement } from "../../UI/Shape.styled";
-
 
 const VariantsItemsLoader = ({
   variants,
@@ -15,46 +21,53 @@ const VariantsItemsLoader = ({
 }) => {
   return (
     <>
-      <Box sx={{display:'flex',alignItems:'center', justifyContent:'center',}}>
-        
+      <Box
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
         <List
           sx={{
             width: "100%",
             maxWidth: 600,
-            marginTop: "5%",
             bgcolor: "secondary",
             position: "relative",
             overflow: "auto",
             color: "common.white",
-            // maxHeight: 300,
-            "& ul": { padding: '20px' },
+            "& ul": { padding: "20px" },
           }}
           subheader={<li />}
         >
-         
           {
             <ul>
               {Object.keys(variants).map((id) => {
                 const item = variants[`${id}`];
-                console.log('item', item)
+                console.log("item", item);
                 return (
                   <ListElement
                     key={item.id}
                     sx={{
                       backgroundColor: "secondary.dark",
-                      marginBottom: "5px",
+                      marginBottom: "15px",
                       borderRadius: "5px",
-                      
                     }}
                   >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        padding: "10px",
+                      }}
+                    >
+                      {defualtVariant.id == id && (
+                        <ListItemText
+                          primary={"Defualt"}
+                          sx={{ color: "green" }}
+                        />
+                      )}
 
-                  <Box sx={{display:'flex',flexDirection:'row',gap:'10px',padding:'10px'}}>
-                    {defualtVariant.id == id && (<ListItemText primary={"Defualt"} sx={{color:'green'}} />) }
-        
                       <ListItemText primary={item.name} />
                       <ListItemText primary={`${item.regularPrice} ৳`} />
                       <ListItemText primary={`${item.sellingPrice} ৳`} />
-                   
                     </Box>
 
                     <Box sx={{ display: "flex", gap: "10px" }}>
@@ -93,24 +106,31 @@ const VariantsItemsLoader = ({
               })}
             </ul>
           }
-         {/* </CategoryList> */}
-        
-      </List>
-    </Box>
+          {/* </CategoryList> */}
+        </List>
+      </Box>
     </>
   );
 };
 
-const AddVariantsAndVariantsListLoader = ({ setVariants, variants , defualtVariant , setDefualtVariant }) => {
+const AddVariantsAndVariantsListLoader = ({
+  setVariants,
+  variants,
+  defualtVariant,
+  setDefualtVariant,
+}) => {
   const [AddvarinatUI, setVariantUI] = useState("");
 
   const onVariantStateLift = async (type, liftedState) => {
     if (type) {
-      if(!defualtVariant){
-        setDefualtVariant({...liftedState})
+      if (!defualtVariant) {
+        setDefualtVariant({ ...liftedState });
       }
-      if(defualtVariant && defualtVariant.sellingPrice > liftedState.sellingPrice){
-        setDefualtVariant({...liftedState})
+      if (
+        defualtVariant &&
+        defualtVariant.sellingPrice > liftedState.sellingPrice
+      ) {
+        setDefualtVariant({ ...liftedState });
       }
       await setVariants((prv) => {
         prv[`${liftedState.id}`] = liftedState;
@@ -129,60 +149,73 @@ const AddVariantsAndVariantsListLoader = ({ setVariants, variants , defualtVaria
     });
   };
 
-  console.log(variants);
-
-                  // useEffect(() => {
-                  //   setVariantUI(
-                  //     <VariantsItemsLoader
-                  //       variants={variants}
-                  //       onVariantStateLift={onVariantStateLift}
-                  //       setVariantUI={setVariantUI}
-                  //       deleteVariantsHandle={deleteVariantsHandle}
-                  //     />
-                  //   );
-                  // }, [variants]);
-                  console.log('variants ', variants)
-  return(
+  // useEffect(() => {
+  //   setVariantUI(
+  //     <VariantsItemsLoader
+  //       variants={variants}
+  //       onVariantStateLift={onVariantStateLift}
+  //       setVariantUI={setVariantUI}
+  //       deleteVariantsHandle={deleteVariantsHandle}
+  //     />
+  //   );
+  // }, [variants]);
+  return (
     <Box>
       {/* UpperBox for Items Load With Scroll View  */}
 
-     {
-       (Object.keys(variants).length >0)&&  <Box sx={{width:'100%',height:'300px',backgroundColor:'rgba(255,255,255, 0.08)', overflowY:'scroll'}}>
-       <VariantsItemsLoader
-        defualtVariant={defualtVariant}
-         variants={variants}
-         onVariantStateLift={onVariantStateLift}
-         deleteVariantsHandle={deleteVariantsHandle}
-         setVariantUI={setVariantUI}
-       />
-     </Box> 
-     }
-
-
-   
-
-
+      {Object.keys(variants).length > 0 ? (
+        <Box
+          sx={{
+            width: "100%",
+            height: "300px",
+            backgroundColor: "rgba(255,255,255, 0.08)",
+            overflowY: "scroll",
+          }}
+        >
+          <VariantsItemsLoader
+            defualtVariant={defualtVariant}
+            variants={variants}
+            onVariantStateLift={onVariantStateLift}
+            deleteVariantsHandle={deleteVariantsHandle}
+            setVariantUI={setVariantUI}
+          />
+        </Box>
+      ) : (
+        <Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "300px",
+              backgroundColor: "rgba(255,255,255, 0.08)",
+              overflowY: "scroll",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography sx={{ color: "#fff", fontSize: "1.5rem" }}>
+              No variants found !
+            </Typography>
+          </Box>
+        </Box>
+      )}
 
       {/* LowerBox For Add Variants  */}
       {AddvarinatUI}
       <Box>
-        <Button 
-          onClick={()=> setVariantUI(
-                              <AddVariants
-                                onStateLift={onVariantStateLift}
-                              />
-          )} variant="contained" sx={{marginTop:'16px' ,marginBottom:'10px'}}> Add Variants </Button>
+        <Button
+          onClick={() =>
+            setVariantUI(<AddVariants onStateLift={onVariantStateLift} />)
+          }
+          variant="contained"
+          sx={{ marginTop: "16px", marginBottom: "10px" }}
+        >
+          {" "}
+          Add Variants{" "}
+        </Button>
       </Box>
-
-
-
-
-
-
-
     </Box>
-
-  ) 
+  );
   // <Box>{AddvarinatUI}</Box>;
 };
 
