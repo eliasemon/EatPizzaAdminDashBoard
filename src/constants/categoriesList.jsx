@@ -7,6 +7,8 @@ import AppsIcon from '@mui/icons-material/Apps';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import AddchartIcon from '@mui/icons-material/Addchart';
+import PromoCode from './../components/routesComponent/promocode/index';
+import BeenhereIcon from '@mui/icons-material/Beenhere';
 const categories = [
   {
     id: 1,
@@ -61,6 +63,12 @@ const categories = [
   },
   {
     id: 9,
+    title: "promocode",
+    link: "/promocode",
+    icon: <BeenhereIcon />,
+  },
+  {
+    id: 10,
     title: "Settings",
     link: "/settings",
     icon: <SettingsIcon />,
