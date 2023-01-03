@@ -98,9 +98,13 @@ const CreateItems = ({ update }) => {
           </Typography>
         </Box> */}
         <Box>
-          <Box sx={{ flexDirection: "row" }}>
-            <LabelText sx={{ display: "inline" }}>Items ID : </LabelText>
-            <LabelText sx={{ display: "inline" }}>{items?.id}</LabelText>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <LabelText>Items ID : {items?.id} </LabelText>
           </Box>
           <InputWrapper>
             <LabelText>Items Name</LabelText>
@@ -111,18 +115,6 @@ const CreateItems = ({ update }) => {
               onChange={(e) =>
                 setItems((prv) => ({ ...prv, name: e.target.value }))
               }
-              id="filled-size-normal"
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <LabelText>Description</LabelText>
-            <InputText
-              color="common"
-              placeholder="Enter description here"
-              onChange={(e) =>
-                setItems((prv) => ({ ...prv, descriptions: e.target.value }))
-              }
-              value={items.descriptions || ""}
             />
           </InputWrapper>
         </Box>
@@ -130,25 +122,57 @@ const CreateItems = ({ update }) => {
 
         {/* Catagories Select Option  */}
         <Box>
-          <Typography pt={1} color="white">
-            Please Select Catagory
-          </Typography>
+          <LabelText>Please Select Catagory</LabelText>
           <SelectedCatagories
             setSelectedCatagories={setSelectedCatagories}
             selectedCatagories={selectedCatagories}
           />
         </Box>
-
-        {/* For Upload Image  */}
         <Box
           sx={{
             display: "flex",
+            justifyContent: "space-between",
             alignItems: "center",
-            justifyContent: "center",
-            marginTop: "1%",
           }}
         >
-          {ui}
+          {/* For Upload Image  */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginTop: "1%",
+              justifyContent: "space-between",
+            }}
+          >
+            <LabelText>Upload Image Here</LabelText>
+            {ui}
+          </Box>
+          {/* Description Here */}
+          <InputWrapper>
+            <LabelText>Description</LabelText>
+            <TextField
+              color="common"
+              placeholder="Enter description here"
+              inputProps={{
+                style: {
+                  height: "175px",
+                  color: "#fff",
+                },
+              }}
+              sx={{
+                ".MuiInputBase-root": {
+                  backgroundColor: "secondary",
+                  border: "1px solid grey",
+                },
+              }}
+              multiline
+              row={4}
+              onChange={(e) =>
+                setItems((prv) => ({ ...prv, descriptions: e.target.value }))
+              }
+              value={items.descriptions || ""}
+            />
+          </InputWrapper>
         </Box>
       </Box>
       {/* LeftConTainer End  */}
@@ -157,10 +181,12 @@ const CreateItems = ({ update }) => {
       <Box
         sx={{
           width: "50%",
+          height: "100%",
           padding: "2%",
           display: "flex",
           flexDirection: "column",
           gap: "2%",
+          position: "relative",
         }}
       >
         {/* UpperBox Start  */}
@@ -186,7 +212,18 @@ const CreateItems = ({ update }) => {
         {/* DownBox End  */}
 
         {/* Compleate And DisCard Actions  */}
-        <Box sx={{ marginTop: "3%", display: "flex", gap: "2%" }}>
+        <Box
+          sx={{
+            marginTop: "3%",
+            display: "flex",
+            gap: "5%",
+            // justifySelf: "flex-end",
+            // alignSelf: "flex-end",
+            position: "absolute",
+            right: 0,
+            bottom: 0,
+          }}
+        >
           <Button onClick={createProduct} variant="contained" size="large">
             Complete
           </Button>

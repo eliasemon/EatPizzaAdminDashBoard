@@ -1,23 +1,20 @@
+import { Box } from "@mui/material";
 import { styled } from "@mui/system";
 
-const SelectOptionStyle = styled("div")`
+const SelectOptionStyle = styled(Box)`
   background: rgba(255, 255, 255, 0.56);
-  border-radius: 5px;
   overflow: hidden;
-  height: 40px;
+  /* height: 30px; */
   width: ${(props) => props.width};
   display: flex;
   justify-content: space-between;
-  gap: 1px;
 `;
 
-const Option = styled("div")`
+const Option = styled(Box)`
   background-color: ${(props) =>
-    props.isActive
-      ? props.theme.palette.primary.dark
-      : props.theme.palette.primary.light};
+    props.isActive ? "#292929" : props.theme.palette.primary.light};
   flex: 1;
-  height: 40px;
+  height: 30px;
   transition: 0.5s;
   display: flex;
   align-items: center;
@@ -25,19 +22,19 @@ const Option = styled("div")`
   color: white;
 
   &:hover {
-    border: 1px solid white;
+    /* outline: 1px solid white; */
     cursor: pointer;
   }
 `;
 
-const SelectOption = ({ width, options, activeItem, setActiveItem }) => {
+const SelectOption = ({ width, options, activeItem, setActiveItem, sx }) => {
   const handleClick = (index) => {
     setActiveItem(index);
     options[index].cb();
   };
 
   return (
-    <SelectOptionStyle width={width}>
+    <SelectOptionStyle width={width} sx={sx}>
       {options.map((option, index) => (
         <Option
           key={index}

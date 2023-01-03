@@ -31,15 +31,6 @@ const ShowAddonsList = ({
     },
   ];
 
-  const options2 = [
-    {
-      title: "All",
-      cb: () => {
-        ViewChange();
-      },
-    },
-  ];
-
   const ViewChange = (type) => {
     if (type == "filtered") {
       if (selectedCatagories.length > 0) {
@@ -69,7 +60,7 @@ const ShowAddonsList = ({
     }
   }, [selectedCatagories]);
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       {/* for Addons Filtering  */}
       {/* <Box>
                       <FilterView  
@@ -87,14 +78,17 @@ const ShowAddonsList = ({
         <Button onClick={() => ViewChange("filtered")}>Default Filtered</Button>
         <Button onClick={ViewChange}>All</Button>
       </Box> */}
-      <SelectOption
-        width={"60%"}
-        options={selectedCatagories.length == 0 ? options2 : options}
-        activeItem={activeItem}
-        setActiveItem={setActiveItem}
-      />
-      <LabelText>Please Select Addons</LabelText>
-      <Box sx={{}}>
+      <LabelText>Please Select Addons </LabelText>
+      {selectedCatagories.length !== 0 && (
+        <SelectOption
+          width={"60%"}
+          options={options}
+          activeItem={activeItem}
+          setActiveItem={setActiveItem}
+          sx={{ fontSize: ".8rem" }}
+        />
+      )}
+      <Box>
         {items && (
           <SelectedCatagories
             selectedCatagories={selectedAddons}
