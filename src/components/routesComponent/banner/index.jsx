@@ -21,7 +21,7 @@ const itemsModel = {
   selectedCatagories: [],
 };
 
-const Addons = () => {
+const Banner = () => {
   const [items, setItems] = useState("");
   const [selectedCatagories, setSelectedCatagories] = useState([]);
   const clearFilterfun = () => {
@@ -117,4 +117,4 @@ const Addons = () => {
     </BannerContainer>
   );
 };
-export default Addons;
+export default Banner;

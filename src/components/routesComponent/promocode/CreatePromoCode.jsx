@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 
 import { addDataToCollection, setDataToCollection } from "../../../../utils";
 import { InputText, LabelText } from "./../../UI/Forms.styled";
+import SelectOption from "../../UI/SelectOption";
 
 const promoCodeModel = {
   name: "",
@@ -26,6 +27,7 @@ const promoCodeModel = {
 };
 
 const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
+  const [activeItem, setActiveItem] = useState(0);
   const [items, setItems] = useState(EditAbleItem);
   CreatePromoCode;
   useEffect(() => {
@@ -66,6 +68,21 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
     await addDataToCollection(items, "promoCode");
     setItems(promoCodeModel);
   };
+
+  const options = [
+    {
+      title: "in Percentage",
+      cb: () => {
+        setItems((prv) => ({ ...prv, discountType: "%" }));
+      },
+    },
+    {
+      title: "in Taka",
+      cb: () => {
+        setItems((prv) => ({ ...prv, discountType: "taka" }));
+      },
+    },
+  ];
   return (
     <Box
       sx={{
@@ -176,7 +193,13 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
           <FormControl sx={{ width: "100%" }}>
             <LabelText>Discount type</LabelText>
             {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
-            <Select
+            <SelectOption
+              // width="100%"
+              options={options}
+              activeItem={activeItem}
+              setActiveItem={setActiveItem}
+            />
+            {/* <Select
               // labelId="demo-simple-select-label"
               // id="demo-simple-select"
               autoWidth={false}
@@ -188,7 +211,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
             >
               <MenuItem value={"%"}>In Percentage</MenuItem>
               <MenuItem value={"tk"}>In Taka</MenuItem>
-            </Select>
+            </Select> */}
           </FormControl>
         </Box>
       </Box>

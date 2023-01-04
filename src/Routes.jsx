@@ -9,7 +9,6 @@ import {
   CurrentOrders,
   Dashboard,
   OrdersHistory,
-  Settings,
   Users,
   PromoCode,
 } from "./components/routesComponent";
@@ -33,7 +32,7 @@ const RoutesComponent = ({ openingStatus }) => {
       <Route path="/items" element={<AllItems />} />
       <Route path="/orderhistory" element={<OrdersHistory />} />
       <Route path="/users" element={<Users />} />
-      <Route path="/settings" element={<Settings />} />
+      <Route path="/banner" element={<Banner />} />
       <Route path="/promocode" element={<PromoCode />} />
     </Routes>
   );

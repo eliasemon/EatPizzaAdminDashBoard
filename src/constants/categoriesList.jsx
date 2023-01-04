@@ -1,14 +1,15 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ListIcon from "@mui/icons-material/List";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import SettingsIcon from "@mui/icons-material/Settings";
-import ReorderIcon from '@mui/icons-material/Reorder';
-import AppsIcon from '@mui/icons-material/Apps';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
-import AddchartIcon from '@mui/icons-material/Addchart';
-import PromoCode from './../components/routesComponent/promocode/index';
-import BeenhereIcon from '@mui/icons-material/Beenhere';
+import ReorderIcon from "@mui/icons-material/Reorder";
+import AppsIcon from "@mui/icons-material/Apps";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import AddchartIcon from "@mui/icons-material/Addchart";
+import PromoCode from "./../components/routesComponent/promocode/index";
+import BeenhereIcon from "@mui/icons-material/Beenhere";
+import WebIcon from "@mui/icons-material/Web";
+
 const categories = [
   {
     id: 1,
@@ -35,13 +36,12 @@ const categories = [
     icon: <AppsIcon />,
   },
 
- // {
+  // {
   //  id: 5,
-   // title: "Create Items",
-    // link: "/createitem",
-   // icon: <AssignmentTurnedInIcon />,
- // },
-
+  // title: "Create Items",
+  // link: "/createitem",
+  // icon: <AssignmentTurnedInIcon />,
+  // },
 
   {
     id: 6,
@@ -69,9 +69,9 @@ const categories = [
   },
   {
     id: 10,
-    title: "Settings",
-    link: "/settings",
-    icon: <SettingsIcon />,
+    title: "Banner",
+    link: "/banner",
+    icon: <DashboardIcon />,
   },
 ];
 

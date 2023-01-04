@@ -149,7 +149,14 @@ const itemsModel = {
   selectedCatagories: [],
 };
 
-const option = ["Product Ref", "External Link"];
+const options = [
+  {
+    title: "Product Ref",
+  },
+  {
+    title: "External Link",
+  },
+];
 
 const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
   const { ui, uploadProcess, image, setImage } = useFileUploaderJSX(false);
@@ -180,7 +187,7 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
       </Box>
       <SelectOption
         width="40%"
-        option={option}
+        options={options}
         activeItem={activeItem}
         setActiveItem={setActiveItem}
       />
