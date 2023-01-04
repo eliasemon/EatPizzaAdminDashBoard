@@ -27,17 +27,29 @@ export const SidebarContainer = styled("div")(({ theme }) => ({
   height: "100%",
   backgroundColor: theme.palette.surface.dp01,
   zIndex: 1,
+  display: "flex",
+  flexDirection: "column",
+  overflow: "scroll",
+
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
 }));
 
-export const ListButton = styled('div')(({ theme }) => ({
- margin: "30px",
- padding: "10px",
+export const ListButton = styled("div")(({ theme }) => ({
+  // margin: "5% 15%",
+  // margin: "2.5%",
+  padding: "5%",
+  margin: "2.5% 5%",
+  flex: 1,
+  //  margin: "30px",
+  //  padding: "10px",
   borderRadius: "5px",
- "&:hover": {
+  display: "flex",
+  "&:hover": {
     backgroundColor: theme.palette.primary.main,
-   transitionDuration: ".5s",
-    
- },
+    transitionDuration: ".5s",
+  },
 }));
 
 export const StyledLink = styled(Link)(({ theme }) => ({
