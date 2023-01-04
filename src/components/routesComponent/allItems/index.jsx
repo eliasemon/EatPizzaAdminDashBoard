@@ -110,6 +110,7 @@ const AllItems = () => {
             <StyledInputBase
               placeholder="Enter user ID or username or phonenumber"
               inputProps={{ "aria-label": "search" }}
+              sx={{ color: "#fff" }}
             />
           </Search>
           <Button
@@ -133,12 +134,13 @@ const AllItems = () => {
             sx={{
               width: "100%",
               display: "grid",
-              gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr",
+              gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr 1fr",
             }}
           >
             <ListHeader>Item ID</ListHeader>
             <ListHeader>Items Name</ListHeader>
-            <ListHeader>Status</ListHeader>
+            <ListHeader>Regular Price</ListHeader>
+            <ListHeader>Sale Price</ListHeader>
             <ListHeader>Edit Items</ListHeader>
             <ListHeader>Delete Items</ListHeader>
           </Box>
@@ -148,7 +150,7 @@ const AllItems = () => {
               // width: "35%",
               flex: 1,
               display: "grid",
-              gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr",
+              gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr 1fr",
               overflowY: "scroll",
             }}
           >
@@ -167,7 +169,8 @@ const AllItems = () => {
                   />
                   {item.name}
                 </ListBody>
-                <ListBody>{item.isActive ? "True" : "False"}</ListBody>
+                <ListBody>50</ListBody>
+                <ListBody>45</ListBody>
                 <ListBody>
                   <EditIcon
                     onClick={() => console.log("EditIcon clicked")}
