@@ -107,7 +107,7 @@ const OrdersHistory = () => {
               <SearchIcon color="#" />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Enter user ID or username or phonenumber"
+              placeholder="Enter order ID or username or phonenumber"
               inputProps={{ "aria-label": "search" }}
               sx={{
                 color: "#fff",
