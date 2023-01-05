@@ -1,13 +1,13 @@
-import { Box } from "@material-ui/core";
-import SearchIcon from "@mui/icons-material/Search";
+import { Box, Button } from "@material-ui/core";
+import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { useNavigate } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import ItemList from "../../../constants/ItemsList";
+import product from "../../../assets/images/profile.jpg";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
 import DeleteIcon from "@mui/icons-material/Delete";
-import PersonOffIcon from '@mui/icons-material/PersonOff';
-import PersonIcon from '@mui/icons-material/Person';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import UserDetails  from "./UserDetails";
-
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -48,53 +48,33 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const data = [
-  { id: 1, userName: 'tapu', img: '', phoneNumber: '0178545656', restriction: true },
-  { id: 2, userName: 'tapuS', img: '', phoneNumber: '0178545658', restriction: false },
-  { id: 3, userName: 'tapuM', img: '', phoneNumber: '0178545659', restriction: false },
-  { id: 4, userName: 'tapuC', img: '', phoneNumber: '0178545655', restriction: false },
-  { id: 5, userName: 'tapuC', img: '', phoneNumber: '0178545655', restriction: true }
+const ListHeader = styled(Box)`
+  width: 100%;
+  height: 40px;
+  color: #fff;
+  font-weight: 700;
+  background-color: #212020;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-]
-
-
-const dataMaping = (user) => {
-
-
-  return (
-    <Box sx={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(5,1fr)',
-      gridTemplateRows: '1fr',
-      padding: '10px 0px 10px 0px',
-      borderBottom: '1px solid white',
-      textAlign: 'center',
-      justifyContent: 'center',
-      alignItems: 'center'
-
-    }}>
-      <Box >{user.id}</Box>
-      <Box sx={{
-        display: 'flex',
-        justifyContent:'center',
-        alignItems:'center',
-      }}>
-      
-          <AccountCircleIcon fontSize="large" />
-        <Box sx = {{textAlign:'left',padding:'10px'}}>
-            <Box>{user.userName}mojumder</Box>
-            <Box>location</Box>
-        </Box>
-      </Box>
-      <Box>{user.phoneNumber}</Box>
-      <Box>{user.restriction ? <PersonIcon /> : <PersonOffIcon />}</Box>
-      <Box>{<DeleteIcon />}</Box>
-    </Box>
-  )
-}
-
+const ListBody = styled(Box)`
+  width: 100%;
+  /* min-height: 40px; */
+  color: #fff;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background-color: #2f2e2e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #212020;
+`;
 
 const Users = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -103,67 +83,160 @@ const Users = () => {
         // gridTemplateColumns: "17.9vw auto",
         width: "100%",
         height: "100%",
-     
-
-      }}>
-        
-      {
-        // Search bar 
-      }
-
-      <Box sx={{ display: "flex" }}>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Enter user ID or username or phonenumber"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
+        padding: "1.5%",
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: "#252525",
+          height: "85%",
+          borderRadius: "5px",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            alignItems: "start",
+            padding: "2% 1% 0",
+          }}
+        >
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon color="#" />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Enter user ID or username or phonenumber"
+              inputProps={{ "aria-label": "search" }}
+              sx={{
+                color: "#fff",
+              }}
+            />
+          </Search>
+        </Box>
+        <Box
+          sx={{
+            marginTop: "3%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              display: "grid",
+              gridTemplateColumns: "1fr 2fr 2fr 1fr 1fr",
+            }}
+          >
+            <ListHeader>User ID</ListHeader>
+            <ListHeader>Username</ListHeader>
+            <ListHeader>Phone Number</ListHeader>
+            <ListHeader>Restriction</ListHeader>
+            <ListHeader>Delete User</ListHeader>
+          </Box>
+          <Box
+            sx={{
+              height: "35%",
+              // width: "35%",
+              flex: 1,
+              display: "grid",
+              gridTemplateColumns: "1fr 2fr 2fr 1fr 1fr",
+              overflowY: "scroll",
+            }}
+          >
+            {ItemList.map((item, index) => (
+              <>
+                <ListBody>#751</ListBody>
+                <ListBody>
+                  <img
+                    src={product}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50%",
+                      marginRight: "1rem",
+                    }}
+                  />
+                  {item.name}
+                </ListBody>
+                <ListBody>+8801771551910</ListBody>
+                <ListBody>
+                  <PersonOffIcon
+                    fontSize="large"
+                    sx={{
+                      "&:hover": {
+                        color: "secondary.light",
+                        cursor: "pointer",
+                      },
+                    }}
+                  />
+                </ListBody>
+                <ListBody>
+                  <DeleteIcon
+                    fontSize="large"
+                    sx={{
+                      "&:hover": {
+                        color: "secondary.light",
+                        cursor: "pointer",
+                      },
+                    }}
+                  />
+                </ListBody>
+              </>
+            ))}
+            {/* {Object.keys(variants).map((id) => {
+              const item = variants[`${id}`];
+              console.log("item", item);
+              return (
+                <>
+                <ListBody>{item.name}</ListBody>
+                <ListBody>{item.regularPrice}</ListBody>
+                <ListBody>{item.sellingPrice}</ListBody>
+                <ListBody>
+                <EditIcon
+                onClick={() =>
+                  setVariantUI(
+                    <AddVariants
+                  incomingItem={item}
+                  onStateLift={onVariantStateLift}
+                  />
+                  )
+                }
+                sx={{
+                  "&:hover": {
+                    color: "secondary.light",
+                    cursor: "pointer",
+                  },
+                }}
+                />
+                </ListBody>
+                <ListBody>
+                <DeleteIcon
+                onClick={() => deleteVariantsHandle(item.id)}
+                sx={{
+                  "&:hover": {
+                    color: "secondary.light",
+                    cursor: "pointer",
+                  },
+                }}
+                />
+                </ListBody>
+                </>
+                // {defualtVariant.id == id && (
+                  //   <ListItemText
+                  //     primary={"Defualt"}
+                  //     sx={{ color: "green" }}
+                  //   />
+                  // )}
+                  );
+                })} */}
+          </Box>
+        </Box>
       </Box>
-
-      {
-        // Table Header
-      }
-
-      <Box sx={{
-        marginTop: '3%',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5,1fr)',
-        gridTemplateRows: '1fr',
-        paddingBottom: '10px',
-        borderBottom: '2px solid white',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center'
-
-      }} >
-
-        <Box>User's ID</Box>
-        <Box>User name</Box>
-        <Box>PhoneNumber</Box>
-        <Box>Restriction</Box>
-        <Box>Delete User</Box>
-
-      </Box>
-
-
-      {
-        // Data maping
-      }
-
-
-
-      {
-        data.map(user => dataMaping(user))
-      }
-
-      {/* <UserDetails /> */}
-
-
     </Box>
-  )
+  );
 };
 
 export default Users;
