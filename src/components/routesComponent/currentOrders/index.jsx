@@ -25,47 +25,54 @@ const CurrentOrders = () => {
     <CurrentOrdersContainer>
       <HalfBox color="blue">
         <TitleBar title="PENDING" color="blue" />
-        <Box sx={{
-          overflowY: 'auto', 'container::-webkit-scrollbar': {
-            display: 'none'
-          }
-        }}>
-
-          {
-            pendingDummyArr.map((el,index) =><CardComponent setForceRender={setForceRender} key={index} el = {el}/> )
-          }
-
+        <Box
+          sx={{
+            overflowY: "auto",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+        >
+          {pendingDummyArr.map((el, index) => (
+            <CardComponent
+              setForceRender={setForceRender}
+              key={index}
+              el={el}
+              color="#1ec1fc"
+            />
+          ))}
         </Box>
       </HalfBox>
 
       <HalfBox color="orange">
         <TitleBar title="COOKING" color="orange" />
-        <Box sx={{
-          overflowY: 'auto', 'container::-webkit-scrollbar': {
-            display: 'none'
-          }
-        }}>
-
-          {
-            cookingDummyArr.map((el,index) =><CardComponent key={index} el = {el}/> )
-          }
-
+        <Box
+          sx={{
+            overflowY: "auto",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+        >
+          {cookingDummyArr.map((el, index) => (
+            <CardComponent key={index} el={el} color="#fc591e" />
+          ))}
         </Box>
-
       </HalfBox>
 
       <HalfBox color="green">
         <TitleBar title="READY" color="green" />
-        <Box sx={{
-          overflowY: 'auto', 'container::-webkit-scrollbar': {
-            display: 'none'
-          }
-        }}>
-
-          {
-            readyDummyArr.map((el,index) =><CardComponent key={index} el = {el}/> )
-          }
-
+        <Box
+          sx={{
+            overflowY: "auto",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+        >
+          {readyDummyArr.map((el, index) => (
+            <CardComponent key={index} el={el} color="#1efcc8" />
+          ))}
         </Box>
       </HalfBox>
     </CurrentOrdersContainer>
