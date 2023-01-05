@@ -1,4 +1,4 @@
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -8,6 +8,8 @@ import ItemList from "../../../constants/ItemsList";
 import product from "../../../assets/images/profile.jpg";
 import PersonOffIcon from "@mui/icons-material/PersonOff";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Modal } from "@mui/material";
+import UserDetails from "./UserDetails";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -74,6 +76,9 @@ const ListBody = styled(Box)`
 
 const Users = () => {
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box
@@ -149,7 +154,14 @@ const Users = () => {
             {ItemList.map((item, index) => (
               <>
                 <ListBody>#751</ListBody>
-                <ListBody>
+                <ListBody
+                  onClick={handleOpen}
+                  sx={{
+                    "&:hover": {
+                      cursor: "pointer",
+                    },
+                  }}
+                >
                   <img
                     src={product}
                     style={{
@@ -186,6 +198,14 @@ const Users = () => {
                 </ListBody>
               </>
             ))}
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <UserDetails />
+            </Modal>
             {/* {Object.keys(variants).map((id) => {
               const item = variants[`${id}`];
               console.log("item", item);
