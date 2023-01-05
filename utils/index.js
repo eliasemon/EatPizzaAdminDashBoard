@@ -72,6 +72,29 @@ export const showDataWithOutPagination =  (setState, collectionRef) => {
                                 })
                               }
 
+
+                              export const FixedProductDumy = () =>{
+                                showDataWithOutPaginationForCreation("productlist").then((docs)=>{
+                                  docs.forEach(  (doc) => {
+                                    const data = doc.data()
+                                    // data.id = `EatPizza-${shortUUID()}`
+                                    let lowestPrice = 100000000000;
+                                    let defualtVariant = {}
+                                    Object.keys(data.variants).forEach((key)=>{
+                                      const variant  =  data.variants[key]
+                                      if(lowestPrice > variant.sellingPrice){
+                                        lowestPrice = variant.sellingPrice
+                                        defualtVariant = {...variant}
+                                      }
+                                    })
+                                    delete data["defualtPrice"]
+                                    data.defualtVariant = defualtVariant
+                                    setDataToCollection(data , "productlist" , false)
+                                    
+                                  });
+                                })
+                              }
+
 export const getSingleDataWithOutRealTimeUpdates = async (collectionRef , idRef) => {
   const docRef = doc(db, `${collectionRef}`, `${idRef}`);
   const docSnap = await getDoc(docRef);

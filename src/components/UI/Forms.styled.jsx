@@ -2,7 +2,7 @@ import { styled } from "@mui/system";
 import { Typography, TextField } from "@mui/material";
 
 export const LabelText = styled(Typography)(({ theme }) => ({
-  fontSize: "1rem",
+  fontSize: "1.1rem",
   color: theme.palette.common.white,
   marginBottom: ".75rem",
 }));
@@ -17,7 +17,6 @@ export const InputText = styled(TextField)(({ theme }) => ({
   ".MuiInputBase-root": {
     backgroundColor: "secondary",
     border: "1px solid grey",
-   
   },
   input: {
     color: "white",

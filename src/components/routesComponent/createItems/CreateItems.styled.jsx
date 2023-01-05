@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const CreateItemsContainer = styled("div")(({ theme }) => ({
@@ -9,3 +10,7 @@ export const CreateItemsContainer = styled("div")(({ theme }) => ({
   borderRadius: "5px",
   backgroundColor: theme.palette.surface.dp01,
 }));
+
+export const InputWrapper = styled(Box)`
+  margin-top: 1rem;
+`;
