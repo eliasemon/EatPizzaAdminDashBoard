@@ -16,6 +16,7 @@ import TitleBar from "./../../UI/TitleBar";
 import { FilterSection } from "../addons/Addons.styled";
 import FilterView from "./../../UI/FilterView";
 import CreateAddons from "./../banner/CreateBanner";
+import ExtraCostCreation from "./ExtraCostCreation";
 
 const promoCodeModel = {
   name: "",
@@ -26,115 +27,202 @@ const promoCodeModel = {
   howManyTimesUsed: "",
   conditionAmmount: 0,
 };
+const ExtraCostCodeModel = {
+  name: "",
+  description: "",
+  costType: "",
+  costValue: "",
+};
 
 const PromoCode = () => {
   const [showData, setShowData] = useState("");
+  const [extraCostShowData , setExtraCostShowData] = useState("");
   const [createDtaUI, setcreateDtaUI] = useState(
     <CreatePromoCode EditAbleItem={promoCodeModel} status={false} />
+  );
+  const [createExtraCostUI, setcreateExtraCostUI] = useState(
+    <ExtraCostCreation EditAbleItem={ExtraCostCodeModel} status={false} />
   );
 
   useEffect(() => {
     showDataWithOutPagination(setShowData, "promoCode");
+    showDataWithOutPagination(setExtraCostShowData, "extraCost");
   }, []);
 
-  const deleteItems = (itemsID, itemName) => {
+  const deleteItems = (itemsID, itemName , type) => {
     if (
       window.confirm(
         `******************************************** \n\n Wait:= \n\n Do You Wanna Delete \n**"${itemName}"**\PromoCode Item!!! \n\n ********************************************`
       )
     ) {
+      if(type === "extraCost"){
+        delteColloctionInstance(itemsID, "extraCost");
+        return
+      }
       delteColloctionInstance(itemsID, "promoCode");
     }
   };
-  const clearUi = () => {
+  const clearUi = (type) => {
+    if(type === "extraCost"){
+      setcreateExtraCostUI(
+        <ExtraCostCreation EditAbleItem={ExtraCostCodeModel} status={false} />
+      )
+      return
+    }
     setcreateDtaUI(
       <CreatePromoCode EditAbleItem={promoCodeModel} status={false} />
     );
   };
-  const handelEditDataUi = (item) => {
+  const handelEditDataUi = (item , type) => {
+    if(type === "extraCost"){
+      setcreateExtraCostUI( 
+        <ExtraCostCreation EditAbleItem={item} status={true} clearUi={clearUi} />
+      ) 
+      return
+    }
+    
     setcreateDtaUI(
       <CreatePromoCode EditAbleItem={item} status={true} clearUi={clearUi} />
-    );
+      );
+
   };
 
   // code stolen from addons
-
-  const [items, setItems] = useState("");
-  const [selectedCatagories, setSelectedCatagories] = useState([]);
-  const clearFilterfun = () => {
-    setSelectedCatagories([]);
-  };
-
-  useEffect(() => {
-    if (selectedCatagories.length > 0) {
-      showDataByArrayQuers(
-        setItems,
-        "Addons",
-        selectedCatagories,
-        "selectedCatagories"
-      );
-    } else {
-      showDataWithOutPagination(setItems, "Addons");
-    }
-  }, [selectedCatagories]);
 
   return (
     <PromocodeContainer>
       <HalfBox color="blue">
         <TitleBar title="Creation Section" color="blue" />
         {createDtaUI}
+
+           <Box>
+              <List
+                 sx={{
+                   width: "100%",
+                   maxWidth: 400,
+                   marginTop: "5%",
+                   bgcolor: "secondary",
+                   position: "relative",
+                   overflow: "auto",
+                   color: "common.white",
+                   // maxHeight: 300,
+                   "& ul": { padding: 0 },
+                 }}
+                 subheader={<li />}
+               >
+                 {
+                   <ul>
+                     {showData && showData.map((doc) =>
+                     {
+                     const item = doc.data()
+                     item.id = doc.id ;
+                     return(
+                       <ListItem
+                         key={doc.id}
+                         sx={{
+                           backgroundColor: "secondary.dark",
+                           marginBottom: "5px",
+                           borderRadius: "5px",
+                         }}
+                       >
+                         <ListItemText primary={item.name} />
+                         <Box sx={{ display: "flex", gap: "10px" }}>
+                           <Box>
+                             <EditIcon
+                               onClick = {()=> handelEditDataUi(item)}
+                               sx={{
+                                 "&:hover": {
+                                   color: "secondary.light",
+                                   cursor: "pointer",
+                                 },
+                               }}
+                             />
+                           </Box>
+                           <Box>
+                             <DeleteIcon
+                               onClick={() => deleteItems(doc.id , item.name)}
+                               sx={{
+                                 "&:hover": {
+                                   color: "secondary.light",
+                                   cursor: "pointer",
+                                 },
+                               }}
+                             />
+                           </Box>
+                         </Box>
+                       </ListItem>
+                     )})}
+                   </ul>
+                 }
+               </List>
+          </Box>
+
       </HalfBox>
       <HalfBox color="green">
-        <TitleBar title="Promocode List" color="green" />
-        {/* <FilterSection>
-          <FilterView
-            selectedCatagories={selectedCatagories}
-            setSelectedCatagories={setSelectedCatagories}
-            clearFilterfun={clearFilterfun}
-            heading="Filter By Catagories"
-          />
-        </FilterSection> */}
-        <CategoryList subheader={<li />}>
-          <ul>
-            {items &&
-              items.map((doc) => {
-                const item = doc.data();
-                item.id = doc.id;
-                return (
-                  <ListElement key={item.id}>
-                    <Box>
-                      <ListItemText primary={item.name} />
-                      <ListItemText primary={`${item.price} ৳`} />
-                    </Box>
-                    <Box sx={{ display: "flex", gap: "10px" }}>
-                      <Box>
-                        <EditIcon
-                          onClick={() => handelEditDataUi(item)}
-                          sx={{
-                            "&:hover": {
-                              color: "secondary.light",
-                              cursor: "pointer",
-                            },
-                          }}
-                        />
-                      </Box>
-                      <Box>
-                        <DeleteIcon
-                          onClick={() => deleteItems(item.id, item.name)}
-                          sx={{
-                            "&:hover": {
-                              color: "secondary.light",
-                              cursor: "pointer",
-                            },
-                          }}
-                        />
-                      </Box>
-                    </Box>
-                  </ListElement>
-                );
-              })}
-          </ul>
-        </CategoryList>
+        <TitleBar title="Extra Cost" color="green" />
+        {createExtraCostUI}
+
+           <Box>
+              <List
+                 sx={{
+                   width: "100%",
+                   maxWidth: 400,
+                   marginTop: "5%",
+                   bgcolor: "secondary",
+                   position: "relative",
+                   overflow: "auto",
+                   color: "common.white",
+                   // maxHeight: 300,
+                   "& ul": { padding: 0 },
+                 }}
+                 subheader={<li />}
+               >
+                 {
+                   <ul>
+                     {extraCostShowData && extraCostShowData.map((doc) =>
+                     {
+                     const item = doc.data()
+                     item.id = doc.id ;
+                     return(
+                       <ListItem
+                         key={doc.id}
+                         sx={{
+                           backgroundColor: "secondary.dark",
+                           marginBottom: "5px",
+                           borderRadius: "5px",
+                         }}
+                       >
+                         <ListItemText primary={item.name} />
+                         <Box sx={{ display: "flex", gap: "10px" }}>
+                           <Box>
+                             <EditIcon
+                               onClick = {()=> handelEditDataUi(item , "extraCost")}
+                               sx={{
+                                 "&:hover": {
+                                   color: "secondary.light",
+                                   cursor: "pointer",
+                                 },
+                               }}
+                             />
+                           </Box>
+                           <Box>
+                             <DeleteIcon
+                               onClick={() => deleteItems(doc.id , item.name , "extraCost")}
+                               sx={{
+                                 "&:hover": {
+                                   color: "secondary.light",
+                                   cursor: "pointer",
+                                 },
+                               }}
+                             />
+                           </Box>
+                         </Box>
+                       </ListItem>
+                     )})}
+                   </ul>
+                 }
+               </List>
+          </Box>
       </HalfBox>
     </PromocodeContainer>
     // <Box
