@@ -275,7 +275,9 @@ const CardComponent = ({ el, setForceRender, color }) => {
     setExpanded(!expanded);
   };
 
-  const onClickButtonHandler = (id, pendingArr, cookingArr) => {
+  const onClickButtonHandler = (id, pendingArr, cookingArr,readyArr) => {
+
+    //
     const newArr = pendingArr.filter((el) => {
       if (el.orderId == id) {
         cookingArr.push(el);
