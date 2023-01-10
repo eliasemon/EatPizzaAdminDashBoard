@@ -36,7 +36,7 @@ export const SidebarContainer = styled("div")(({ theme }) => ({
   },
 }));
 
-export const ListButton = styled("div")(({ theme }) => ({
+export const ListButton = styled("div")(({ theme, selected }) => ({
   // margin: "5% 15%",
   // margin: "2.5%",
   padding: "5%",
@@ -46,6 +46,7 @@ export const ListButton = styled("div")(({ theme }) => ({
   //  padding: "10px",
   borderRadius: "5px",
   display: "flex",
+  backgroundColor: selected && theme.palette.primary.main,
   "&:hover": {
     backgroundColor: theme.palette.primary.main,
     transitionDuration: ".5s",

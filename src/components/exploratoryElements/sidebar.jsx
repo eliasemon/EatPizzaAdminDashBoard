@@ -11,19 +11,19 @@ import {
 
 const SideBar = () => {
  
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleListItemClick = (event, index) => {
-    event.preventDefault()
+    event.preventDefault();
     setSelectedIndex(index);
   };
 
   return (
     <SidebarContainer>
-      {categories.map((item) => (
+      {categories.map((item, index) => (
         <ListButton
-          onClick={(event) => handleListItemClick(event, 0)}
-          selected={selectedIndex === 0}
+          onClick={(event) => handleListItemClick(event, index)}
+          selected={selectedIndex === index}
           key={item.id}
         >
           <StyledLink to={item.link}>
