@@ -1,5 +1,5 @@
 import { Box, Button } from "@material-ui/core";
-import React from "react";
+import {useState, useEffect , useRef} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import ItemList from "../../../constants/ItemsList";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import product from "../../../assets/images/product.jpg";
+import usePagination from "../../../hooks/usePagination";
+import { showDataWithPagination , delteColloctionInstance} from "../../../../utils";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -75,6 +76,24 @@ const ListBody = styled(Box)`
 
 const AllItems = () => {
   const navigate = useNavigate();
+  const [items , setItems] =  useState("");
+  const itemDocsRefAll = useRef(null);
+  const {ui , activepage, changeTheLocalTotal  } = usePagination(1)
+  const limitation  = 8;
+  useEffect(()=>{
+    showDataWithPagination(setItems,  "productlist" , 0 , limitation, true).then((docs)=>{
+      itemDocsRefAll.current = docs
+      changeTheLocalTotal( Math.ceil( Number(docs.length) / limitation))
+
+      showDataWithPagination(setItems,  "productlist" , 0 , limitation)
+    })
+  },[])
+  useEffect(()=>{
+    if(itemDocsRefAll.current){
+      showDataWithPagination(setItems,  "productlist" , itemDocsRefAll.current[(limitation * (activepage - 1))] , limitation)
+    }
+  },[activepage])
+
 
   return (
     <Box
@@ -103,16 +122,7 @@ const AllItems = () => {
             padding: "2% 1% 0",
           }}
         >
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Enter user ID or username or phonenumber"
-              inputProps={{ "aria-label": "search" }}
-              sx={{ color: "#fff" }}
-            />
-          </Search>
+          
           <Button
             onClick={() => navigate("/createitem")}
             variant="contained"
@@ -144,18 +154,30 @@ const AllItems = () => {
             <ListHeader>Edit Items</ListHeader>
             <ListHeader>Delete Items</ListHeader>
           </Box>
+            <Box
+              sx={{
+                height: "35%",
+              width: "100%",
+              boxSizing : "border-box",
+              flex: 1,
+              }}
+            >
+
+            
+          {items && items.map((doc) => {
+              const item = doc.data()
+              item.id = doc.id
+            return (
           <Box
             sx={{
-              height: "35%",
+              // height: "35%",
               // width: "35%",
-              flex: 1,
+              // flex: 1,
               display: "grid",
               gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr 1fr",
-              overflowY: "scroll",
             }}
+            key={item.id}
           >
-            {ItemList.map((item) => (
-              <>
                 <ListBody>{item.id}</ListBody>
                 <ListBody>
                   <img
@@ -169,11 +191,11 @@ const AllItems = () => {
                   />
                   {item.name}
                 </ListBody>
-                <ListBody>50</ListBody>
-                <ListBody>45</ListBody>
+                <ListBody>{item.defualtVariant.regularPrice}</ListBody>
+                <ListBody>{item.defualtVariant.sellingPrice}</ListBody>
                 <ListBody>
                   <EditIcon
-                    onClick={() => console.log("EditIcon clicked")}
+                    onClick={() => navigate(`/createitem/${item.id}`)}
                     sx={{
                       "&:hover": {
                         color: "secondary.light",
@@ -184,7 +206,7 @@ const AllItems = () => {
                 </ListBody>
                 <ListBody>
                   <DeleteIcon
-                    onClick={() => console.log("EditIcon clicked")}
+                    onClick={() => delteColloctionInstance(item.id , "productlist" , item.image.imgRef)}
                     sx={{
                       "&:hover": {
                         color: "secondary.light",
@@ -193,55 +215,10 @@ const AllItems = () => {
                     }}
                   />
                 </ListBody>
-              </>
-            ))}
-            {/* {Object.keys(variants).map((id) => {
-              const item = variants[`${id}`];
-              console.log("item", item);
-              return (
-                <>
-                <ListBody>{item.name}</ListBody>
-                <ListBody>{item.regularPrice}</ListBody>
-                <ListBody>{item.sellingPrice}</ListBody>
-                <ListBody>
-                <EditIcon
-                onClick={() =>
-                  setVariantUI(
-                    <AddVariants
-                  incomingItem={item}
-                  onStateLift={onVariantStateLift}
-                  />
-                  )
-                }
-                sx={{
-                  "&:hover": {
-                    color: "secondary.light",
-                    cursor: "pointer",
-                  },
-                }}
-                />
-                </ListBody>
-                <ListBody>
-                <DeleteIcon
-                onClick={() => deleteVariantsHandle(item.id)}
-                sx={{
-                  "&:hover": {
-                    color: "secondary.light",
-                    cursor: "pointer",
-                  },
-                }}
-                />
-                </ListBody>
-                </>
-                // {defualtVariant.id == id && (
-                  //   <ListItemText
-                  //     primary={"Defualt"}
-                  //     sx={{ color: "green" }}
-                  //   />
-                  // )}
-                  );
-                })} */}
           </Box>
+          )})}
+          </Box>
+          {ui}
         </Box>
       </Box>
     </Box>
