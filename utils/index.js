@@ -13,22 +13,40 @@ import {
   query,
   orderBy,
   startAt,
+  startAfter,
   endAt,
-  limit } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+  limit,
+  getCountFromServer } from "firebase/firestore";
+import { db , firebaseApp } from "../firebaseConfig";
 import { closeLoading, showLoading } from '../src/components/loading/loading';
-import { async } from '@firebase/util';
 
-export const showDataWithPagination = (setState, collectionRef, startingPoint, limitation, fristAttemp) => {
-  const q = query(collection(db, `${collectionRef}`), orderBy("name"), startAt(startingPoint), limit(limitation));
+export const showDataWithPagination = async (setState, collectionRef, startingPoint, limitation, fristAttemp) => {
+  const q = query(collection(db, `${collectionRef}`),orderBy("name")  , startAfter(startingPoint) , limit(limitation) );
+  console.log(startingPoint)
   if (fristAttemp) {
-    // getDocs(collection(db, `${collectionRef}`) , (snapshot) => {
-    // })
+    // const snapshot = await getCountFromServer(collection(db, `${collectionRef}`))
+    const snapshot = await getDocs(collection(db, `${collectionRef}`))
+    return snapshot.docs
   }
-  onSnapshot(q, (snapshot) => {
-    setState(prv => ({ ...prv, snapshot: snapshot }))
-    //   .forEach(doc => console.log(doc.data()))  
-  })
+  else{
+    onSnapshot(q, (snapshot)=>{
+      setState(snapshot.docs)
+    })
+  }
+}
+
+
+export const getDataWithInfinityScroll = async ( setItems , collectionRef , limitation , lastDoc , queryObj ) =>{
+  
+  let q;
+  if(queryObj){
+    q = query(collection(db, `${collectionRef}`),where(`${queryObj.queryField}` ,  'array-contains-any' , queryObj.queryArray ) ,orderBy("name"), startAfter(lastDoc || 0), limit(limitation));
+  }else{
+    q = query(collection(db, `${collectionRef}`), orderBy("name"), startAfter (lastDoc || 0), limit(limitation));
+  }
+    const data = await getDocs(q)
+  // console.log(data.docs.length)
+  setItems(data.docs)
 }
 
 export const showDataWithOutPagination =  (setState, collectionRef) => {
@@ -177,11 +195,18 @@ const isExist = async (colRef , itemsName) =>{
   return true
 }
 
+import { getStorage, ref, deleteObject } from "firebase/storage";
 
 
-export const delteColloctionInstance = async (itemsID, collectionRef) => {
+
+export const delteColloctionInstance = async (itemsID, collectionRef , isImageRef) => {
   try {
     showLoading()
+    if(isImageRef){
+      const storage = getStorage(firebaseApp);
+      const desertRef = ref(storage, `${isImageRef}`);
+      await deleteObject(desertRef)
+    }
     await deleteDoc(doc(db, `${collectionRef}`, `${itemsID}`));
     closeLoading()
     toast.success(`${collectionRef} Item deleted Succesfully!`)
