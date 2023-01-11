@@ -89,7 +89,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: "1.5rem",
+        gap: ".3rem",
       }}
     >
       {/* <Typography color="white" py={1}>
@@ -250,7 +250,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
         {/* <Typography>
         {`This Promo-Code Will Be Valid In More Than ${items.conditionAmmount} Tk. Order  `}
       </Typography> */}
-        <Box>
+        <Box sx={{ width: "50%", marginLeft: "5%" }}>
           <LabelText>Order amount condition</LabelText>
           <InputText
             color="common"

@@ -70,7 +70,7 @@ const Banner = () => {
         <TitleBar title="Creation Section" color="blue" />
         {createDtaUI}
       </HalfBox>
-      <HalfBox color="green">
+      {/* <HalfBox color="green">
         <TitleBar title="Addons On The Store" color="green" />
         <CategoryList subheader={<li />}>
           <ul>
@@ -113,7 +113,7 @@ const Banner = () => {
               })}
           </ul>
         </CategoryList>
-      </HalfBox>
+      </HalfBox> */}
     </BannerContainer>
   );
 };

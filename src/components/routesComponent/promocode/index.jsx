@@ -92,7 +92,7 @@ const PromoCode = () => {
   return (
     <PromocodeContainer>
       <HalfBox color="blue">
-        <TitleBar title="Creation Section" color="blue" />
+        <TitleBar title="Promocode Section" color="blue" />
         {createDtaUI}
 
            <Box>
