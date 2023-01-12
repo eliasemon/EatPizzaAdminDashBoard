@@ -63,7 +63,7 @@ const categories = [
   },
   {
     id: 9,
-    title: "promocode",
+    title: "promotion / cost",
     link: "/promocode",
     icon: <BeenhereIcon />,
   },

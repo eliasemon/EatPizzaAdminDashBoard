@@ -81,11 +81,11 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
   ];
   return (
     <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "1.5rem",
-      }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1.4rem",
+        }}
     >
       {/* <Typography color="white" py={1}>
         {status
