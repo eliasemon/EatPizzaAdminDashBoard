@@ -95,10 +95,10 @@ const PromoCode = () => {
         <TitleBar title="Promocode Section" color="blue" />
         {createDtaUI}
 
-           <Box sx = {{position : 'relative'}}>
+           <Box sx = {{ boxSizing:'border-box', position : 'relative'}}>
               <List
                  sx={{
-                  boxSizing:'border-box',   
+                    
                   width: "100%",
                   maxWidth: '50%',
                   maxHeight: '20vh',
