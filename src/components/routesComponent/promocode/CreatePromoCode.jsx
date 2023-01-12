@@ -279,8 +279,8 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
         This Promo-Code Will Be Valid In More Than {items.conditionAmmount} Tk.
         Order
       </LabelText>
-
-      <Box sx={{ display: "flex", gap: "2%" }}>
+  
+ <Box sx={{ display: "flex", gap: "2%" }}>
         {status ? (
           <Button
             onClick={updateFireStoreValue}
