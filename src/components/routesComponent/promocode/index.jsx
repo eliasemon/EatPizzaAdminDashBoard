@@ -91,21 +91,24 @@ const PromoCode = () => {
 
   return (
     <PromocodeContainer>
-      <HalfBox color="blue">
-        <TitleBar title="Creation Section" color="blue" />
+      <HalfBox color="blue" >
+        <TitleBar title="Promocode Section" color="blue" />
         {createDtaUI}
 
-           <Box>
+           <Box sx = {{position : 'relative'}}>
               <List
                  sx={{
+                  
                    width: "100%",
                    maxWidth: 400,
-                   marginTop: "5%",
+                   maxHeight: 220,
+                   marginTop: "-6%",
+                   marginLeft:'250px',
+                   marginBottom:'100px',
                    bgcolor: "secondary",
-                   position: "relative",
-                   overflow: "auto",
+                   position: "absolute",
+                   overflowY: "scroll",
                    color: "common.white",
-                   // maxHeight: 300,
                    "& ul": { padding: 0 },
                  }}
                  subheader={<li />}
@@ -162,16 +165,19 @@ const PromoCode = () => {
         <TitleBar title="Extra Cost" color="green" />
         {createExtraCostUI}
 
-           <Box>
+           <Box sx = {{position : 'relative'}}>
               <List
                  sx={{
-                   width: "100%",
-                   maxWidth: 400,
-                   marginTop: "5%",
-                   bgcolor: "secondary",
-                   position: "relative",
-                   overflow: "auto",
-                   color: "common.white",
+                  width: "100%",
+                  maxWidth: 400,
+                  maxHeight: 220,
+                  marginTop: "-6%",
+                  marginLeft:'250px',
+                  marginBottom:'100px',
+                  bgcolor: "secondary",
+                  position: "absolute",
+                  overflowY: "scroll",
+                  color: "common.white",
                    // maxHeight: 300,
                    "& ul": { padding: 0 },
                  }}

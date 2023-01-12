@@ -52,6 +52,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
     setExpanded(!expanded);
   };
 
+
   const db = getFirestore()
   const colRef = doc(db, "ordersList" , `${el.id}` );
   const onClickButtonHandler = async () => {

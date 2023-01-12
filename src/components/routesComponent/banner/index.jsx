@@ -70,50 +70,7 @@ const Banner = () => {
         <TitleBar title="Creation Section" color="blue" />
         {createDtaUI}
       </HalfBox>
-      <HalfBox color="green">
-        <TitleBar title="Addons On The Store" color="green" />
-        <CategoryList subheader={<li />}>
-          <ul>
-            {items &&
-              items.map((doc) => {
-                const item = doc.data();
-                item.id = doc.id;
-                return (
-                  <ListElement key={item.id}>
-                    <Box>
-                      <ListItemText primary={item.name} />
-                      <ListItemText primary={`${item.price} ৳`} />
-                    </Box>
-                    <Box sx={{ display: "flex", gap: "10px" }}>
-                      <Box>
-                        <EditIcon
-                          onClick={() => handelEditDataUi(item)}
-                          sx={{
-                            "&:hover": {
-                              color: "secondary.light",
-                              cursor: "pointer",
-                            },
-                          }}
-                        />
-                      </Box>
-                      <Box>
-                        <DeleteIcon
-                          onClick={() => deleteItems(item.id, item.name)}
-                          sx={{
-                            "&:hover": {
-                              color: "secondary.light",
-                              cursor: "pointer",
-                            },
-                          }}
-                        />
-                      </Box>
-                    </Box>
-                  </ListElement>
-                );
-              })}
-          </ul>
-        </CategoryList>
-      </HalfBox>
+     
     </BannerContainer>
   );
 };
