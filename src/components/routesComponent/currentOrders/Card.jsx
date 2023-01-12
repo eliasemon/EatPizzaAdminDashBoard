@@ -14,240 +14,17 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import OrderQuantity from "../createItems/OrderQuantity";
 import product from "../../../assets/images/product2.png";
+import OrderQuantity from "./OrderQuantity";
+import { getFirestore , doc , updateDoc} from "firebase/firestore";
+import { delteColloctionInstanceWithOutLoadingAnimation } from "../../../../utils";
 
-export let pendingDummyArr = [
-  {
-    name: "Elias Emon",
-    orderId: "#44423",
-    mobile: "01920143161",
-    paymentStatus: "Cash On Delivery",
-    total: 320,
-    comments: "tumi jemne paro randho ami khaite parlei chole",
-    products: [
-      {
-        image: product,
-        text: "Wow! That looks delicious",
-        price: "305",
-        qty: "2",
-      },
-      {
-        image: product,
-        text: "Wow! ",
-        price: "80",
-        qty: "1",
-      },
-      {
-        image: product,
-        text: "Wow! delicious",
-        price: "95",
-        qty: "3",
-      },
-    ],
-  },
+const orderStatusChanged = {
+  pending : "inCoocked",
+  inCoocked : "picked",
+  picked : "compleate"
 
-  {
-    name: "Mr Azizul",
-    orderId: "#12346",
-    mobile: "01920145175",
-    paymentStatus: "Cash On Delivery",
-    total: 820,
-    comments: "",
-    products: [
-      {
-        image: product,
-        text: "jhal fried",
-        price: "305",
-        qty: "10",
-      },
-      {
-        image: product,
-        text: "Wow! ",
-        price: "10",
-        qty: "34",
-      },
-      {
-        image: product,
-        text: "Wow! delicious",
-        price: "75",
-        qty: "12",
-      },
-    ],
-  },
-  {
-    name: "Mr Arif",
-    orderId: "#124546",
-    mobile: "019201445655",
-    paymentStatus: "Cash On Delivery",
-    total: 3640,
-    comments: "",
-    products: [
-      {
-        image: product,
-        text: "jhal fried ",
-        price: "105",
-        qty: "18",
-      },
-      {
-        image: product,
-        text: "Wow! checken curry",
-        price: "100",
-        qty: "4",
-      },
-      {
-        image: product,
-        text: "Wow! delicious",
-        price: "75",
-        qty: "18",
-      },
-    ],
-  },
-  {
-    name: "Mh Murshed",
-    orderId: "#442378",
-    mobile: "01920145161",
-    paymentStatus: "Cash On Delivery",
-    total: 720,
-    comments: "",
-    products: [
-      {
-        image: product,
-        text: "Wow! That looks delicious",
-        price: "305",
-        qty: "20",
-      },
-      {
-        image: product,
-        text: "Wow! ",
-        price: "80",
-        qty: "14",
-      },
-      {
-        image: product,
-        text: "Wow! delicious",
-        price: "15",
-        qty: "2",
-      },
-    ],
-  },
-  {
-    name: "Mh Murshed",
-    orderId: "#445423",
-    mobile: "01920145161",
-    paymentStatus: "Cash On Delivery",
-    total: 720,
-    comments: "",
-    products: [
-      {
-        image: product,
-        text: "Wow! That looks delicious",
-        price: "305",
-        qty: "20",
-      },
-      {
-        image: product,
-        text: "Wow! ",
-        price: "80",
-        qty: "14",
-      },
-      {
-        image: product,
-        text: "Wow! delicious",
-        price: "15",
-        qty: "2",
-      },
-    ],
-  },
-  {
-    name: "Mh Murshed",
-    orderId: "#442478",
-    mobile: "01920145161",
-    paymentStatus: "Cash On Delivery",
-    total: 720,
-    comments: "",
-    products: [
-      {
-        image: product,
-        text: "Wow! That looks delicious",
-        price: "305",
-        qty: "20",
-      },
-      {
-        image: product,
-        text: "Wow! ",
-        price: "80",
-        qty: "14",
-      },
-      {
-        image: product,
-        text: "Wow! delicious",
-        price: "15",
-        qty: "2",
-      },
-    ],
-  },
-];
-export let cookingDummyArr = [
-  {
-    name: "Mh Murshed",
-    orderId: "#442347",
-    mobile: "01920145161",
-    paymentStatus: "Cash On Delivery",
-    total: 720,
-    comments: "",
-    products: [
-      {
-        image: product,
-        text: "Wow! That looks delicious",
-        price: "305",
-        qty: "20",
-      },
-      {
-        image: product,
-        text: "Wow! ",
-        price: "80",
-        qty: "14",
-      },
-      {
-        image: product,
-        text: "Wow! delicious",
-        price: "15",
-        qty: "2",
-      },
-    ],
-  },
-];
-export let readyDummyArr = [
-  {
-    name: "Mh Murshed",
-    orderId: "#442347",
-    mobile: "01920145161",
-    paymentStatus: "Cash On Delivery",
-    total: 720,
-    comments: "",
-    products: [
-      {
-        image: product,
-        text: "Wow! That looks delicious",
-        price: "305",
-        qty: "20",
-      },
-      {
-        image: product,
-        text: "Wow! ",
-        price: "80",
-        qty: "14",
-      },
-      {
-        image: product,
-        text: "Wow! delicious",
-        price: "15",
-        qty: "2",
-      },
-    ],
-  },
-];
+}
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -269,25 +46,53 @@ const Header = ({ name, orderId, mobile }) => {
   );
 };
 
-const CardComponent = ({ el, setForceRender, color }) => {
+const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const onClickButtonHandler = (id, pendingArr, cookingArr,readyArr) => {
 
-    //
-    const newArr = pendingArr.filter((el) => {
-      if (el.orderId == id) {
-        cookingArr.push(el);
-      }
-      return el.orderId != id;
-    });
-    pendingDummyArr = newArr;
-    setForceRender((prv) => !prv);
+  const db = getFirestore()
+  const colRef = doc(db, "ordersList" , `${el.id}` );
+  const onClickButtonHandler = async () => {
+    await updateDoc( colRef ,{status : orderStatusChanged[el.status]})
+    if(el.status === "picked"){
+      delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
+      setUnHandleOrderDocs((prv) =>{
+        delete prv[el.id]
+        return {...prv}
+      })
+    }else{
+      setUnHandleOrderDocs((prv) =>{
+        prv[el.id].status =  orderStatusChanged[el.status]
+        return {...prv}
+      })
+    }
   };
-  console.log("pend", pendingDummyArr);
+  const declineOrder = async (type) =>{
+     await updateDoc( colRef ,{status : type})
+      delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
+      setUnHandleOrderDocs((prv) =>{
+        delete prv[el.id]
+        return {...prv}
+      })
+  }
+  // console.log("pend", pendingDummyArr);
+
+  if(!el.isValided){
+    return (
+      <Box>
+        <CardHeaderStyles>
+          <Header name={el.userName} orderId={el.id} mobile={el?.userPhoneNumber} />
+          <Box>
+            <Typography> Order has Some issue </Typography>
+            <Button onClick={() => declineOrder("Manipulated")}>Decline the Oreder</Button>
+          </Box>
+        </CardHeaderStyles>
+      </Box>
+    )
+  }
   return (
     <Card
       sx={{
@@ -296,8 +101,8 @@ const CardComponent = ({ el, setForceRender, color }) => {
         padding: "10px",
       }}
     >
-      <CardHeaderStyles>
-        <Header name={el.name} orderId={el.orderId} mobile={el.mobile} />
+      <CardHeaderStyles onClick={handleExpandClick} sx={{cursor : "pointer"}} >
+        <Header name={el.userName} orderId={el.id} mobile={el?.userPhoneNumber} />
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -309,23 +114,9 @@ const CardComponent = ({ el, setForceRender, color }) => {
       </CardHeaderStyles>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        {el.products.map((pd) => (
-          <OrderQuantity product={pd} />
+        {Object.keys(el.items).map((key) => (
+          <OrderQuantity key ={key} product={el.items[key]} />
         ))}
-        {el.comments && (
-          <Box
-            sx={{
-              width: "95%",
-              height: "10vh",
-              border: "1px solid #353535",
-              padding: "10px",
-              margin: "20px auto",
-              borderRadius: "5px",
-            }}
-          >
-            <Typography color="#cbcbcb">NOTE : {el.comments}</Typography>
-          </Box>
-        )}
         <Box
           sx={{
             disply: "flex",
@@ -336,23 +127,34 @@ const CardComponent = ({ el, setForceRender, color }) => {
           }}
         >
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography color="white">Subtotal</Typography>
+            <Typography color="white">৳ {el.subTottal}</Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography color="white">Delivery And Other Cost</Typography>
+            <Typography color="white">৳ {el.totalExtraCost}</Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography color="white">- Discount</Typography>
+            <Typography color="white"> -{el.discountAmmount}</Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography color="white">Total</Typography>
-            <Typography color="white">৳ {el.total}</Typography>
+            <Typography color="white">৳ {el.TotalOrderAmmount}</Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography color="white">Payment Method</Typography>
-            <Typography color="white">{el.paymentStatus}</Typography>
+            <Typography color="white">{el.paymentType}</Typography>
+          </Box>
+
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography color="white">Shiping Address</Typography>
+            <Typography color="white">{el.shipingAddress}</Typography>
           </Box>
         </Box>
+        <Button onClick={() => declineOrder("cancel")}>Cancel</Button>
         <Button
-          onClick={() =>
-            onClickButtonHandler(
-              el.orderId,
-              pendingDummyArr,
-              cookingDummyArr,
-              readyDummyArr
-            )
-          }
+          onClick={onClickButtonHandler}
           mt={1}
           variant="contained"
           fullWidth

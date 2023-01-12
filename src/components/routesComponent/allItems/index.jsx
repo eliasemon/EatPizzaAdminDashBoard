@@ -181,7 +181,7 @@ const AllItems = () => {
                 <ListBody>{item.id}</ListBody>
                 <ListBody>
                   <img
-                    src={product}
+                    src={item.image.imageDownloadUrl}
                     style={{
                       width: "50px",
                       height: "50px",
