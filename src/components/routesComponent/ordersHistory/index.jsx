@@ -1,13 +1,14 @@
 import { Box, Button } from "@material-ui/core";
-import React from "react";
+import { useState , useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import ItemList from "../../../constants/ItemsList";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
-
 import { Chip } from "@mui/material";
+import { showDataWithPagination } from "../../../../utils";
+import { toast } from "react-toastify";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -73,7 +74,37 @@ const ListBody = styled(Box)`
 `;
 
 const OrdersHistory = () => {
-  const navigate = useNavigate();
+
+  const [ordersList , setOrdersList] = useState("");
+  // const [open, setOpen] = useState(true);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
+
+  const [searchOrderId , setSearchOrderId] = useState("")
+  const limitation = 8;
+
+
+  const onSearchButtonClick = () =>{
+          getSingleDataWithOutRealTimeUpdates("ordersList" , searchOrderId , true).then((data) => {
+            setOrdersList(data)
+          }).catch((error) =>{
+            toast.error("No Data Found");
+          })
+  }
+
+
+console.log(ordersList)
+  useEffect(()=>{
+    showDataWithPagination(setOrdersList,  "ordersList" , 0 , limitation, false , "creationTime" )
+  },[])
+
+  const onPaginationHandle = (type) =>{
+    if(type){
+      showDataWithPagination(setOrdersList,  "ordersList" , 0 , limitation, false , "creationTime" )
+      return
+    }
+    showDataWithPagination(setOrdersList,  "ordersList" , ordersList[limitation-1] , limitation, false , "creationTime" )
+  }
 
   return (
     <Box
@@ -107,13 +138,16 @@ const OrdersHistory = () => {
               <SearchIcon color="#" />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Enter order ID or username or phonenumber"
+              onChange={(e)=> setSearchOrderId(e.target.value)}
+              value={searchOrderId}
+              placeholder="Enter order ID"
               inputProps={{ "aria-label": "search" }}
               sx={{
                 color: "#fff",
               }}
             />
           </Search>
+          <Button onClick={onSearchButtonClick}>Search</Button>
         </Box>
         <Box
           sx={{
@@ -137,22 +171,29 @@ const OrdersHistory = () => {
             <ListHeader>Status</ListHeader>
             <ListHeader>Download</ListHeader>
           </Box>
-          <Box
-            sx={{
+          <Box sx={{
               height: "35%",
-              // width: "35%",
+              width: "100%",
+              overflowY: "scroll",
+          }}>
+          {ordersList && ordersList.map((doc , index) =>{
+              const item = doc.data()
+              const creationDate = new Date(Number(item.creationTime))
+              return(
+          <Box
+            key={item.id}
+            sx={{
+              
               flex: 1,
               display: "grid",
               gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
-              overflowY: "scroll",
+              
             }}
           >
-            {ItemList.map((item, index) => (
-              <>
                 <ListBody>#751</ListBody>
-                <ListBody>{item.name}</ListBody>
-                <ListBody>+8801771551910</ListBody>
-                <ListBody>2:30 12 July 2022</ListBody>
+                <ListBody>{item.userName}</ListBody>
+                <ListBody>{item?.userPhoneNumber}</ListBody>
+                <ListBody>{creationDate.toLocaleString()}</ListBody>
                 <ListBody>
                   <Chip
                     label={index % 2 == 0 ? "Delivered" : "Cancelled"}
@@ -170,54 +211,10 @@ const OrdersHistory = () => {
                     }}
                   />
                 </ListBody>
-              </>
-            ))}
-            {/* {Object.keys(variants).map((id) => {
-              const item = variants[`${id}`];
-              console.log("item", item);
-              return (
-                <>
-                <ListBody>{item.name}</ListBody>
-                <ListBody>{item.regularPrice}</ListBody>
-                <ListBody>{item.sellingPrice}</ListBody>
-                <ListBody>
-                <EditIcon
-                onClick={() =>
-                  setVariantUI(
-                    <AddVariants
-                  incomingItem={item}
-                  onStateLift={onVariantStateLift}
-                  />
-                  )
-                }
-                sx={{
-                  "&:hover": {
-                    color: "secondary.light",
-                    cursor: "pointer",
-                  },
-                }}
-                />
-                </ListBody>
-                <ListBody>
-                <DeleteIcon
-                onClick={() => deleteVariantsHandle(item.id)}
-                sx={{
-                  "&:hover": {
-                    color: "secondary.light",
-                    cursor: "pointer",
-                  },
-                }}
-                />
-                </ListBody>
-                </>
-                // {defualtVariant.id == id && (
-                  //   <ListItemText
-                  //     primary={"Defualt"}
-                  //     sx={{ color: "green" }}
-                  //   />
-                  // )}
-                  );
-                })} */}
+              </Box>
+            )})}
+            <Button onClick={() => onPaginationHandle(false)} disabled={ordersList[limitation - 1] ? false : true}>Next</Button>
+          <Button onClick={() => onPaginationHandle (true)} >First page</Button>
           </Box>
         </Box>
       </Box>

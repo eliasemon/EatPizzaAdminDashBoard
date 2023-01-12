@@ -20,9 +20,8 @@ import {
 import { db , firebaseApp } from "../firebaseConfig";
 import { closeLoading, showLoading } from '../src/components/loading/loading';
 
-export const showDataWithPagination = async (setState, collectionRef, startingPoint, limitation, fristAttemp) => {
-  const q = query(collection(db, `${collectionRef}`),orderBy("name")  , startAfter(startingPoint) , limit(limitation) );
-  console.log(startingPoint)
+export const showDataWithPagination = async (setState, collectionRef, startingPoint, limitation, fristAttemp , orderByFilter , descSorting) => {
+  const q = query(collection(db, `${collectionRef}`),orderBy(orderByFilter ? orderByFilter : "name")  , startAfter(startingPoint) , limit(limitation) );
   if (fristAttemp) {
     // const snapshot = await getCountFromServer(collection(db, `${collectionRef}`))
     const snapshot = await getDocs(collection(db, `${collectionRef}`))
@@ -36,18 +35,6 @@ export const showDataWithPagination = async (setState, collectionRef, startingPo
 }
 
 
-export const getDataWithInfinityScroll = async ( setItems , collectionRef , limitation , lastDoc , queryObj ) =>{
-  
-  let q;
-  if(queryObj){
-    q = query(collection(db, `${collectionRef}`),where(`${queryObj.queryField}` ,  'array-contains-any' , queryObj.queryArray ) ,orderBy("name"), startAfter(lastDoc || 0), limit(limitation));
-  }else{
-    q = query(collection(db, `${collectionRef}`), orderBy("name"), startAfter (lastDoc || 0), limit(limitation));
-  }
-    const data = await getDocs(q)
-  // console.log(data.docs.length)
-  setItems(data.docs)
-}
 
 export const showDataWithOutPagination =  (setState, collectionRef) => {
 
@@ -113,12 +100,16 @@ export const showDataWithOutPagination =  (setState, collectionRef) => {
                                 })
                               }
 
-export const getSingleDataWithOutRealTimeUpdates = async (collectionRef , idRef) => {
+export const getSingleDataWithOutRealTimeUpdates = async (collectionRef , idRef , search) => {
   const docRef = doc(db, `${collectionRef}`, `${idRef}`);
   const docSnap = await getDoc(docRef);
   return new Promise((resolve , reject)=>{
     if (docSnap.exists()) {
-      resolve(docSnap.data())
+      if(search){
+        resolve(docSnap)
+      }else{
+        resolve(docSnap.data())
+      }
     }else{
       reject("SomeThings went worng don't do piracy")
     }
@@ -212,6 +203,23 @@ export const delteColloctionInstance = async (itemsID, collectionRef , isImageRe
     toast.success(`${collectionRef} Item deleted Succesfully!`)
   } catch (e) {
     closeLoading()
+    toast.error("Server Connection Faild ");
+  }
+  
+}
+
+export const delteColloctionInstanceWithOutLoadingAnimation = async (itemsID, collectionRef , isImageRef) => {
+  try {
+
+    if(isImageRef){
+      const storage = getStorage(firebaseApp);
+      const desertRef = ref(storage, `${isImageRef}`);
+      await deleteObject(desertRef)
+    }
+    await deleteDoc(doc(db, `${collectionRef}`, `${itemsID}`));
+    closeLoading()
+    toast.success(`${collectionRef} Item deleted Succesfully!`)
+  } catch (e) {
     toast.error("Server Connection Faild ");
   }
   

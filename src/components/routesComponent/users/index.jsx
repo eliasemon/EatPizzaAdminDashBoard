@@ -1,5 +1,5 @@
-import { Box, Button, Typography } from "@material-ui/core";
-import React from "react";
+import { Box, Button, Typography } from "@mui/material";
+import  { useState, useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,9 @@ import PersonOffIcon from "@mui/icons-material/PersonOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Modal } from "@mui/material";
 import UserDetails from "./UserDetails";
+import { showDataWithPagination , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
+import { getFirestore , doc , updateDoc} from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -74,12 +77,77 @@ const ListBody = styled(Box)`
   border-bottom: 1px solid #212020;
 `;
 
+const inputValidate = (state) => {
+    if(state == ""){
+      return ""
+    }
+    if (state.startsWith('8')) {
+      return `+${state}`
+    }
+    if (state.startsWith('+')) {
+      return state
+    }
+
+    if (state.startsWith('0') ) {
+      return `+88${state}`
+    }
+    return false
+}
+
+
 const Users = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  const [usersList , setUserList] = useState("");
+  const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [searchPhone , setSearchPhone] = useState("")
+  const limitation = 8;
+
+  const searchHandle = (e) =>{
+    const data = inputValidate(e.target.value)
+    if(data === ""){
+      setSearchPhone(data)
+      return
+    }
+    if(data){
+      setSearchPhone(data)
+    }else{
+      toast.error("Please Type Properly");
+    }
+  }
+
+
+  useEffect(()=>{
+    if(searchPhone.length === 14){
+      getSingleDataWithOutRealTimeUpdates("usersList" , searchPhone , true).then((data) => {
+        setUserList(data)
+      }).catch((error) =>{
+        toast.error("No Data Found");
+      })
+    }
+  },[searchPhone])
+
+
+  useEffect(()=>{
+    showDataWithPagination(setUserList,  "usersList" , 0 , limitation, false , "fullName")
+  },[])
+
+  const onPaginationHandle = (type) =>{
+    if(type){
+      showDataWithPagination(setUserList,  "usersList" , 0 , limitation, false , "fullName")
+      return
+    }
+    showDataWithPagination(setUserList,  "usersList" , usersList[limitation-1] , limitation, false , "fullName")
+  }
+
+
+  const restrictionHandle = async (id , initialState) =>{
+    const db = getFirestore()
+    const colRef = doc(db, "usersList" , `${id}` );
+    await updateDoc( colRef ,{isRestricted :  !initialState})
+  }
   return (
     <Box
       sx={{
@@ -112,7 +180,9 @@ const Users = () => {
               <SearchIcon color="#" />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Enter user ID or username or phonenumber"
+              onChange={searchHandle}
+              value={searchPhone}
+              placeholder="Enter user's phone number"
               inputProps={{ "aria-label": "search" }}
               sx={{
                 color: "#fff",
@@ -141,19 +211,28 @@ const Users = () => {
             <ListHeader>Restriction</ListHeader>
             <ListHeader>Delete User</ListHeader>
           </Box>
+          <Box sx={{
+            width : "100%",
+            height : "100%",
+            boxSizing : "border-box"
+          }}>
+
+
+          {usersList && usersList.map((doc, index) =>
+          { 
+            const item =  doc.data()
+          return (
           <Box
+            key = {item.id}
             sx={{
-              height: "35%",
+              // height: "35%",
               // width: "35%",
               flex: 1,
               display: "grid",
               gridTemplateColumns: "1fr 2fr 2fr 1fr 1fr",
-              overflowY: "scroll",
             }}
           >
-            {ItemList.map((item, index) => (
-              <>
-                <ListBody>#751</ListBody>
+                <ListBody>{item.uid}</ListBody>
                 <ListBody
                   onClick={handleOpen}
                   sx={{
@@ -171,13 +250,15 @@ const Users = () => {
                       marginRight: "1rem",
                     }}
                   />
-                  {item.name}
+                  {item.fullName}
                 </ListBody>
-                <ListBody>+8801771551910</ListBody>
+                <ListBody>{item.phoneNumber}</ListBody>
                 <ListBody>
                   <PersonOffIcon
+                  onClick={() => restrictionHandle(item.id , item.isRestricted)}
                     fontSize="large"
                     sx={{
+                      color : `${item.isRestricted ? "red" : "white"}`,
                       "&:hover": {
                         color: "secondary.light",
                         cursor: "pointer",
@@ -195,68 +276,28 @@ const Users = () => {
                       },
                     }}
                   />
-                </ListBody>
-              </>
-            ))}
-            <Modal
+                </ListBody>   
+          </Box>
+          )})}
+          <Button onClick={() => onPaginationHandle(false)} disabled={usersList[limitation - 1] ? false : true}>Next</Button>
+          <Button onClick={() => onPaginationHandle (true)} >First page</Button>
+        </Box>
+        
+        </Box>
+      </Box>
+      {/* <Modal
               open={open}
               onClose={handleClose}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
               <UserDetails />
-            </Modal>
-            {/* {Object.keys(variants).map((id) => {
-              const item = variants[`${id}`];
-              console.log("item", item);
-              return (
-                <>
-                <ListBody>{item.name}</ListBody>
-                <ListBody>{item.regularPrice}</ListBody>
-                <ListBody>{item.sellingPrice}</ListBody>
-                <ListBody>
-                <EditIcon
-                onClick={() =>
-                  setVariantUI(
-                    <AddVariants
-                  incomingItem={item}
-                  onStateLift={onVariantStateLift}
-                  />
-                  )
-                }
-                sx={{
-                  "&:hover": {
-                    color: "secondary.light",
-                    cursor: "pointer",
-                  },
-                }}
-                />
-                </ListBody>
-                <ListBody>
-                <DeleteIcon
-                onClick={() => deleteVariantsHandle(item.id)}
-                sx={{
-                  "&:hover": {
-                    color: "secondary.light",
-                    cursor: "pointer",
-                  },
-                }}
-                />
-                </ListBody>
-                </>
-                // {defualtVariant.id == id && (
-                  //   <ListItemText
-                  //     primary={"Defualt"}
-                  //     sx={{ color: "green" }}
-                  //   />
-                  // )}
-                  );
-                })} */}
-          </Box>
-        </Box>
-      </Box>
+        </Modal> */}
     </Box>
   );
 };
 
 export default Users;
+
+
+
