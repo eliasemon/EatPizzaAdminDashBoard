@@ -98,18 +98,32 @@ const PromoCode = () => {
            <Box sx = {{position : 'relative'}}>
               <List
                  sx={{
-                  
-                   width: "100%",
-                   maxWidth: 400,
-                   maxHeight: 220,
-                   marginTop: "-6%",
-                   marginLeft:'250px',
-                   marginBottom:'100px',
-                   bgcolor: "secondary",
-                   position: "absolute",
-                   overflowY: "scroll",
-                   color: "common.white",
+                  boxSizing:'border-box',   
+                  width: "100%",
+                  maxWidth: '50%',
+                  maxHeight: '20vh',
+                  marginTop: "-6%",
+                  marginLeft:'50%',
+                  marginBottom:'10%',
+                  bgcolor: "secondary",
+                  position: "absolute",
+                  overflowY: "scroll",
+                  color: "common.white",
+                   // maxHeight: 300,
                    "& ul": { padding: 0 },
+
+
+                  //  width: "100%",
+                  //  maxWidth: 400,
+                  //  maxHeight: 220,
+                  //  marginTop: "-6%",
+                  //  marginLeft:'250px',
+                  //  marginBottom:'100px',
+                  //  bgcolor: "secondary",
+                  //  position: "absolute",
+                  //  overflowY: "scroll",
+                  //  color: "common.white",
+                  //  "& ul": { padding: 0 },
                  }}
                  subheader={<li />}
                >
@@ -168,12 +182,13 @@ const PromoCode = () => {
            <Box sx = {{position : 'relative'}}>
               <List
                  sx={{
+                  boxSizing:'border-box',   
                   width: "100%",
-                  maxWidth: 400,
-                  maxHeight: 220,
+                  maxWidth: '50%',
+                  maxHeight: '20vh',
                   marginTop: "-6%",
-                  marginLeft:'250px',
-                  marginBottom:'100px',
+                  marginLeft:'50%',
+                  marginBottom:'10%',
                   bgcolor: "secondary",
                   position: "absolute",
                   overflowY: "scroll",

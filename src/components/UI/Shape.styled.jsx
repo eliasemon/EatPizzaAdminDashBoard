@@ -3,6 +3,7 @@ import { List, ListItem, TextField, Typography } from "@mui/material";
 
 export const HalfBox = styled("div")((props) => ({
   position: "relative",
+  height:'auto',
   width: "50%",
   padding: "1.5%",
   display: "flex",
