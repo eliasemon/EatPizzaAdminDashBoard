@@ -1,13 +1,18 @@
-import { Box } from "@material-ui/core";
-import SearchIcon from "@mui/icons-material/Search";
+import { Box, Button, Typography } from "@mui/material";
+import  { useState, useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { useNavigate } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import ItemList from "../../../constants/ItemsList";
+import product from "../../../assets/images/profile.jpg";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
 import DeleteIcon from "@mui/icons-material/Delete";
-import PersonOffIcon from '@mui/icons-material/PersonOff';
-import PersonIcon from '@mui/icons-material/Person';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import UserDetails  from "./UserDetails";
-
+import { Modal } from "@mui/material";
+import UserDetails from "./UserDetails";
+import { showDataWithPagination , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
+import { getFirestore , doc , updateDoc} from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -48,53 +53,101 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const data = [
-  { id: 1, userName: 'tapu', img: '', phoneNumber: '0178545656', restriction: true },
-  { id: 2, userName: 'tapuS', img: '', phoneNumber: '0178545658', restriction: false },
-  { id: 3, userName: 'tapuM', img: '', phoneNumber: '0178545659', restriction: false },
-  { id: 4, userName: 'tapuC', img: '', phoneNumber: '0178545655', restriction: false },
-  { id: 5, userName: 'tapuC', img: '', phoneNumber: '0178545655', restriction: true }
+const ListHeader = styled(Box)`
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-weight: 700;
+  background-color: #212020;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-]
+const ListBody = styled(Box)`
+  width: 100%;
+  /* min-height: 40px; */
+  color: #fff;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background-color: #2f2e2e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #212020;
+`;
 
+const inputValidate = (state) => {
+    if(state == ""){
+      return ""
+    }
+    if (state.startsWith('8')) {
+      return `+${state}`
+    }
+    if (state.startsWith('+')) {
+      return state
+    }
 
-const dataMaping = (user) => {
-
-
-  return (
-    <Box sx={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(5,1fr)',
-      gridTemplateRows: '1fr',
-      padding: '10px 0px 10px 0px',
-      borderBottom: '1px solid white',
-      textAlign: 'center',
-      justifyContent: 'center',
-      alignItems: 'center'
-
-    }}>
-      <Box >{user.id}</Box>
-      <Box sx={{
-        display: 'flex',
-        justifyContent:'center',
-        alignItems:'center',
-      }}>
-      
-          <AccountCircleIcon fontSize="large" />
-        <Box sx = {{textAlign:'left',padding:'10px'}}>
-            <Box>{user.userName}mojumder</Box>
-            <Box>location</Box>
-        </Box>
-      </Box>
-      <Box>{user.phoneNumber}</Box>
-      <Box>{user.restriction ? <PersonIcon /> : <PersonOffIcon />}</Box>
-      <Box>{<DeleteIcon />}</Box>
-    </Box>
-  )
+    if (state.startsWith('0') ) {
+      return `+88${state}`
+    }
+    return false
 }
 
 
 const Users = () => {
+  const navigate = useNavigate();
+  const [usersList , setUserList] = useState("");
+  const [open, setOpen] = useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [searchPhone , setSearchPhone] = useState("")
+  const limitation = 8;
+
+  const searchHandle = (e) =>{
+    const data = inputValidate(e.target.value)
+    if(data === ""){
+      setSearchPhone(data)
+      return
+    }
+    if(data){
+      setSearchPhone(data)
+    }else{
+      toast.error("Please Type Properly");
+    }
+  }
+
+
+  useEffect(()=>{
+    if(searchPhone.length === 14){
+      getSingleDataWithOutRealTimeUpdates("usersList" , searchPhone , true).then((data) => {
+        setUserList(data)
+      }).catch((error) =>{
+        toast.error("No Data Found");
+      })
+    }
+  },[searchPhone])
+
+
+  useEffect(()=>{
+    showDataWithPagination(setUserList,  "usersList" , 0 , limitation, false , "fullName")
+  },[])
+
+  const onPaginationHandle = (type) =>{
+    if(type){
+      showDataWithPagination(setUserList,  "usersList" , 0 , limitation, false , "fullName")
+      return
+    }
+    showDataWithPagination(setUserList,  "usersList" , usersList[limitation-1] , limitation, false , "fullName")
+  }
+
+
+  const restrictionHandle = async (id , initialState) =>{
+    const db = getFirestore()
+    const colRef = doc(db, "usersList" , `${id}` );
+    await updateDoc( colRef ,{isRestricted :  !initialState})
+  }
   return (
     <Box
       sx={{
@@ -103,66 +156,148 @@ const Users = () => {
         // gridTemplateColumns: "17.9vw auto",
         width: "100%",
         height: "100%",
+        padding: "1.5%",
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: "#252525",
+          height: "85%",
+          borderRadius: "5px",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            alignItems: "start",
+            padding: "2% 1% 0",
+          }}
+        >
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon color="#" />
+            </SearchIconWrapper>
+            <StyledInputBase
+              onChange={searchHandle}
+              value={searchPhone}
+              placeholder="Enter user's phone number"
+              inputProps={{ "aria-label": "search" }}
+              sx={{
+                color: "#fff",
+              }}
+            />
+          </Search>
+        </Box>
+        <Box
+          sx={{
+            marginTop: "3%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              display: "grid",
+              gridTemplateColumns: "1fr 2fr 2fr 1fr 1fr",
+            }}
+          >
+            <ListHeader>User ID</ListHeader>
+            <ListHeader>Username</ListHeader>
+            <ListHeader>Phone Number</ListHeader>
+            <ListHeader>Restriction</ListHeader>
+            <ListHeader>Delete User</ListHeader>
+          </Box>
+          <Box sx={{
+            width : "100%",
+            height : "100%",
+            boxSizing : "border-box"
+          }}>
 
-      }}>
+
+          {usersList && usersList.map((doc, index) =>
+          { 
+            const item =  doc.data()
+          return (
+          <Box
+            key = {item.id}
+            sx={{
+              // height: "35%",
+              // width: "35%",
+              flex: 1,
+              display: "grid",
+              gridTemplateColumns: "1fr 2fr 2fr 1fr 1fr",
+            }}
+          >
+                <ListBody>{item.uid}</ListBody>
+                <ListBody
+                  onClick={handleOpen}
+                  sx={{
+                    "&:hover": {
+                      cursor: "pointer",
+                    },
+                  }}
+                >
+                  <img
+                    src={product}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50%",
+                      marginRight: "1rem",
+                    }}
+                  />
+                  {item.fullName}
+                </ListBody>
+                <ListBody>{item.phoneNumber}</ListBody>
+                <ListBody>
+                  <PersonOffIcon
+                  onClick={() => restrictionHandle(item.id , item.isRestricted)}
+                    fontSize="large"
+                    sx={{
+                      color : `${item.isRestricted ? "red" : "white"}`,
+                      "&:hover": {
+                        color: "secondary.light",
+                        cursor: "pointer",
+                      },
+                    }}
+                  />
+                </ListBody>
+                <ListBody>
+                  <DeleteIcon
+                    fontSize="large"
+                    sx={{
+                      "&:hover": {
+                        color: "secondary.light",
+                        cursor: "pointer",
+                      },
+                    }}
+                  />
+                </ListBody>   
+          </Box>
+          )})}
+          <Button onClick={() => onPaginationHandle(false)} disabled={usersList[limitation - 1] ? false : true}>Next</Button>
+          <Button onClick={() => onPaginationHandle (true)} >First page</Button>
+        </Box>
         
-      {
-        // Search bar 
-      }
-
-      <Box sx={{ display: "flex" }}>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Enter user ID or username or phonenumber"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
+        </Box>
       </Box>
-
-      {
-        // Table Header
-      }
-
-      <Box sx={{
-        marginTop: '3%',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5,1fr)',
-        gridTemplateRows: '1fr',
-        paddingBottom: '10px',
-        borderBottom: '2px solid white',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center'
-
-      }} >
-
-        <Box>User's ID</Box>
-        <Box>User name</Box>
-        <Box>PhoneNumber</Box>
-        <Box>Restriction</Box>
-        <Box>Delete User</Box>
-
-      </Box>
-
-
-      {
-        // Data maping
-      }
-
-
-
-      {
-        data.map(user => dataMaping(user))
-      }
-
-      <UserDetails />
-
-
+      {/* <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <UserDetails />
+        </Modal> */}
     </Box>
-  )
+  );
 };
 
 export default Users;
+
+
+

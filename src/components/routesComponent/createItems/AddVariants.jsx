@@ -1,6 +1,7 @@
 import { Box , TextField , Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
+import Dialog from '@mui/material/Dialog';
 import { UUID } from "../../../../utils";
 
 const VariantsModel = {
@@ -18,7 +19,11 @@ const AddVariants = ({onStateLift , incomingItem}) => {
             toast.error("Can't Added With Empty Field")
             return
         }
-        onStateLift( true ,variantsItem)
+        const data = {...variantsItem}
+        if(data.sellingPrice == ""){
+          data.sellingPrice = data.regularPrice
+        }
+        onStateLift( true ,data)
         setVariantsItem(VariantsModel)
 
     }
@@ -34,7 +39,7 @@ const AddVariants = ({onStateLift , incomingItem}) => {
       }
     },[])
   return (
-    <Box sx={{m : 2 , border : "2px solid #fff"}}>
+    <Dialog open={true} onClose={Discard} sx={{background:"#121212",opacity:'0.95'}}>
         <TextField
         color="common"
         onChange = {(e)=> setVariantsItem(prv => ({...prv , name : e.target.value}))}
@@ -112,7 +117,7 @@ const AddVariants = ({onStateLift , incomingItem}) => {
           Discard
         </Button>
         </Box>
-    </Box>
+    </Dialog>
   )
 }
 

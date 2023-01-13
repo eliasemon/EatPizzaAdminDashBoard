@@ -11,31 +11,6 @@ import AddVariants from "./AddVariants";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CategoryList, ListElement } from "../../UI/Shape.styled";
-import { styled } from "@mui/system";
-
-const ListHeader = styled(Box)`
-  width: 100%;
-  height: 40px;
-  color: #fff;
-  font-weight: 700;
-  background-color: #212020;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ListBody = styled(Box)`
-  width: 100%;
-  min-height: 40px;
-  color: #fff;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  background-color: #2f2e2e;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid #212020;
-`;
 
 const VariantsItemsLoader = ({
   variants,
@@ -47,82 +22,92 @@ const VariantsItemsLoader = ({
   return (
     <>
       <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100%",
-        }}
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        <Box
+        <List
           sx={{
-            height: "auto",
             width: "100%",
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
+            maxWidth: 600,
+            bgcolor: "secondary",
+            position: "relative",
+            overflow: "auto",
+            color: "common.white",
+            "& ul": { padding: "20px" },
           }}
+          subheader={<li />}
         >
-          <ListHeader>Name</ListHeader>
-          <ListHeader>Price</ListHeader>
-          <ListHeader>Sale Price</ListHeader>
-          <ListHeader>Edit</ListHeader>
-          <ListHeader>Delete</ListHeader>
-        </Box>
-        <Box
-          sx={{
-            height: "auto",
-            width: "100%",
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
-            overflowY: "scroll",
-          }}
-        >
-          {Object.keys(variants).map((id) => {
-            const item = variants[`${id}`];
-            console.log("item", item);
-            return (
-              <>
-                <ListBody>{item.name}</ListBody>
-                <ListBody>{item.regularPrice}</ListBody>
-                <ListBody>{item.sellingPrice}</ListBody>
-                <ListBody>
-                  <EditIcon
-                    onClick={() =>
-                      setVariantUI(
-                        <AddVariants
-                          incomingItem={item}
-                          onStateLift={onVariantStateLift}
+          {
+            <ul>
+              {Object.keys(variants).map((id) => {
+                const item = variants[`${id}`];
+                console.log("item", item);
+                return (
+                  <ListElement
+                    key={item.id}
+                    sx={{
+                      backgroundColor: "secondary.dark",
+                      marginBottom: "15px",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                        padding: "10px",
+                      }}
+                    >
+                      {defualtVariant.id == id && (
+                        <ListItemText
+                          primary={"Defualt"}
+                          sx={{ color: "green" }}
                         />
-                      )
-                    }
-                    sx={{
-                      "&:hover": {
-                        color: "secondary.light",
-                        cursor: "pointer",
-                      },
-                    }}
-                  />
-                </ListBody>
-                <ListBody>
-                  <DeleteIcon
-                    onClick={() => deleteVariantsHandle(item.id)}
-                    sx={{
-                      "&:hover": {
-                        color: "secondary.light",
-                        cursor: "pointer",
-                      },
-                    }}
-                  />
-                </ListBody>
-              </>
-              // {defualtVariant.id == id && (
-              //   <ListItemText
-              //     primary={"Defualt"}
-              //     sx={{ color: "green" }}
-              //   />
-              // )}
-            );
-          })}
-        </Box>
+                      )}
+
+                      <ListItemText primary={item.name} />
+                      <ListItemText primary={`${item.regularPrice} ৳`} />
+                      <ListItemText primary={`${item.sellingPrice} ৳`} />
+                    </Box>
+
+                    <Box sx={{ display: "flex", gap: "10px" }}>
+                      <Box>
+                        <EditIcon
+                          onClick={() =>
+                            setVariantUI(
+                              <AddVariants
+                                incomingItem={item}
+                                onStateLift={onVariantStateLift}
+                              />
+                            )
+                          }
+                          sx={{
+                            "&:hover": {
+                              color: "secondary.light",
+                              cursor: "pointer",
+                            },
+                          }}
+                        />
+                      </Box>
+                      <Box>
+                        <DeleteIcon
+                          onClick={() => deleteVariantsHandle(item.id)}
+                          sx={{
+                            "&:hover": {
+                              color: "secondary.light",
+                              cursor: "pointer",
+                            },
+                          }}
+                        />
+                      </Box>
+                    </Box>
+                  </ListElement>
+                );
+              })}
+            </ul>
+          }
+          {/* </CategoryList> */}
+        </List>
       </Box>
     </>
   );
@@ -184,6 +169,7 @@ const AddVariantsAndVariantsListLoader = ({
             width: "100%",
             height: "300px",
             backgroundColor: "rgba(255,255,255, 0.08)",
+            overflowY: "scroll",
           }}
         >
           <VariantsItemsLoader

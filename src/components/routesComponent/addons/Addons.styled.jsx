@@ -2,7 +2,7 @@ import { styled } from "@mui/system";
 
 export const AddonsContainer = styled("div")({
   width: "100%",
-  height: "100%",
+  height: "98%",
   display: "flex",
 });
 

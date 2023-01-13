@@ -1,7 +1,14 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ListIcon from "@mui/icons-material/List";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import SettingsIcon from "@mui/icons-material/Settings";
+import ReorderIcon from "@mui/icons-material/Reorder";
+import AppsIcon from "@mui/icons-material/Apps";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import AddchartIcon from "@mui/icons-material/Addchart";
+import PromoCode from "./../components/routesComponent/promocode/index";
+import BeenhereIcon from "@mui/icons-material/Beenhere";
+import WebIcon from "@mui/icons-material/Web";
 
 const categories = [
   {
@@ -14,7 +21,7 @@ const categories = [
     id: 2,
     title: "Current Orders",
     link: "/currentorders",
-    icon: <DashboardIcon />,
+    icon: <ReorderIcon />,
   },
   {
     id: 3,
@@ -26,37 +33,45 @@ const categories = [
     id: 4,
     title: "All Items",
     link: "/items",
-    icon: <DashboardIcon />,
+    icon: <AppsIcon />,
   },
-  {
-    id: 5,
-    title: "Create Items",
-    link: "/createitem",
-    icon: <DashboardIcon />,
-  },
+
+  // {
+  //  id: 5,
+  // title: "Create Items",
+  // link: "/createitem",
+  // icon: <AssignmentTurnedInIcon />,
+  // },
+
   {
     id: 6,
     title: "Total User",
     link: "users",
-    icon: <ListAltIcon />,
+    icon: <SupervisedUserCircleIcon />,
   },
   {
     id: 7,
-    title: "Create Categories",
+    title: "Categories",
     link: "/categories",
     icon: <ListAltIcon />,
   },
   {
     id: 8,
-    title: "Create AddOns",
+    title: "AddOns",
     link: "/addons",
-    icon: <SettingsIcon />,
+    icon: <AddchartIcon />,
   },
   {
     id: 9,
-    title: "Settings",
-    link: "/settings",
-    icon: <SettingsIcon />,
+    title: "promotion / cost",
+    link: "/promocode",
+    icon: <BeenhereIcon />,
+  },
+  {
+    id: 10,
+    title: "Banner",
+    link: "/banner",
+    icon: <DashboardIcon />,
   },
 ];
 

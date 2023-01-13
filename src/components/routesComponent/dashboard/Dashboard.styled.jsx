@@ -23,7 +23,7 @@ export const RightContainer = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "space-between",
+  justifyContent: "center",
 
 }));
 
@@ -32,7 +32,8 @@ export const Section = styled("div")((props) => ({
   minHeight: "30%",
   padding: props.padding ?? "1rem",
   margin: props.margin ?? "1rem",
-  backgroundColor: props.theme.palette.surface.dp16,
+  // backgroundColor: props.theme.palette.surface.dp16,
+  backgroundColor:"rgba(255,255,255, 0.11)",
   borderRadius: "5px",
   color: "white",
   display: "flex",
