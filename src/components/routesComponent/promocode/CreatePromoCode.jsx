@@ -9,11 +9,10 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-
 import { toast } from "react-toastify";
 
 import { addDataToCollection, setDataToCollection } from "../../../../utils";
-import { InputText, LabelText } from "../../UI/Forms.styled";
+import { HighlightText, InputText, LabelText } from "../../UI/Forms.styled";
 import SelectOption from "../../UI/SelectOption";
 
 const promoCodeModel = {
