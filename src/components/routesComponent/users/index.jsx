@@ -55,7 +55,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const ListHeader = styled(Box)`
   width: 100%;
-  height: 40px;
+  height: 100%;
   color: #fff;
   font-weight: 700;
   background-color: #212020;

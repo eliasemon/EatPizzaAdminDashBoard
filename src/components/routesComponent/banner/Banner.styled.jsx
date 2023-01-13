@@ -7,12 +7,13 @@ export const BannerContainer = styled("div")({
   // justifyContent:'center',
   // alignItems:'center',
   // boxSizing: 'border-box'
-  width: "98%",
-  height: "90vh",
+  width: "100%",
+  height: "98%",
   display: "flex",
   justifyContent:'center',
   alignItems:'center',
-  boxSizing: 'border-box'
+  boxSizing: 'border-box',
+  marginTop:'2%',
 });
 
 export const FilterSection = styled("div")(({ theme }) => ({
