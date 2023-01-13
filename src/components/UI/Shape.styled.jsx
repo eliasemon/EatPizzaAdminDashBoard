@@ -2,14 +2,15 @@ import { styled } from "@mui/system";
 import { List, ListItem, TextField, Typography } from "@mui/material";
 
 export const HalfBox = styled("div")((props) => ({
+  height:'100%',
   position: "relative",
   width: "50%",
-  padding: "1.5%",
+  padding: "1%",
   display: "flex",
   flexDirection: "column",
   border: `2px solid ${props.theme.palette.color[props.color] ?? "#fff"}`,
   borderRadius: "5px",
-  margin: "1.5%",
+  margin: "1%",
   backgroundColor: props.theme.palette.surface.dp01,
 }));
 

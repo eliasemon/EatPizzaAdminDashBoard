@@ -52,7 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const ListHeader = styled(Box)`
   width: 100%;
-  height: 40px;
+  height: 100%;
   color: #fff;
   font-weight: 700;
   background-color: #212020;
@@ -79,7 +79,7 @@ const AllItems = () => {
   const [items , setItems] =  useState("");
   const itemDocsRefAll = useRef(null);
   const {ui , activepage, changeTheLocalTotal  } = usePagination(1)
-  const limitation  = 8;
+  const limitation  = 7;
   useEffect(()=>{
     showDataWithPagination(setItems,  "productlist" , 0 , limitation, true).then((docs)=>{
       itemDocsRefAll.current = docs
@@ -103,23 +103,29 @@ const AllItems = () => {
         // gridTemplateColumns: "17.9vw auto",
         width: "100%",
         height: "100%",
-        padding: "1.5%",
+        padding: "1%",
+        
+        boxSizing:'border-box'
       }}
     >
       <Box
         sx={{
           backgroundColor: "#252525",
-          height: "85%",
+          height: "100%",
+          width:'100%',
           borderRadius: "5px",
+       
         }}
       >
         <Box
           sx={{
             display: "flex",
             width: "100%",
+            height:'10%',
             justifyContent: "space-between",
             alignItems: "start",
-            padding: "2% 1% 0",
+            // padding: "2% 1% 0",
+            padding:'2%'
           }}
         >
           
@@ -134,15 +140,18 @@ const AllItems = () => {
         </Box>
         <Box
           sx={{
-            marginTop: "3%",
-            height: "100%",
+            marginTop: "2%",
+            
+            height: "86%",
             display: "flex",
             flexDirection: "column",
+            boxSizing:'border-box'
           }}
         >
           <Box
             sx={{
               width: "100%",
+              height:'10%',
               display: "grid",
               gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr 1fr",
             }}
@@ -154,9 +163,9 @@ const AllItems = () => {
             <ListHeader>Edit Items</ListHeader>
             <ListHeader>Delete Items</ListHeader>
           </Box>
-            <Box
+          <Box
               sx={{
-                height: "35%",
+              height: "90%",
               width: "100%",
               boxSizing : "border-box",
               flex: 1,
