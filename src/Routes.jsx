@@ -12,7 +12,7 @@ import {
   Users,
   PromoCode,
 } from "./components/routesComponent";
-import Settings from "./components/routesComponent/settings";
+// import Settings from "./components/routesComponent/settings";
 
 
 const RoutesComponent = ({ openingStatus }) => {
@@ -36,7 +36,7 @@ const RoutesComponent = ({ openingStatus }) => {
       <Route path="/users" element={<Users />} />
       <Route path="/banner" element={<Banner />} />
       <Route path="/promocode" element={<PromoCode />} />
-      <Route path="/Settings" element={<Settings />} />
+      {/* <Route path="/Settings" element={<Settings />} /> */}
     </Routes>
   );
 };

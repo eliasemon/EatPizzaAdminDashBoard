@@ -19,6 +19,7 @@ import {
   shortUUID,
   getSingleDataWithOutRealTimeUpdates,
 } from "../../../../utils";
+import { showLoading , closeLoading } from "../../loading/loading";
 
 import useFileUploaderJSX from "../../../hooks/useFileUploader";
 import { toast } from "react-toastify";
@@ -67,10 +68,13 @@ const CreateItems = ({ update }) => {
     data.defualtVariant = { ...defualtVariant };
 
     if (image) {
+      showLoading()
       uploadProcess("product", items.id).then((v) => {
         data.image = { ...v };
         setDataToCollection(data, "productlist", false);
-        navigate("/items");
+      }).then(()=>{
+          closeLoading();
+          navigate("/items");
       });
     } else {
       data.image = {};

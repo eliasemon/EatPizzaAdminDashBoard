@@ -157,7 +157,8 @@ export const addDataToCollection = async (items, collectionRef) => {
 export const setDataToCollection = async (items , collectionRef , isSingle = true) => {
   try {
     showLoading()
-    if(isSingle && await isExist(collection(db, `${collectionRef}`) , items.name)){
+    console.log(items)
+    if(isSingle && await isExist(collection(db, `${collectionRef}`) , items?.name)){
       closeLoading()
       toast.error("Data Is Already In the Store");
       return

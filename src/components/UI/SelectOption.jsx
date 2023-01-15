@@ -11,8 +11,7 @@ const SelectOptionStyle = styled(Box)`
 `;
 
 const Option = styled(Box)`
-  background-color: ${(props) =>
-    props.isActive ? "#292929" : props.theme.palette.primary.light};
+  background-color: ${(props) =>  props.activecolor};
   flex: 1;
   height: 30px;
   transition: 0.5s;
@@ -38,7 +37,7 @@ const SelectOption = ({ width, options, activeItem, setActiveItem, sx }) => {
       {options.map((option, index) => (
         <Option
           key={index}
-          isActive={index == activeItem}
+          activecolor={index == activeItem ? "#292929" : "#2020202"  }
           onClick={() => {
             handleClick(index);
           }}

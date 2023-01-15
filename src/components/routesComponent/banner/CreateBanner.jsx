@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Button,
   Box,
@@ -8,54 +7,90 @@ import {
   Autocomplete,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { CreateBannerStyle } from "./Banner.styled";
 import { LabelText, InputText, ButtonGroup } from "./../../UI/Forms.styled";
 import { FormControl } from "@material-ui/core";
 import SelectOption from "./../../UI/SelectOption";
 import useFileUploaderJSX from "../../../hooks/useFileUploader";
+import { getSingleDataWithOutRealTimeUpdates , setDataToCollection} from "../../../../utils";
+import { toast } from "react-toastify";
+import { showLoading , closeLoading } from "../../loading/loading";
 
 
-
-const itemsModel = {
-  name: "",
-  price: "",
-  selectedCatagories: [],
-};
 
 const options = [
   {
     title: "Product Ref",
+    index : 0,
+    cb: () => {}
   },
   {
     title: "External Link",
+    index : 1,
+    cb: () => {}
   },
 ];
+const dataModel = {
+  homePageTittle : "",
+  image : {},
+  backLinkType : "",
+  backLink : ""
+}
+const CreateBanner = () => {
+  const { ui, uploadProcess, image, setImage } = useFileUploaderJSX(true , {propsWidth : "325" , propsHeight : "150"} );
+  const [items, setItems] = useState(dataModel);
+  const [activeItem , setActiveItem]= useState(0);
 
-const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
-  const { ui, uploadProcess, image, setImage } = useFileUploaderJSX(false);
-  const [items, setItems] = useState(EditAbleItem);
-  const [activeItem, setActiveItem] = useState(0);
 
-  const discardHandle = () => {
-    if (clearUi) {
-      clearUi();
+  useEffect(() => {
+    getSingleDataWithOutRealTimeUpdates("banner" , "banner1").then((data)=>{
+      setItems(data)
+      console.log(data)
+      setImage(data.image.imageDownloadUrl)
+      setActiveItem(Number(data?.backLinkType?.index))
+    }).catch(()=>{
+      setItems(dataModel)
+    })
+  },[]);
+
+  const updataHandle = () =>{
+
+    if (items.homePageTittle === "") {
+      toast.error("You have missed Some required Filed");
+      return;
     }
-    setItems(itemsModel);
-    setSelectedCatagories([]);
-  };
+    const data = { ...items };
+    data.id = "banner1"
+    data.backLinkType = {title : options[activeItem].title ,  index : options[activeItem].index}
+    if (image) {
+      showLoading()
+      uploadProcess("banner", "banner1").then((v) => {
+        data.image = { ...v };
+        setDataToCollection(data, "banner", false);
+      }).then(()=>{
+        closeLoading()
+      }).catch(()=>{
+        toast.error("Some Things Went Worng");
+        closeLoading()
+      });
+    } else {
+      data.image = {};
+      setDataToCollection(data, "banner", false);
+    }
+  }
 
   return (
     <CreateBannerStyle>
       <Box>
-        <LabelText>Banner Title </LabelText>
+        <LabelText>Home Page Tittle</LabelText>
         <InputText
           color="common"
           id="filled-size-normal"
-          placeholder="Enter addons name"
-          value={items.name}
+          placeholder="Enter Home Page Tittle"
+          value={items.homePageTittle}
           onChange={(e) =>
-            setItems((prv) => ({ ...prv, name: e.target.value }))
+            setItems((prv) => ({ ...prv, homePageTittle : e.target.value }))
           }
         />
       </Box>
@@ -63,35 +98,21 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
         width="40%"
         options={options}
         activeItem={activeItem}
-        setActiveItem={setActiveItem}
+        setActiveItem={(index)=> { setItems((prv) => ({ ...prv, backLink : "" , backLinkType : options[activeItem]  }))  ; setActiveItem(index)}}
       />
-      {activeItem == 0 ? (
+
         <Box>
-        <LabelText>Product Id</LabelText>
+        <LabelText>{options[activeItem]?.title}</LabelText>
           <InputText
             color="common"
             id="filled-size-normal"
-            placeholder="Enter Product Id"
-            value={items.name}
+            placeholder={`Enter the ${options[activeItem]?.title}`}
+            value={items.backLink}
             onChange={(e) =>
-              setItems((prv) => ({ ...prv, name: e.target.value }))
+              setItems((prv) => ({ ...prv, backLink : e.target.value }))
             }
           />
         </Box>
-      ) : (
-        <Box>
-          <LabelText>External Link</LabelText>
-          <InputText
-            color="common"
-            id="filled-size-normal"
-            placeholder="Enter external link"
-            value={items.name}
-            onChange={(e) =>
-              setItems((prv) => ({ ...prv, name: e.target.value }))
-            }
-          />
-        </Box>
-      )}
 
       <Box
         sx={{
@@ -104,11 +125,8 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
         {ui}
       </Box>
       <ButtonGroup>
-        <Button variant="contained" size="large">
-          Create
-        </Button>
-        <Button onClick={discardHandle} variant="outlined" size="large">
-          Discard
+        <Button onClick= {updataHandle} variant="contained" size="large">
+          Update
         </Button>
       </ButtonGroup>
     </CreateBannerStyle>
@@ -116,4 +134,4 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
 };
 //
 
-export default CreateAddons;
+export default CreateBanner;
