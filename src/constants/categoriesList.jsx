@@ -14,7 +14,7 @@ const categories = [
   {
     id: 1,
     title: "Dashboard",
-    link: "/",
+    link: undefined,
     icon: <DashboardIcon />,
   },
   {
