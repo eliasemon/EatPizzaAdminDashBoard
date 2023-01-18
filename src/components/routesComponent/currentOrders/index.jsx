@@ -33,16 +33,17 @@ const validateData = async (rawData , extraCostDocs) =>{
     const AddonsIds = Object.keys(doc.selectedAddonsForCard)
     const AddonsPromise = AddonsIds.map( async (id)=>{
       const data = await getSingleDataWithOutRealTimeUpdates("Addons" , id )
-      subTottal +=  Number(data.price)
+      if(data) subTottal +=  Number(data.price);
     })
     await Promise.all(AddonsPromise).then(() => {
       subTottal = (Number(subTottal) * Number(doc.itemCount))
     })
   })
+
   await Promise.all (itemsPromise).then(()=>{
     extraCostDocs.map((doc) => {
       const data = doc.data()
-      if(data.costType === "taka" ){
+      if(data.costType === "taka"){
         exTraCost+= Number(data.costValue)
       }else{
         const temp =  (subTottal / 100) * Number(data.costValue)
@@ -50,25 +51,30 @@ const validateData = async (rawData , extraCostDocs) =>{
       }
     })
   })
+  
   let discount = 0
   if(rawData.promoCode){
   const promoData = await  getSingleDataWithOutRealTimeUpdates("promoCode" , rawData.promoCode)
-  if(promoData.discountType === "%" && promoData.conditionAmmount <=  subTottal){
-    discount = (subTottal / 100) * Number(promoData.discountValue)
-  }else if(promoData.discountType === "taka" && promoData.conditionAmmount <=  subTottal){
-    discount = Number(promoData.conditionAmmount)
-  }
-}
-
-  if(Number(rawData.TotalOrderAmmount) === (subTottal + exTraCost - discount)){
-    console.log(subTottal + exTraCost - discount)
-    return true
-  }else{
+  
+  if(Number(promoData.conditionAmmount) >  subTottal){
     return false
   }
 
-  
+  if(promoData.discountType === "taka"){
+    discount = Number(promoData.discountValue)
+  }else{
+    discount = (subTottal / 100) * Number(promoData.discountValue)
+  }
+}
+console.log(discount)
 
+  if(Number(rawData.TotalOrderAmmount) === ((subTottal + exTraCost) - discount)){
+    // console.log(subTottal + exTraCost - discount)
+    return true
+  }else{
+    console.log(`${rawData.id}` ,(subTottal ))
+    return false
+  }
 
  
 }

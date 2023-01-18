@@ -26,3 +26,4 @@ dist-ssr
 firebaseConfig.js
 jsconfig.json
 yarn.lock
+.env
