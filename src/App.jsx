@@ -13,44 +13,29 @@ import { auth } from "../firebaseConfig";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import { findTheResturentStatus } from "../utils/ResturentOpenCloseStatus";
-import { showDataWithOutPagination } from "../utils";
-
+import Login from "./pages/Login";
 const App = () => {
 
-  const [resturentOpenClosedData , setResturentOpenClosedData] = useState("")
-  const [openingStatus , setOpeningStatus] = useState("")
-  useEffect(() => {
-    showDataWithOutPagination(setResturentOpenClosedData, "ResturentOpeningHr")
-  }, []);
-  useEffect(() => {
-    if(resturentOpenClosedData.length > 0)
-    setOpeningStatus(findTheResturentStatus(resturentOpenClosedData[0].data()))
-  }, [resturentOpenClosedData]);
-
-
-
-  const [ui, setUi] = useState(
-    
-  );
-  // auth.onAuthStateChanged(user=>{
-  //   if(user){
-  //     setUi(
-  //       <BrowserRouter>
-  //         <Layout />
-  //       </BrowserRouter>
-  //     )
-  //   }else{
-  //     setUi(<Login />)
-  //   }
-  // })
+  const [ui, setUi] = useState("");
+  useEffect(()=>{
+    auth.onAuthStateChanged(user=>{
+      if(user){
+        setUi(
+          <BrowserRouter>
+            <Layout />
+          </BrowserRouter>
+        )
+      }else{
+        setUi(<Login />)
+      }
+    })
+  },[])
+  
   return (
     <>
       <ThemeProvider theme={theme}>
         <Background>
-        <BrowserRouter>
-          <Layout openingStatus={openingStatus}  />
-        </BrowserRouter>
+          {ui}
           <CssBaseline />
           <ToastContainer theme="dark" />
         </Background>

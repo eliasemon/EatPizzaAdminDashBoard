@@ -13,99 +13,33 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OrderQuantity from "./OrderQuantity";
 import CardComponent from "./Card";
-import { showDataWithOutPagination , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
+import { showDataWithOutPagination , getSingleDataWithOutRealTimeUpdates , showDataForCurrentOrder } from "../../../../utils";
 
 // const item =  data.variants[`${rawData.selectedVariant.id}`];
 
-const validateData = async (rawData , extraCostDocs) =>{
-  if(rawData.isChecked){
-    return rawData.isValided
-  }
-  let subTottal = 0
-  let exTraCost = 0
-  const keys =  Object.keys(rawData.items);
-  
-  const itemsPromise = keys.map( async (v)=>{
-    const doc = rawData.items[`${v}`]
-    const data = await getSingleDataWithOutRealTimeUpdates("productlist" , doc.id )
-    const item =  data.variants[`${doc.selectedVariant.id}`];
-    subTottal +=  Number(item.sellingPrice)
-    const AddonsIds = Object.keys(doc.selectedAddonsForCard)
-    const AddonsPromise = AddonsIds.map( async (id)=>{
-      const data = await getSingleDataWithOutRealTimeUpdates("Addons" , id )
-      if(data) subTottal +=  Number(data.price);
-    })
-    await Promise.all(AddonsPromise).then(() => {
-      subTottal = (Number(subTottal) * Number(doc.itemCount))
-    })
-  })
-
-  await Promise.all (itemsPromise).then(()=>{
-    extraCostDocs.map((doc) => {
-      const data = doc.data()
-      if(data.costType === "taka"){
-        exTraCost+= Number(data.costValue)
-      }else{
-        const temp =  (subTottal / 100) * Number(data.costValue)
-        exTraCost+= temp
-      }
-    })
-  })
-  
-  let discount = 0
-  if(rawData.promoCode){
-  const promoData = await  getSingleDataWithOutRealTimeUpdates("promoCode" , rawData.promoCode)
-  
-  if(Number(promoData.conditionAmmount) >  subTottal){
-    return false
-  }
-
-  if(promoData.discountType === "taka"){
-    discount = Number(promoData.discountValue)
-  }else{
-    discount = (subTottal / 100) * Number(promoData.discountValue)
-  }
-}
-console.log(discount)
-
-  if(Number(rawData.TotalOrderAmmount) === ((subTottal + exTraCost) - discount)){
-    // console.log(subTottal + exTraCost - discount)
-    return true
-  }else{
-    console.log(`${rawData.id}` ,(subTottal ))
-    return false
-  }
-
- 
-}
 
 
 const CurrentOrders = () => {
-  const [forceRender,setForceRender]=useState(false)
   const [unHandleList , setUnHandleList] = useState("")
   const [unHandleOrderDocs , setUnHandleOrderDocs] = useState({})
-  const [extraCostDocs , setExtraCostDocs] = useState("")
   useEffect(()=>{
-    showDataWithOutPagination(setUnHandleList , "unHandleOrdersIds")
-    showDataWithOutPagination(setExtraCostDocs , "extraCost")
+    showDataForCurrentOrder(setUnHandleList , "ordersList" , ["pending" , "inCoocked" , "picked" ] , "status" )
   },[])
 
   useEffect(()=>{
-    if(unHandleList && extraCostDocs){
-      unHandleList.forEach(async (v) => {
-        const data = await getSingleDataWithOutRealTimeUpdates("ordersList" , v.id)
-        data.isValided = await validateData(data , extraCostDocs )
-        data.isChecked = true;
-        console.log("SomeThings WentWorg")
-        setUnHandleOrderDocs((prv) => {
-            prv[`${data.id}`] = data
-            return {...prv}
-        })
-      });
-      
+    if(unHandleList){
+      const data = unHandleList.reduce(( acc , doc) => {
+        const data = doc.data()
+        data.id = doc.id;
+        acc[`${data.id}`] = data
+        return acc
+      },{});
+
+      setUnHandleOrderDocs((prv) => ({...prv , ...data}))
     }
-  },[unHandleList , extraCostDocs])
-if(unHandleOrderDocs) console.log(unHandleOrderDocs);
+  },[unHandleList])
+
+if(unHandleList) console.log(unHandleList);
   return (
     <CurrentOrdersContainer>
       <HalfBox color="blue">

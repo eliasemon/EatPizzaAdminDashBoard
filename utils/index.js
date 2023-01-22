@@ -20,6 +20,40 @@ import {
 import { db , firebaseApp } from "../firebaseConfig";
 import { closeLoading, showLoading } from '../src/components/loading/loading';
 
+
+
+export const findDataWithQuries = async (collectionRef , quriesField , qurieskey) => {
+  const q = query(collection(db, `${collectionRef}`), where(`${quriesField}` , "==" , `${qurieskey}`) );
+  const docSnap = await getDocs(q);
+  return new Promise((resolve , reject)=>{
+    if (docSnap.docs.length > 0) {
+        resolve(docSnap.docs)
+    }else{
+      reject("SomeThings went worng don't do piracy")
+    }
+  })
+   
+}
+
+
+
+
+
+
+
+export const showDataForCurrentOrder = (setState , collectionRef , queryArray , queryField ) => {
+  const q = query(collection(db, `${collectionRef}`), where(`${queryField}`, 'in', queryArray));
+  onSnapshot(q, (snapshot) => {  
+    setState(() => {
+      return snapshot.docs
+    })
+  })
+
+}
+
+
+
+
 export const showDataWithPagination = async (setState, collectionRef, startingPoint, limitation, fristAttemp , orderByFilter , descSorting) => {
   const q = query(collection(db, `${collectionRef}`),orderBy(orderByFilter ? orderByFilter : "name")  , startAfter(startingPoint) , limit(limitation) );
   if (fristAttemp) {
@@ -113,8 +147,6 @@ export const getSingleDataWithOutRealTimeUpdates = async (collectionRef , idRef 
     }else{
       reject("SomeThings went worng don't do piracy")
     }
-
-
   })
    
 }
