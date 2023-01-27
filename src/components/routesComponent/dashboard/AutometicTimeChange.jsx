@@ -81,7 +81,6 @@ const AutometicTimeChange = ({ forView, setForView, data }) => {
     setDataToCollection(forView, "ResturentOpeningHr", false)
   }
   return (
-
     <Box
       sx={{
         width: "100%",
@@ -129,20 +128,18 @@ const AutometicTimeChange = ({ forView, setForView, data }) => {
                 Automatic Mode Time is Seted From <br />
               </Typography>
               <Box sx={{ display: "flex", gap: "3rem" }}>
-
-
                 <TextField
-                  align='center'
+                  align="center"
                   value={timeStr(data.openingHR)}
                   type="time"
                   sx={{
-                    textAlign: 'center',
-                    borderRadius: '5px',
-                    color: 'white',
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    color: "white",
                     background: "#121212",
                     input: {
-                      color: 'white'
-                    }
+                      color: "white",
+                    },
                   }}
                 />
                 <Typography mt={2}>To</Typography>
@@ -150,20 +147,15 @@ const AutometicTimeChange = ({ forView, setForView, data }) => {
                   value={timeStr(data.closingHR)}
                   type="time"
                   sx={{
-                    textAlign: 'center',
-                    borderRadius: '5px',
-                    color: 'white',
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    color: "white",
                     background: "#121212",
                     input: {
-                      color: 'white'
-                    }
+                      color: "white",
+                    },
                   }}
                 />
-
-
-
-
-
 
                 {/* <input disabled value={timeStr(data.openingHR)} type="time" /> */}
                 {/* To */}
@@ -171,39 +163,51 @@ const AutometicTimeChange = ({ forView, setForView, data }) => {
               </Box>
             </Box>
 
-            <Typography variant="h6">OPENING HOURS</Typography>
-            <TextField
-              value={timeStr(forView.openingHR)}
-              onChange={(e) => automaticTimeChangeHandeler(e, "opening")}
-              type="time"
-              id="outlined-basic"
-              variant="outlined"
+            <Typography variant="h6" sx={{ textAlign: "center" }}>
+              OPENING HOURS
+            </Typography>
+            <Box
               sx={{
-                border: '1px solid white',
-                color: 'white',
-                input: {
-                  color: "white",
-
-                }
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
-            />
-            <Typography align="center">To</Typography>
-
-            <TextField
-              onChange={(e) => automaticTimeChangeHandeler(e)}
-              value={timeStr(forView.closingHR)}
-              type="time"
-              id="outlined-basic"
-              variant="outlined"
-              sx={{
-                border: '1px solid white',
-                input: {
+            >
+              <TextField
+                value={timeStr(forView.openingHR)}
+                onChange={(e) => automaticTimeChangeHandeler(e, "opening")}
+                type="time"
+                id="outlined-basic"
+                variant="outlined"
+                sx={{
+                  border: "1px solid white",
                   color: "white",
+                  input: {
+                    color: "white",
+                  },
+                }}
+              />
+              <Typography align="center">To</Typography>
 
-                }
-              }}
-            />
-            <Button onClick={automaticModeAdded} variant="contained" sx={{ marginTop: '10px' }}>
+              <TextField
+                onChange={(e) => automaticTimeChangeHandeler(e)}
+                value={timeStr(forView.closingHR)}
+                type="time"
+                id="outlined-basic"
+                variant="outlined"
+                sx={{
+                  border: "1px solid white",
+                  input: {
+                    color: "white",
+                  },
+                }}
+              />
+            </Box>
+            <Button
+              onClick={automaticModeAdded}
+              variant="contained"
+              sx={{ marginTop: "10px" }}
+            >
               Set
             </Button>
           </Box>
