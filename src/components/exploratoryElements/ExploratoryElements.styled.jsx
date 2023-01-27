@@ -23,7 +23,7 @@ export const LogoWrapper = styled(Box)(({ theme }) => ({
 }));
 
 export const SidebarContainer = styled("div")(({ theme }) => ({
-  width: "15%",
+  width: "20%",
   height: "100%",
   backgroundColor: theme.palette.surface.dp01,
   zIndex: 1,
