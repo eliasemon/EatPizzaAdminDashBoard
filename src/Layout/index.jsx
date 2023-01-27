@@ -5,18 +5,20 @@ import { LayoutContainer, BodyContainer, RoutesWrapper } from "./Layout.styled";
 import { showDataWithOutPagination } from "../../utils";
 import { findTheResturentStatus } from "../../utils/ResturentOpenCloseStatus";
 import { useState , useEffect } from "react";
+import { Container } from "@mui/material";
 
 const Layout = () => {
-  const [resturentOpenClosedData , setResturentOpenClosedData] = useState("")
-  const [openingStatus , setOpeningStatus] = useState("")
+  const [resturentOpenClosedData, setResturentOpenClosedData] = useState("");
+  const [openingStatus, setOpeningStatus] = useState("");
   useEffect(() => {
-    showDataWithOutPagination(setResturentOpenClosedData, "ResturentOpeningHr")
+    showDataWithOutPagination(setResturentOpenClosedData, "ResturentOpeningHr");
   }, []);
   useEffect(() => {
-    if(resturentOpenClosedData.length > 0)
-    setOpeningStatus(findTheResturentStatus(resturentOpenClosedData[0].data()))
+    if (resturentOpenClosedData.length > 0)
+      setOpeningStatus(
+        findTheResturentStatus(resturentOpenClosedData[0].data())
+      );
   }, [resturentOpenClosedData]);
-
 
   return (
     <LayoutContainer>

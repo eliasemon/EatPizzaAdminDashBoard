@@ -1,8 +1,10 @@
 import { styled } from "@mui/system";
 
 export const LayoutContainer = styled("div")({
-  width: "100vw",
-  height: "100vh",
+  maxWidth: "1200px",
+  // width: "100%",
+  height: "100%",
+  margin: "0 auto",
 });
 
 export const BodyContainer = styled("div")(({ theme }) => ({
