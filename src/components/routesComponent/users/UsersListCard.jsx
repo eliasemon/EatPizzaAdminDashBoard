@@ -35,52 +35,46 @@ const UsersListCard = ({item}) => {
 
   return (
     <Box
-            key = {item.id}
-            sx={{
-              // height: "35%",
-              // width: "35%",
-              flex: 1,
-              display: "grid",
-              gridTemplateColumns: "1fr 2fr 2fr",
-            }}
-          >
-                <ListBody>{item.uid}</ListBody>
-                <ListBody
-                  onClick={handleOpen}
-                  sx={{
-                    "&:hover": {
-                      cursor: "pointer",
-                    },
-                  }}
-                >
-                  <img
-                    src={product}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                      marginRight: "1rem",
-                    }}
-                  />
-                  {item.fullName}
-                </ListBody>
-                <ListBody>{item.phoneNumber}</ListBody>
-                
+      key={item.id}
+      sx={{
+        // height: "35%",
+        // width: "35%",
+        flex: 1,
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+      }}
+    >
+      <ListBody
+        onClick={handleOpen}
+        sx={{
+          "&:hover": {
+            cursor: "pointer",
+          },
+        }}
+      >
+        <img
+          src={product}
+          style={{
+            width: "50px",
+            height: "50px",
+            borderRadius: "50%",
+            marginRight: "1rem",
+          }}
+        />
+        {item.fullName}
+      </ListBody>
+      <ListBody>{item.phoneNumber}</ListBody>
 
-                <Modal
-                     open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                    >
-
-                        
-                            <UserDetails  item={item}/>
-
-                        
-                </Modal>
-        </Box>
-  )
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <UserDetails item={item} />
+      </Modal>
+    </Box>
+  );
 }
 export default UsersListCard
 

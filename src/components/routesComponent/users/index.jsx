@@ -186,31 +186,33 @@ const Users = () => {
             sx={{
               width: "100%",
               display: "grid",
-              gridTemplateColumns: "1fr 2fr 2fr ",
+              gridTemplateColumns: "1fr 1fr ",
             }}
           >
-            <ListHeader>User ID</ListHeader>
             <ListHeader>Username</ListHeader>
             <ListHeader>Phone Number</ListHeader>
           </Box>
-          <Box sx={{
-            width : "100%",
-            height : "100%",
-            boxSizing : "border-box"
-          }}>
-
-
-          {usersList && usersList.map((doc, index) =>
-          { 
-            const item =  doc.data()
-            item.id = doc.id
-          return (
-            <UsersListCard key={item.id} item={item} />
-          )})}
-          <Button onClick={() => onPaginationHandle(false)} disabled={usersList[limitation - 1] ? false : true}>Next</Button>
-          <Button onClick={() => onPaginationHandle (true)} >First page</Button>
-        </Box>
-        
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              boxSizing: "border-box",
+            }}
+          >
+            {usersList &&
+              usersList.map((doc, index) => {
+                const item = doc.data();
+                item.id = doc.id;
+                return <UsersListCard key={item.id} item={item} />;
+              })}
+            <Button
+              onClick={() => onPaginationHandle(false)}
+              disabled={usersList[limitation - 1] ? false : true}
+            >
+              Next
+            </Button>
+            <Button onClick={() => onPaginationHandle(true)}>First page</Button>
+          </Box>
         </Box>
       </Box>
       {/* <Modal
