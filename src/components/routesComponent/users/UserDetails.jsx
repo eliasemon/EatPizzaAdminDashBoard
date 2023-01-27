@@ -1,12 +1,20 @@
-import {useState} from "react";
+import React from "react";
+import { useState } from "react";
 import {
+  AppBar,
   Avatar,
   Box,
   Button,
   Card,
   CardActions,
   CardContent,
+  Divider,
   Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Toolbar,
   Typography,
 } from "@mui/material/";
 // import Box from '@mui/material/Box';
@@ -26,6 +34,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import HistoryIcon from "@mui/icons-material/History";
 import { Dialog } from "@mui/material";
 import ConfirmationBox from "../../UI/ConfirmationBox";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ListHeader = styled(Box)`
   width: 100%;
@@ -37,6 +46,10 @@ const ListHeader = styled(Box)`
   justify-content: center;
   align-items: center;
 `;
+
+// const Transition = React.forwardRef(function Transition(props, ref) {
+//   return <Slide direction="up" ref={ref} {...props} />;
+// });
 
 const UserDetails = ({ user }) => {
   // const user = {
@@ -55,6 +68,7 @@ const UserDetails = ({ user }) => {
   const [ordersList, setOrdersList] = useState("");
   const [isOrdersListShown, setIsOrdersListShown] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [fullDialogOpen, setFullDialogOpen] = useState(false);
 
   let [message, setMessage] = useState("");
   const [agreeFunction, setAgreeFunction] = useState(null);
@@ -87,6 +101,14 @@ const UserDetails = ({ user }) => {
     setDialogOpen(true);
   };
 
+  const handleClickFullOpen = () => {
+    setFullDialogOpen(true);
+  };
+
+  const handleClickFullClose = () => {
+    setFullDialogOpen(false);
+  };
+
   const getDate = (data) => {
     const date = new Date(data);
     return date.toLocaleDateString();
@@ -96,7 +118,7 @@ const UserDetails = ({ user }) => {
     <Box>
       {!dialogOpen && (
         <Card sx={{ backgroundColor: "#353535" }}>
-          {!isOrdersListShown ? (
+          {!isOrdersListShown && (
             <CardContent sx={{ margin: ".5rem" }}>
               <Grid container spacing={10}>
                 <Grid item md={4}>
@@ -151,7 +173,8 @@ const UserDetails = ({ user }) => {
                   endIcon={<HistoryIcon />}
                   sx={{ marginRight: ".5rem" }}
                   onClick={() => {
-                    setIsOrdersListShown(true);
+                    setFullDialogOpen(true);
+                    // setIsOrdersListShown(true);
                     handelOrdersList();
                   }}
                 >
@@ -189,51 +212,6 @@ const UserDetails = ({ user }) => {
                 </Button>
               </Box>
             </CardContent>
-          ) : (
-            <CardContent
-              sx={{
-                marginTop: "3%",
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                }}
-              >
-                <ListHeader>Order ID</ListHeader>
-                <ListHeader>Time</ListHeader>
-                <ListHeader>Status</ListHeader>
-                <ListHeader>Download</ListHeader>
-              </Box>
-              <Box
-                sx={{
-                  height: "35%",
-                  width: "100%",
-                  overflowY: "scroll",
-                }}
-              >
-                {ordersList &&
-                  ordersList.map((doc, index) => {
-                    const item = doc.data();
-                    item.id = doc.id;
-                    const creationDate = new Date(Number(item.creationTime));
-                    return (
-                      <>
-                        <OrdersItemsCard
-                          key={item.id}
-                          item={item}
-                          creationDate={creationDate}
-                        />
-                      </>
-                    );
-                  })}
-              </Box>
-            </CardContent>
           )}
         </Card>
       )}
@@ -242,6 +220,82 @@ const UserDetails = ({ user }) => {
           data={{ dialogOpen, setDialogOpen, message, agreeFunction }}
         />
       )}
+
+      {/*Full Screen Modal for order history*/}
+      <Dialog
+        fullScreen
+        open={fullDialogOpen}
+        onClose={handleClickFullClose}
+        sx={{ backgroundColor: "#252525" }}
+        // TransitionComponent={Transition}
+      >
+        <AppBar sx={{ position: "relative" }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClickFullClose}
+              aria-label="close"
+              sx={{ marginLeft: "auto" }}
+            >
+              <Typography>Close</Typography>
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Box
+          sx={{
+            position: "fixed",
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <CardContent
+            sx={{
+              marginTop: "3%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              }}
+            >
+              <ListHeader>Order ID</ListHeader>
+              <ListHeader>Time</ListHeader>
+              <ListHeader>Status</ListHeader>
+              <ListHeader>Download</ListHeader>
+            </Box>
+            <Box
+              sx={{
+                // height: "35%",
+                width: "100%",
+                overflowY: "scroll",
+              }}
+            >
+              {ordersList &&
+                ordersList.map((doc, index) => {
+                  const item = doc.data();
+                  item.id = doc.id;
+                  const creationDate = new Date(Number(item.creationTime));
+                  return (
+                    <>
+                      <OrdersItemsCard
+                        key={item.id}
+                        item={item}
+                        creationDate={creationDate}
+                      />
+                    </>
+                  );
+                })}
+            </Box>
+          </CardContent>
+        </Box>
+      </Dialog>
       {/* <Box
         sx={{
           display: "flex",
