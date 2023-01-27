@@ -8,6 +8,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 import { toast } from "react-toastify";
 
@@ -26,8 +28,13 @@ const promoCodeModel = {
 };
 
 const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
-  const [activeItem, setActiveItem] = useState(0);
+  const [discountType, setDiscountType] = useState("");
   const [items, setItems] = useState(EditAbleItem);
+
+  const handleToggleChange = (event, value) => {
+    setDiscountType(value);
+  };
+
   CreatePromoCode;
   useEffect(() => {
     setItems(EditAbleItem);
@@ -64,7 +71,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
       toast.error("Empty Field Can't added");
       return;
     }
-    const data = {...items , id : items.name}
+    const data = { ...items, id: items.name };
     await setDataToCollection(data, "promoCode");
     setItems(promoCodeModel);
   };
@@ -73,13 +80,13 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
     {
       title: "in Percentage",
       cb: () => {
-        setItems((prv) => ({ ...prv, discountValue : 0 , discountType: "%" }));
+        setItems((prv) => ({ ...prv, discountValue: 0, discountType: "%" }));
       },
     },
     {
       title: "in Taka",
       cb: () => {
-        setItems((prv) => ({ ...prv, discountValue : 0 , discountType: "taka" }));
+        setItems((prv) => ({ ...prv, discountValue: 0, discountType: "taka" }));
       },
     },
   ];
@@ -193,12 +200,36 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
           <FormControl sx={{ width: "100%" }}>
             <LabelText>Discount type</LabelText>
             {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
-            <SelectOption
+            <ToggleButtonGroup
+              color="primary"
+              value={discountType}
+              exclusive
+              onChange={handleToggleChange}
+              aria-label="Platform"
+            >
+              <ToggleButton
+                value="percentage"
+                sx={{
+                  color: "#fff",
+                }}
+              >
+                In Percentage
+              </ToggleButton>
+              <ToggleButton
+                value="taka"
+                sx={{
+                  color: "#fff",
+                }}
+              >
+                In Taka
+              </ToggleButton>
+            </ToggleButtonGroup>
+            {/* <SelectOption
               // width="100%"
               options={options}
               activeItem={activeItem}
               setActiveItem={setActiveItem}
-            />
+            /> */}
             {/* <Select
               // labelId="demo-simple-select-label"
               // id="demo-simple-select"
@@ -275,11 +306,11 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
         </Box>
       </Box>
       <LabelText>
-        This Promo-Code Will Be Valid In More Than {items.conditionAmmount} Tk.
-        Order
+        <span style={{ color: "yellow" }}>Note: </span>This Promo-Code Will Be
+        Valid In More Than {items.conditionAmmount} Tk. Order
       </LabelText>
-  
- <Box sx={{ display: "flex", gap: "2%" }}>
+
+      <Box sx={{ display: "flex", gap: "2%" }}>
         {status ? (
           <Button
             onClick={updateFireStoreValue}

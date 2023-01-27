@@ -8,6 +8,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 
 import { toast } from "react-toastify";
@@ -24,8 +26,13 @@ const ExtraCostCodeModel = {
 };
 
 const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
-  const [activeItem, setActiveItem] = useState(0);
+  const [costType, setCostType] = useState("");
   const [items, setItems] = useState(EditAbleItem);
+
+  const handleToggleChange = (event, value) => {
+    setCostType(value);
+  };
+
   useEffect(() => {
     setItems(EditAbleItem);
   }, [EditAbleItem]);
@@ -37,11 +44,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
     setItems(promoCodeModel);
   };
   const checkedCondition = (items) => {
-    if (
-      items.name == "" ||
-      items.costType == "" ||
-      items.costValue == ""
-    ) {
+    if (items.name == "" || items.costType == "" || items.costValue == "") {
       return true;
     }
     return false;
@@ -60,7 +63,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
       toast.error("Empty Field Can't added");
       return;
     }
-    const data = {...items , id : items.name}
+    const data = { ...items, id: items.name };
     await setDataToCollection(data, "extraCost");
     setItems(ExtraCostCodeModel);
   };
@@ -81,11 +84,11 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
   ];
   return (
     <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1.4rem",
-        }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1.4rem",
+      }}
     >
       {/* <Typography color="white" py={1}>
         {status
@@ -159,17 +162,40 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
         />
       </Box>
       <Box sx={{ display: "flex", width: "100%" }}>
-
         <Box sx={{ width: "50%", marginRight: "5%" }}>
           <FormControl sx={{ width: "100%" }}>
             <LabelText>Cost type</LabelText>
             {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
-            <SelectOption
+            <ToggleButtonGroup
+              color="primary"
+              value={costType}
+              exclusive
+              onChange={handleToggleChange}
+              aria-label="Platform"
+            >
+              <ToggleButton
+                value="percentage"
+                sx={{
+                  color: "#fff",
+                }}
+              >
+                In Percentage
+              </ToggleButton>
+              <ToggleButton
+                value="taka"
+                sx={{
+                  color: "#fff",
+                }}
+              >
+                In Taka
+              </ToggleButton>
+            </ToggleButtonGroup>
+            {/* <SelectOption
               // width="100%"
               options={options}
               activeItem={activeItem}
               setActiveItem={setActiveItem}
-            />
+            /> */}
             {/* <Select
               // labelId="demo-simple-select-label"
               // id="demo-simple-select"
