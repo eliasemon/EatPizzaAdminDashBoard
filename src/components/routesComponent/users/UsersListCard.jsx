@@ -8,8 +8,7 @@ import product from "../../../assets/images/profile.jpg";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Modal } from "@mui/material";
 import UserDetails from "./UserDetails";
-
-
+import avatar from "../../../assets/images/avatar.png";
 
 const ListBody = styled(Box)`
   width: 100%;
@@ -24,14 +23,10 @@ const ListBody = styled(Box)`
   border-bottom: 1px solid #212020;
 `;
 
-
-const UsersListCard = ({item}) => {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    
-    
-
+const UsersListCard = ({ item }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box
@@ -53,7 +48,7 @@ const UsersListCard = ({item}) => {
         }}
       >
         <img
-          src={product}
+          src={item.photoURL ?? avatar}
           style={{
             width: "50px",
             height: "50px",
@@ -70,12 +65,13 @@ const UsersListCard = ({item}) => {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <UserDetails item={item} />
+        <UserDetails user={item} />
       </Modal>
     </Box>
   );
-}
+};
 export default UsersListCard
 
 
