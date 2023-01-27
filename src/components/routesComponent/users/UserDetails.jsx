@@ -53,13 +53,14 @@ const UserDetails = ({ user }) => {
   // };
 
   const [ordersList, setOrdersList] = useState("");
+  const [isOrdersListShown, setIsOrdersListShown] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   let [message, setMessage] = useState("");
   const [agreeFunction, setAgreeFunction] = useState(null);
 
   const handelOrdersList = () => {
-    findDataWithQuries("ordersList", "userID", item.uid)
+    findDataWithQuries("ordersList", "userID", user.uid)
       .then((data) => {
         setOrdersList(data);
       })
@@ -86,95 +87,154 @@ const UserDetails = ({ user }) => {
     setDialogOpen(true);
   };
 
+  const getDate = (data) => {
+    const date = new Date(data);
+    return date.toLocaleDateString();
+  };
+
   return (
     <Box>
       {!dialogOpen && (
         <Card sx={{ backgroundColor: "#353535" }}>
-          <CardContent sx={{ margin: ".5rem" }}>
-            <Grid container spacing={10}>
-              <Grid item md={4}>
-                <Box style={{ color: "#fff" }}>
-                  <img
-                    src={user.photoURL}
-                    width={"150px"}
-                    height={"150px"}
-                    style={{ borderRadius: "10%" }}
-                  />
-                </Box>
+          {!isOrdersListShown ? (
+            <CardContent sx={{ margin: ".5rem" }}>
+              <Grid container spacing={10}>
+                <Grid item md={4}>
+                  <Box style={{ color: "#fff" }}>
+                    <img
+                      src={user.photoURL}
+                      width={"150px"}
+                      height={"150px"}
+                      style={{ borderRadius: "10%" }}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item md={8}>
+                  <Typography variant="h5" sx={{ color: "#fff" }}>
+                    {user.fullName}
+                  </Typography>
+                  <Box sx={{ display: "flex", marginTop: ".25rem" }}>
+                    <Typography sx={{ color: "#fff" }}>
+                      Phone Number :{" "}
+                    </Typography>
+                    <Typography pl={1} sx={{ color: "#fff" }}>
+                      {user.phoneNumber}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex", marginTop: ".25rem" }}>
+                    <Typography sx={{ color: "#fff" }}>Status : </Typography>
+                    <Typography pl={1} sx={{ color: "#fff" }}>
+                      {user.isRestricted ? "Banned" : "Not Restricted"}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex", marginTop: ".25rem" }}>
+                    <Typography sx={{ color: "#fff" }}>Address : </Typography>
+                    <Typography pl={1} sx={{ color: "#fff" }}>
+                      {user.shipingAddress}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: "flex", marginTop: ".25rem" }}>
+                    <Typography sx={{ color: "#fff" }}>
+                      Created at :{" "}
+                    </Typography>
+                    <Typography pl={1} sx={{ color: "#fff" }}>
+                      {getDate(user.profileCreation)}
+                      {/* {user.profileCreation} */}
+                    </Typography>
+                  </Box>
+                  {console.log(user)}
+                </Grid>
               </Grid>
-              <Grid item md={8}>
-                <Typography variant="h5" sx={{ color: "#fff" }}>
-                  {user.fullName}
-                </Typography>
-                <Box sx={{ display: "flex", marginTop: ".25rem" }}>
-                  <Typography sx={{ color: "#fff" }}>
-                    Phone Number :{" "}
-                  </Typography>
-                  <Typography pl={1} sx={{ color: "#fff" }}>
-                    {user.phoneNumber}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: "flex", marginTop: ".25rem" }}>
-                  <Typography sx={{ color: "#fff" }}>Status : </Typography>
-                  <Typography pl={1} sx={{ color: "#fff" }}>
-                    {user.isRestricted ? "Banned" : "Not Restricted"}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: "flex", marginTop: ".25rem" }}>
-                  <Typography sx={{ color: "#fff" }}>Address : </Typography>
-                  <Typography pl={1} sx={{ color: "#fff" }}>
-                    {user.shipingAddress}
-                  </Typography>
-                </Box>
-                <Box sx={{ display: "flex", marginTop: ".25rem" }}>
-                  <Typography sx={{ color: "#fff" }}>Created at : </Typography>
-                  <Typography pl={1} sx={{ color: "#fff" }}>
-                    {user.profileCreation}
-                  </Typography>
-                </Box>
-                {console.log(user)}
-              </Grid>
-            </Grid>
-            <Box sx={{ marginTop: ".5rem" }}>
-              <Button
-                variant="contained"
-                endIcon={<HistoryIcon />}
-                sx={{ marginRight: ".5rem" }}
-              >
-                Order History
-              </Button>
-              <Button
-                variant="contained"
-                endIcon={<PersonOffIcon />}
-                sx={{ marginRight: ".5rem" }}
-                onClick={() => {
-                  handleClickOpen(
-                    `Are you sure you want ban ${user.fullName} ? ${user.fullName} will not able to order anything`,
-                    () => {
-                      console.log("Agree button clicked from BAN USER");
-                    }
-                  );
+              <Box sx={{ marginTop: ".5rem" }}>
+                <Button
+                  variant="contained"
+                  endIcon={<HistoryIcon />}
+                  sx={{ marginRight: ".5rem" }}
+                  onClick={() => {
+                    setIsOrdersListShown(true);
+                    handelOrdersList();
+                  }}
+                >
+                  Order History
+                </Button>
+                <Button
+                  variant="contained"
+                  endIcon={<PersonOffIcon />}
+                  sx={{ marginRight: ".5rem" }}
+                  onClick={() => {
+                    handleClickOpen(
+                      `Are you sure you want ban ${user.fullName} ? ${user.fullName} will not able to order anything`,
+                      () => {
+                        console.log("Agree button clicked from BAN USER");
+                      }
+                    );
+                  }}
+                >
+                  Ban User
+                </Button>
+                <Button
+                  variant="contained"
+                  endIcon={<DeleteIcon />}
+                  sx={{ marginRight: ".5rem" }}
+                  onClick={() => {
+                    handleClickOpen(
+                      `Are you sure you want delete ${user.fullName}'s account ? ${user.fullName} will not able login anymore with this account`,
+                      () => {
+                        console.log("Agree button clicked from DELETE USER");
+                      }
+                    );
+                  }}
+                >
+                  Delete User
+                </Button>
+              </Box>
+            </CardContent>
+          ) : (
+            <CardContent
+              sx={{
+                marginTop: "3%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr 1fr 1fr",
                 }}
               >
-                Ban User
-              </Button>
-              <Button
-                variant="contained"
-                endIcon={<DeleteIcon />}
-                sx={{ marginRight: ".5rem" }}
-                onClick={() => {
-                  handleClickOpen(
-                    `Are you sure you want delete ${user.fullName}'s account ? ${user.fullName} will not able login anymore with this account`,
-                    () => {
-                      console.log("Agree button clicked from DELETE USER");
-                    }
-                  );
+                <ListHeader>Order ID</ListHeader>
+                <ListHeader>Time</ListHeader>
+                <ListHeader>Status</ListHeader>
+                <ListHeader>Download</ListHeader>
+              </Box>
+              <Box
+                sx={{
+                  height: "35%",
+                  width: "100%",
+                  overflowY: "scroll",
                 }}
               >
-                Delete User
-              </Button>
-            </Box>
-          </CardContent>
+                {ordersList &&
+                  ordersList.map((doc, index) => {
+                    const item = doc.data();
+                    item.id = doc.id;
+                    const creationDate = new Date(Number(item.creationTime));
+                    return (
+                      <>
+                        <OrdersItemsCard
+                          key={item.id}
+                          item={item}
+                          creationDate={creationDate}
+                        />
+                      </>
+                    );
+                  })}
+              </Box>
+            </CardContent>
+          )}
         </Card>
       )}
       {dialogOpen && (
@@ -268,47 +328,52 @@ const UserDetails = ({ user }) => {
           </Box>
         </Box>
       </Box> */}
-      {
-        // ordersList && (
-        //   <Box
-        //     sx={{
-        //       marginTop: "3%",
-        //       height: "100%",
-        //       display: "flex",
-        //       flexDirection: "column",
-        //     }}
-        //   >
-        //     <Box
-        //       sx={{
-        //         width: "100%",
-        //         display: "grid",
-        //         gridTemplateColumns: "1fr 1fr 1fr 1fr",
-        //       }}
-        //     >
-        //       <ListHeader>Order ID</ListHeader>
-        //       <ListHeader>Time</ListHeader>
-        //       <ListHeader>Status</ListHeader>
-        //       <ListHeader>Download</ListHeader>
-        //     </Box>
-        //     <Box sx={{
-        //       height: "35%",
-        //       width: "100%",
-        //       overflowY: "scroll",
-        //     }}>
-        //       {ordersList && ordersList.map((doc, index) => {
-        //         const item = doc.data()
-        //         item.id = doc.id
-        //         const creationDate = new Date(Number(item.creationTime))
-        //         return (
-        //           <>
-        //             <OrdersItemsCard key={item.id} item={item} creationDate={creationDate} />
-        //           </>
-        //         )
-        //       })}
-        //     </Box>
-        //   </Box>
-        // )
-      }
+      {/* {ordersList && (
+        <Box
+          sx={{
+            marginTop: "3%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+            }}
+          >
+            <ListHeader>Order ID</ListHeader>
+            <ListHeader>Time</ListHeader>
+            <ListHeader>Status</ListHeader>
+            <ListHeader>Download</ListHeader>
+          </Box>
+          <Box
+            sx={{
+              height: "35%",
+              width: "100%",
+              overflowY: "scroll",
+            }}
+          >
+            {ordersList &&
+              ordersList.map((doc, index) => {
+                const item = doc.data();
+                item.id = doc.id;
+                const creationDate = new Date(Number(item.creationTime));
+                return (
+                  <>
+                    <OrdersItemsCard
+                      key={item.id}
+                      item={item}
+                      creationDate={creationDate}
+                    />
+                  </>
+                );
+              })}
+          </Box>
+        </Box>
+      )} */}
     </Box>
   );
 };

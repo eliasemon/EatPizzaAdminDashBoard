@@ -81,28 +81,28 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
   const db = getFirestore()
   const colRef = doc(db, "ordersList" , `${el.id}` );
   const onClickButtonHandler = async () => {
-    await updateDoc( colRef ,{status : orderStatusChanged[el.status]})
-    if(el.status === "picked"){
-      delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
-      setUnHandleOrderDocs((prv) =>{
-        delete prv[el.id]
-        return {...prv}
-      })
-    }else{
-      setUnHandleOrderDocs((prv) =>{
-        prv[el.id].status =  orderStatusChanged[el.status]
-        return {...prv}
-      })
+    await updateDoc(colRef, { status: orderStatusChanged[el.status] });
+    if (el.status === "picked") {
+      // delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
+      setUnHandleOrderDocs((prv) => {
+        delete prv[el.id];
+        return { ...prv };
+      });
+    } else {
+      setUnHandleOrderDocs((prv) => {
+        prv[el.id].status = orderStatusChanged[el.status];
+        return { ...prv };
+      });
     }
   };
-  const declineOrder = async (type) =>{
-     await updateDoc( colRef ,{status : type})
-      delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
-      setUnHandleOrderDocs((prv) =>{
-        delete prv[el.id]
-        return {...prv}
-      })
-  }
+  const declineOrder = async (type) => {
+    await updateDoc(colRef, { status: type });
+    // delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
+    setUnHandleOrderDocs((prv) => {
+      delete prv[el.id];
+      return { ...prv };
+    });
+  };
 
   return (
     <Card
@@ -187,7 +187,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
       <Box
         sx={{
           zIndex: -1,
-          position: "absolute",
+          position: "fixed",
           top: 0,
           left: 0,
         }}
