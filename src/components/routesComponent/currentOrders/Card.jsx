@@ -113,13 +113,16 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
       }}
     >
       <Box>
-        <p>
-        {Math.round(delayTime / ( 1000*60 ))} minutes ago. 
+        <p style={{ color: "#fff" }}>
+          {Math.round(delayTime / (1000 * 60))} minutes ago.
         </p>
-        
       </Box>
-      <CardHeaderStyles onClick={handleExpandClick} sx={{cursor : "pointer"}} >
-        <Header name={el.userName} orderId={el.id} mobile={el?.userPhoneNumber} />
+      <CardHeaderStyles onClick={handleExpandClick} sx={{ cursor: "pointer" }}>
+        <Header
+          name={el.userName}
+          orderId={el.id}
+          mobile={el?.userPhoneNumber}
+        />
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -132,7 +135,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {Object.keys(el.items).map((key) => (
-          <OrderQuantity key ={key} product={el.items[key]} />
+          <OrderQuantity key={key} product={el.items[key]} />
         ))}
         <Box
           sx={{
@@ -170,7 +173,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
           </Box>
         </Box>
         <Button onClick={() => declineOrder("cancel")}>Cancel</Button>
-        <Button onClick={handelPrint }>Print</Button>
+        <Button onClick={handelPrint}>Print</Button>
         <Button
           onClick={onClickButtonHandler}
           mt={1}
@@ -180,19 +183,18 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
           PROCESS TO NEXT
         </Button>
       </Collapse>
-         
-          <Box sx={{
-            zIndex : -1,
-            position : "absolute",
-            top : 0,
-            left : 0
-          }} ref={componentRef}>
-              <PrintOrderDetails  el = {el} />
-           </Box>
 
-        
-  
-
+      <Box
+        sx={{
+          zIndex: -1,
+          position: "absolute",
+          top: 0,
+          left: 0,
+        }}
+        ref={componentRef}
+      >
+        <PrintOrderDetails el={el} />
+      </Box>
     </Card>
   );
 };
