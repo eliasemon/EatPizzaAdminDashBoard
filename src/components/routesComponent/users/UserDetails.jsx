@@ -195,7 +195,7 @@ const UserDetails = ({ user }) => {
                 >
                   Ban User
                 </Button>
-                <Button
+                {/* <Button
                   variant="contained"
                   endIcon={<DeleteIcon />}
                   sx={{ marginRight: ".5rem" }}
@@ -209,7 +209,7 @@ const UserDetails = ({ user }) => {
                   }}
                 >
                   Delete User
-                </Button>
+                </Button> */}
               </Box>
             </CardContent>
           )}
