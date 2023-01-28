@@ -197,13 +197,18 @@ const OrdersHistory = () => {
                   </>
                 );
               })}
+          </Box>
+          <Box>
             <Button
+              color="primary"
               onClick={() => onPaginationHandle(false)}
               disabled={ordersList[limitation - 1] ? false : true}
             >
               Next
             </Button>
-            <Button onClick={() => onPaginationHandle(true)}>First page</Button>
+            <Button color="primary" onClick={() => onPaginationHandle(true)}>
+              First page
+            </Button>
           </Box>
         </Box>
       </Box>
