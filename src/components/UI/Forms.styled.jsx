@@ -2,7 +2,7 @@ import { styled } from "@mui/system";
 import { Typography, TextField } from "@mui/material";
 
 export const LabelText = styled(Typography)(({ theme }) => ({
-  fontSize: "1.1rem",
+  fontSize: "1rem",
   color: theme.palette.common.white,
   marginBottom: ".75rem",
 }));
