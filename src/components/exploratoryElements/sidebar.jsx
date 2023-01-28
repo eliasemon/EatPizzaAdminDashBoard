@@ -18,17 +18,13 @@ const SideBar = () => {
   return (
     <SidebarContainer>
       {categories.map((item) => (
-        <StyledLink to={item.link ? item.link :  "/"}>
+        <StyledLink to={item.link ? item.link : "/"}>
           <ListButton
             selected={location.pathname.includes(item.link)}
             key={item.id}
           >
-            
-              <ListItemIcon sx={{ color: "secondary.text" }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.title} sx={{ color: "#fff" }} />
-            
+            <ListItemIcon sx={{ color: "#fff" }}>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.title} sx={{ color: "#fff" }} />
           </ListButton>
         </StyledLink>
       ))}

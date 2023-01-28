@@ -42,9 +42,12 @@ export const ListButton = styled("div")(({ theme, selected }) => ({
   // padding: "5%",
   // margin: "2.5% 5%",
   flex: 1,
+  alignItems: "center",
   //  margin: "30px",
   //  padding: "10px",
   borderRadius: "5px",
+  padding: ".5rem",
+  marginBottom: ".25rem",
   display: "flex",
   backgroundColor: selected && theme.palette.primary.main,
   "&:hover": {
