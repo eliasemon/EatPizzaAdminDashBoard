@@ -6,8 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { showDataWithPagination , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
 import { toast } from "react-toastify";
 import OrdersItemsCard from "./OrdersItemsCard";
-
-
+import PrintIcon from "@mui/icons-material/Print";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,37 +58,56 @@ const ListHeader = styled(Box)`
   align-items: center;
 `;
 
-
 const OrdersHistory = () => {
+  const [ordersList, setOrdersList] = useState("");
 
-  const [ordersList , setOrdersList] = useState("");
-
-  const [searchOrderId , setSearchOrderId] = useState("")
+  const [searchOrderId, setSearchOrderId] = useState("");
   const limitation = 8;
 
+  const onSearchButtonClick = () => {
+    getSingleDataWithOutRealTimeUpdates("ordersList", searchOrderId, true)
+      .then((data) => {
+        setOrdersList([data]);
+      })
+      .catch((error) => {
+        toast.error("No Data Found");
+      });
+  };
 
-  const onSearchButtonClick = () =>{
-          getSingleDataWithOutRealTimeUpdates("ordersList" , searchOrderId , true).then((data) => {
-            setOrdersList([data])
-          }).catch((error) =>{
-            toast.error("No Data Found");
-          })
-  }
+  console.log(ordersList);
 
+  useEffect(() => {
+    showDataWithPagination(
+      setOrdersList,
+      "ordersList",
+      0,
+      limitation,
+      false,
+      "creationTime"
+    );
+  }, []);
 
-console.log(ordersList)
-
-  useEffect(()=>{
-    showDataWithPagination(setOrdersList,  "ordersList" , 0 , limitation, false , "creationTime" )
-  },[])
-
-  const onPaginationHandle = (type) =>{
-    if(type){
-      showDataWithPagination(setOrdersList,  "ordersList" , 0 , limitation, false , "creationTime" )
-      return
+  const onPaginationHandle = (type) => {
+    if (type) {
+      showDataWithPagination(
+        setOrdersList,
+        "ordersList",
+        0,
+        limitation,
+        false,
+        "creationTime"
+      );
+      return;
     }
-      showDataWithPagination(setOrdersList,  "ordersList" , ordersList[limitation-1] , limitation, false , "creationTime" )
-  }
+    showDataWithPagination(
+      setOrdersList,
+      "ordersList",
+      ordersList[limitation - 1],
+      limitation,
+      false,
+      "creationTime"
+    );
+  };
 
   return (
     <Box
@@ -123,7 +141,7 @@ console.log(ordersList)
               <SearchIcon color="#" />
             </SearchIconWrapper>
             <StyledInputBase
-              onChange={(e)=> setSearchOrderId(e.target.value)}
+              onChange={(e) => setSearchOrderId(e.target.value)}
               value={searchOrderId}
               placeholder="Enter order ID"
               inputProps={{ "aria-label": "search" }}
@@ -154,25 +172,38 @@ console.log(ordersList)
             <ListHeader>Phone Number</ListHeader>
             <ListHeader>Time</ListHeader>
             <ListHeader>Status</ListHeader>
-            <ListHeader>Download</ListHeader>
+            <ListHeader>Print</ListHeader>
           </Box>
-          <Box sx={{
+          <Box
+            sx={{
               height: "35%",
               width: "100%",
+              height: "100%",
               overflowY: "scroll",
-          }}>
-          {ordersList && ordersList.map((doc , index) =>{
-              const item = doc.data()
-              item.id = doc.id
-              const creationDate = new Date(Number(item.creationTime))
-              return(
-          
-                <>
-                  <OrdersItemsCard key={item.id} item ={item}  creationDate ={creationDate}/>
-                </>
-          )})}
-            <Button onClick={() => onPaginationHandle(false)} disabled={ordersList[limitation - 1] ? false : true}>Next</Button>
-          <Button onClick={() => onPaginationHandle (true)} >First page</Button>
+            }}
+          >
+            {ordersList &&
+              ordersList.map((doc, index) => {
+                const item = doc.data();
+                item.id = doc.id;
+                const creationDate = new Date(Number(item.creationTime));
+                return (
+                  <>
+                    <OrdersItemsCard
+                      key={item.id}
+                      item={item}
+                      creationDate={creationDate}
+                    />
+                  </>
+                );
+              })}
+            <Button
+              onClick={() => onPaginationHandle(false)}
+              disabled={ordersList[limitation - 1] ? false : true}
+            >
+              Next
+            </Button>
+            <Button onClick={() => onPaginationHandle(true)}>First page</Button>
           </Box>
         </Box>
       </Box>
