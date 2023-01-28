@@ -5,6 +5,8 @@ import { Box } from "@material-ui/core";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import { Chip } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
+import PrintIcon from "@mui/icons-material/Print";
+
 const ListBody = styled(Box)`
   width: 100%;
   /* min-height: 40px; */
@@ -18,22 +20,34 @@ const ListBody = styled(Box)`
   border-bottom: 1px solid #212020;
 `;
 
-
-
-const OrdersItemsCard = ({item , creationDate}) => {
-  const componentRef = useRef()
-  const [isPrint , setIsprinting ] = useState(false);
+const OrdersItemsCard = ({ item, creationDate }) => {
+  const componentRef = useRef();
+  const [isPrint, setIsprinting] = useState(false);
   const handelPrint = useReactToPrint({
-    content : () =>  componentRef.current,
-    documentTitle : `${item.id}`,
-    onAfterPrint : () => { alert('Print Success') ; setIsprinting(false)   } ,
-    onBeforePrint : () => {setIsprinting(true)},
+    content: () => componentRef.current,
+    documentTitle: `${item.id}`,
+    onAfterPrint: () => {
+      alert("Print Success");
+      setIsprinting(false);
+    },
+    onBeforePrint: () => {
+      setIsprinting(true);
+    },
     onBeforeGetContent: () => {
       setIsprinting(true);
     },
+  });
 
-  })
-
+  let color = "";
+  if (item.status == "compleat") {
+    color = "success";
+  } else if (item.status == "cancel") {
+    color = "error";
+  } else if (item.status == "inCoocked") {
+    color = "info";
+  } else {
+    color = "secondary";
+  }
 
   return (
     <Box
@@ -48,12 +62,14 @@ const OrdersItemsCard = ({item , creationDate}) => {
       <ListBody>{creationDate.toLocaleString()}</ListBody>
       <ListBody>
         <Chip
+          color={color}
+          variant="contained"
           label={item.status}
           // color={ item.status == "compleat" ? "success" :  (item.status ==  "cancel" ? "error" : "" ) }
         />
       </ListBody>
       <ListBody>
-        <DownloadForOfflineIcon
+        <PrintIcon
           onClick={handelPrint}
           fontSize="large"
           sx={{
@@ -71,7 +87,7 @@ const OrdersItemsCard = ({item , creationDate}) => {
       </Box>
     </Box>
   );
-}
+};
 
 
 export default OrdersItemsCard

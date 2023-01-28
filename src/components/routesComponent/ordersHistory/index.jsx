@@ -6,7 +6,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { showDataWithPagination , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
 import { toast } from "react-toastify";
 import OrdersItemsCard from "./OrdersItemsCard";
-import PrintIcon from "@mui/icons-material/Print";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

@@ -268,7 +268,7 @@ const UserDetails = ({ user }) => {
               <ListHeader>Order ID</ListHeader>
               <ListHeader>Time</ListHeader>
               <ListHeader>Status</ListHeader>
-              <ListHeader>Download</ListHeader>
+              <ListHeader>Print</ListHeader>
             </Box>
             <Box
               sx={{
