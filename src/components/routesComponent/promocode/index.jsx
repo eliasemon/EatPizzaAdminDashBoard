@@ -102,7 +102,7 @@ const PromoCode = () => {
               marginTop: "1rem",
               width: "100%",
               // maxWidth: "50%",
-              // maxHeight: "20vh",
+              maxHeight: "25vh",
               // marginTop: "-6%",
               // marginLeft: "50%",
               // marginBottom: "10%",
@@ -179,19 +179,22 @@ const PromoCode = () => {
         <TitleBar title="Extra Cost" color="green" />
         {createExtraCostUI}
 
-        <Box sx={{ position: "relative" }}>
+        <Box>
           <List
             sx={{
               boxSizing: "border-box",
               width: "100%",
-              maxWidth: "50%",
-              maxHeight: "20vh",
-              marginTop: "-6%",
-              marginLeft: "50%",
-              marginBottom: "10%",
+              height: "24vh",
+              // maxWidth: "50%",
+              // maxHeight: "20vh",
+              // height: "10%",
+              // marginTop: "-6%",
+              // marginLeft: "50%",
+              // marginBottom: "10%",
+              marginTop: "1rem",
               bgcolor: "secondary",
-              position: "absolute",
-              overflowY: "scroll",
+              // position: "absolute",
+              overflowY: "auto",
               color: "common.white",
               // maxHeight: 300,
               "& ul": { padding: 0 },

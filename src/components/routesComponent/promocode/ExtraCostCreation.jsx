@@ -131,7 +131,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
         <LabelText>Description</LabelText>
         <InputText
           // color="white"
-          placeholder="Write your description here"
+          placeholder="Your description here"
           value={items.description}
           multiline
           row={4}
@@ -161,8 +161,15 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
           // }}
         />
       </Box>
-      <Box sx={{ display: "flex", width: "100%" }}>
-        <Box sx={{ width: "50%", marginRight: "5%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+          gap: 2,
+        }}
+      >
+        <Box sx={{ width: "50%" }}>
           <FormControl sx={{ width: "100%" }}>
             <LabelText>Cost type</LabelText>
             {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
@@ -211,9 +218,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
             </Select> */}
           </FormControl>
         </Box>
-      </Box>
-      <Box sx={{ display: "flex", width: "100%" }}>
-        <Box sx={{ width: "50%", marginRight: "5%" }}>
+        <Box sx={{ width: "50%" }}>
           <LabelText>Cost Amount</LabelText>
           <InputText
             color="common"
@@ -242,11 +247,12 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
             // }}
           />
         </Box>
-
-        {/* <Typography>
+      </Box>
+      {/* <Box sx={{ display: "flex", width: "100%" }}> */}
+      {/* <Typography>
         {`This Promo-Code Will Be Valid In More Than ${items.conditionAmmount} Tk. Order  `}
       </Typography> */}
-      </Box>
+      {/* </Box> */}
       <Box sx={{ display: "flex", gap: "2%" }}>
         {status ? (
           <Button

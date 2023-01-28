@@ -192,6 +192,10 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
           />
         </Box>
       </Box>
+      <LabelText>
+        <span style={{ color: "yellow" }}>Note: </span>This Promo-Code Will Be
+        Valid In More Than {items.conditionAmmount} Tk. Order
+      </LabelText>
       <Box sx={{ display: "flex", width: "100%" }}>
         <Box sx={{ width: "50%", marginRight: "5%" }}>
           <FormControl sx={{ width: "100%" }}>
@@ -259,15 +263,12 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
           />
         </Box>
       </Box>
-      <LabelText>
-        <span style={{ color: "yellow" }}>Note: </span>This Promo-Code Will Be
-        Valid In More Than {items.conditionAmmount} Tk. Order
-      </LabelText>
+
       {/* <Typography>
         {`This Promo-Code Will Be Valid In More Than ${items.conditionAmmount} Tk. Order  `}
       </Typography> */}
 
-      <Box sx={{ display: "flex", gap: 2 }}>
+      <Box sx={{ display: "flex", gap: 2, marginTop: "1rem" }}>
         {status ? (
           <Button
             onClick={updateFireStoreValue}
