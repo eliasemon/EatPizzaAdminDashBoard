@@ -37,45 +37,40 @@ const OrdersItemsCard = ({item , creationDate}) => {
 
   return (
     <Box
-            key={item.id}
-            sx={{
-              
-              flex: 1,
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr 1fr",
-              
-            }}
-          >
-                <ListBody>{item.id}</ListBody>
-                <ListBody>{creationDate.toLocaleString()}</ListBody>
-                <ListBody>
-                  <Chip
-                    label={item.status}
-                    // color={ item.status == "compleat" ? "success" :  (item.status ==  "cancel" ? "error" : "" ) }
-                  />
-                </ListBody>
-                <ListBody>
-                  <DownloadForOfflineIcon
-                    onClick={handelPrint}
-                    fontSize="large"
-                    sx={{
-                      "&:hover": {
-                        color: "secondary.light",
-                        cursor: "pointer",
-                      },
-                    }}
-                  />
-                </ListBody>
-                <Box sx={{
-                    zIndex : -1,
-                    position : "absolute",
-                    top : 0,
-                    left : 0
-                  }} ref={componentRef}>
-                      <PrintOrderDetails  el = {item} />
-                </Box>
+      key={item.id}
+      sx={{
+        flex: 1,
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr 1fr",
+      }}
+    >
+      <ListBody>{item.id}</ListBody>
+      <ListBody>{creationDate.toLocaleString()}</ListBody>
+      <ListBody>
+        <Chip
+          label={item.status}
+          // color={ item.status == "compleat" ? "success" :  (item.status ==  "cancel" ? "error" : "" ) }
+        />
+      </ListBody>
+      <ListBody>
+        <DownloadForOfflineIcon
+          onClick={handelPrint}
+          fontSize="large"
+          sx={{
+            "&:hover": {
+              color: "secondary.light",
+              cursor: "pointer",
+            },
+          }}
+        />
+      </ListBody>
+      <Box sx={{ position: "absolute", top: -1000, left: 0, zIndex: -100 }}>
+        <Box ref={componentRef}>
+          <PrintOrderDetails el={item} />
+        </Box>
+      </Box>
     </Box>
-  )
+  );
 }
 
 

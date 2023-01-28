@@ -82,16 +82,10 @@ const OrdersItemsCard = ({ item, creationDate }) => {
           }}
         />
       </ListBody>
-      <Box
-        sx={{
-          zIndex: -1,
-          position: "absolute",
-          top: 0,
-          left: 0,
-        }}
-        ref={componentRef}
-      >
-        <PrintOrderDetails el={item} />
+      <Box sx={{ position: "absolute", top: -1000, left: 0, zIndex: -100 }}>
+        <Box ref={componentRef}>
+          <PrintOrderDetails el={item} />
+        </Box>
       </Box>
     </Box>
   );

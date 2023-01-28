@@ -183,17 +183,10 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
           PROCESS TO NEXT
         </Button>
       </Collapse>
-
-      <Box
-        sx={{
-          zIndex: -100,
-          position: "fixed",
-          top: 0,
-          left: 0,
-        }}
-        ref={componentRef}
-      >
-        <PrintOrderDetails el={el} />
+      <Box sx={{ position: "absolute", top: -1000, left: 0, zIndex: -100 }}>
+        <Box ref={componentRef}>
+          <PrintOrderDetails el={el} />
+        </Box>
       </Box>
     </Card>
   );

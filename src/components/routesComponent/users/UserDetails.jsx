@@ -226,7 +226,7 @@ const UserDetails = ({ user }) => {
         fullScreen
         open={fullDialogOpen}
         onClose={handleClickFullClose}
-        sx={{ backgroundColor: "#252525" }}
+        sx={{ backgroundColor: "#000", height: "100vh" }}
         // TransitionComponent={Transition}
       >
         <AppBar sx={{ position: "relative" }}>
