@@ -176,8 +176,9 @@ const Users = () => {
         </Box>
         <Box
           sx={{
-            marginTop: "3%",
+            // marginTop: "3%",
             height: "100%",
+            boxSizing: "border-box",
             display: "flex",
             flexDirection: "column",
           }}
@@ -196,7 +197,7 @@ const Users = () => {
             sx={{
               width: "100%",
               height: "100%",
-              boxSizing: "border-box",
+              overflowY: "auto",
             }}
           >
             {usersList &&
@@ -205,6 +206,8 @@ const Users = () => {
                 item.id = doc.id;
                 return <UsersListCard key={item.id} item={item} />;
               })}
+          </Box>
+          <Box>
             <Button
               onClick={() => onPaginationHandle(false)}
               disabled={usersList[limitation - 1] ? false : true}
