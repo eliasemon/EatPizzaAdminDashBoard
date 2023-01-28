@@ -3,9 +3,11 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
     palette: {
         color: {
-            blue: '#1ec1fc',
-            orange: '#fc591e',
-            green: '#1efcc8',
+            blue: '#00B0FF',
+            orange: '#F44336',
+            lightGreen: '#1efcc8',
+            green: '#008000',
+
         },
         common: {
             white: "#fff",

@@ -3,7 +3,8 @@ import { styled } from "@mui/system";
 const TitlebarStyle = styled("div")((props) => ({
   // backgroundColor: "#1E1E1E",
   // border: `2px solid ${props.theme.palette.color[props.color] ?? "#fff"}`,
-  backgroundColor: props.theme.palette.primary.main ?? "#fff",
+  backgroundColor: props.theme.palette.color[props.color] ?? "#fff",
+  // backgroundColor: props.theme.palette.primary.main ?? "#fff",
   borderRadius: "5px",
   padding: "1% 2%",
   // position: "absolute",
