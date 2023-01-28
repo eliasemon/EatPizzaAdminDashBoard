@@ -20,7 +20,7 @@ import SelectOption from "../../UI/SelectOption";
 const promoCodeModel = {
   name: "",
   description: "",
-  discountType: "",
+  discountType: "%",
   discountValue: "",
   validity: "",
   howManyTimesUsed: "",
@@ -28,10 +28,11 @@ const promoCodeModel = {
 };
 
 const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
-  const [discountType, setDiscountType] = useState("");
+  const [discountType, setDiscountType] = useState("%");
   const [items, setItems] = useState(EditAbleItem);
 
   const handleToggleChange = (event, value) => {
+    setItems((prv) => ({ ...prv, discountValue: "", discountType: value }));
     setDiscountType(value);
   };
 
@@ -107,8 +108,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
         <Box>
           {status ? (
             <LabelText>
-              Update the <HighlightText>{items.name}</HighlightText> promocode
-              item
+              Update <HighlightText>{items.name}</HighlightText> promocode item
             </LabelText>
           ) : (
             <LabelText>Create new promocode</LabelText>
@@ -194,22 +194,6 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
       </Box>
       <Box sx={{ display: "flex", width: "100%" }}>
         <Box sx={{ width: "50%", marginRight: "5%" }}>
-          <LabelText>Discount amount</LabelText>
-          <InputText
-            color="common"
-            type="number"
-            disabled={items.discountType ? false : true}
-            value={items.discountValue}
-            onChange={(e) => {
-              if (items.discountType == "%" && e.target.value > 100) {
-                toast.error("You Can't Provide More then 100% discount");
-                return;
-              }
-              setItems((prv) => ({ ...prv, discountValue: e.target.value }));
-            }}
-          />
-        </Box>
-        <Box sx={{ width: "50%", marginRight: "5%" }}>
           <FormControl sx={{ width: "100%" }}>
             <LabelText>Discount type</LabelText>
             {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
@@ -221,7 +205,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
               aria-label="Platform"
             >
               <ToggleButton
-                value="percentage"
+                value="%"
                 sx={{
                   color: "#fff",
                 }}
@@ -257,6 +241,22 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
               <MenuItem value={"tk"}>In Taka</MenuItem>
             </Select> */}
           </FormControl>
+        </Box>
+        <Box sx={{ width: "50%", marginRight: "5%" }}>
+          <LabelText>Discount amount</LabelText>
+          <InputText
+            color="common"
+            type="number"
+            disabled={items.discountType ? false : true}
+            value={items.discountValue}
+            onChange={(e) => {
+              if (items.discountType == "%" && e.target.value > 100) {
+                toast.error("You Can't Provide More then 100% discount");
+                return;
+              }
+              setItems((prv) => ({ ...prv, discountValue: e.target.value }));
+            }}
+          />
         </Box>
       </Box>
       <LabelText>

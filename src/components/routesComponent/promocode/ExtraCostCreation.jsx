@@ -21,15 +21,16 @@ import SelectOption from "../../UI/SelectOption";
 const ExtraCostCodeModel = {
   name: "",
   description: "",
-  costType: "",
+  costType: "%",
   costValue: "",
 };
 
 const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
-  const [costType, setCostType] = useState("");
+  const [costType, setCostType] = useState("%");
   const [items, setItems] = useState(EditAbleItem);
 
   const handleToggleChange = (event, value) => {
+    setItems((prv) => ({ ...prv, costValue: "", costType: value }));
     setCostType(value);
   };
 
@@ -98,8 +99,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
       <Box>
         {status ? (
           <LabelText>
-            Update the <HighlightText>{items.name}</HighlightText> ExtraCost
-            item
+            Update <HighlightText>{items.name}</HighlightText> ExtraCost item
           </LabelText>
         ) : (
           <LabelText>Create ExtraCost</LabelText>
@@ -174,7 +174,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
               aria-label="Platform"
             >
               <ToggleButton
-                value="percentage"
+                value="%"
                 sx={{
                   color: "#fff",
                 }}

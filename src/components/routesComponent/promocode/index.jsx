@@ -19,7 +19,7 @@ import ExtraCostCreation from "./ExtraCostCreation";
 const promoCodeModel = {
   name: "",
   description: "",
-  discountType: "",
+  discountType: "%",
   discountValue: "",
   validity: "",
   howManyTimesUsed: "",
@@ -28,7 +28,7 @@ const promoCodeModel = {
 const ExtraCostCodeModel = {
   name: "",
   description: "",
-  costType: "",
+  costType: "%",
   costValue: "",
 };
 
