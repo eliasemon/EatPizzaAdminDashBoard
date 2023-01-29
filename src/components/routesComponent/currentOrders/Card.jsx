@@ -18,13 +18,13 @@ import OrderQuantity from "./OrderQuantity";
 import { getFirestore , doc , updateDoc} from "firebase/firestore";
 import { delteColloctionInstanceWithOutLoadingAnimation } from "../../../../utils";
 import PrintOrderDetails from "../../printComponent";
+import ConfirmationBox from "./../../UI/ConfirmationBox";
 
 const orderStatusChanged = {
-  pending : "inCoocked",
-  inCoocked : "picked",
-  picked : "compleate"
-
-}
+  pending: "inCoocked",
+  inCoocked: "picked",
+  picked: "compleate",
+};
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -48,38 +48,46 @@ const Header = ({ name, orderId, mobile }) => {
 };
 
 const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
-  const [isPrint , setIsprinting ] = useState(false);
-  const componentRef = useRef()
-  const [delayTime , setDelayTime] = useState(Date.now() - Number(el.creationTime))
-  const intervalID = useRef()
+  const [isPrint, setIsprinting] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  let [message, setMessage] = useState("");
+  const [agreeFunction, setAgreeFunction] = useState(null);
 
-  useEffect(()=>{
-    if(el.status != "compleate" && el.status != "cancel"){
-      intervalID.current = setInterval(()=>{
-        console.log("here")
-        setDelayTime(Date.now() - Number(el.creationTime))
-      }, 1000 * 60) 
+  const componentRef = useRef();
+  const [delayTime, setDelayTime] = useState(
+    Date.now() - Number(el.creationTime)
+  );
+  const intervalID = useRef();
+
+  useEffect(() => {
+    if (el.status != "compleate" && el.status != "cancel") {
+      intervalID.current = setInterval(() => {
+        console.log("here");
+        setDelayTime(Date.now() - Number(el.creationTime));
+      }, 1000 * 60);
     }
-    return () =>  clearInterval(intervalID.current);
-  },[delayTime])
+    return () => clearInterval(intervalID.current);
+  }, [delayTime]);
 
   const handelPrint = useReactToPrint({
-    content : () =>  componentRef.current,
-    documentTitle : `${el.id}`,
-    onAfterPrint : () => { alert('Print Success') ; setIsprinting(false)   } ,
-    onBeforePrint : () => {setIsprinting(true)},
-  })
-
-
+    content: () => componentRef.current,
+    documentTitle: `${el.id}`,
+    onAfterPrint: () => {
+      alert("Print Success");
+      setIsprinting(false);
+    },
+    onBeforePrint: () => {
+      setIsprinting(true);
+    },
+  });
 
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-
-  const db = getFirestore()
-  const colRef = doc(db, "ordersList" , `${el.id}` );
+  const db = getFirestore();
+  const colRef = doc(db, "ordersList", `${el.id}`);
   const onClickButtonHandler = async () => {
     await updateDoc(colRef, { status: orderStatusChanged[el.status] });
     if (el.status === "picked") {
@@ -102,6 +110,16 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
       delete prv[el.id];
       return { ...prv };
     });
+  };
+
+  const handleCancel = (type) => {
+    setMessage(
+      "Are you sure you want to cancel the order ? You can not revert it after clicking agree"
+    );
+    setAgreeFunction(() => {
+      declineOrder(type);
+    });
+    setDialogOpen(true);
   };
 
   return (
@@ -172,7 +190,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
             <Typography color="white">{el.shipingAddress}</Typography>
           </Box>
         </Box>
-        <Button onClick={() => declineOrder("cancel")}>Cancel</Button>
+        <Button onClick={() => handleCancel("cancel")}>Cancel</Button>
         <Button onClick={handelPrint}>Print</Button>
         <Button
           onClick={onClickButtonHandler}
@@ -188,6 +206,11 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
           <PrintOrderDetails el={el} />
         </Box>
       </Box>
+      {dialogOpen && (
+        <ConfirmationBox
+          data={{ dialogOpen, setDialogOpen, message, agreeFunction }}
+        />
+      )}
     </Card>
   );
 };
