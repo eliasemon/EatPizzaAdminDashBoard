@@ -52,20 +52,21 @@ if(unHandleList) console.log(unHandleList);
             },
           }}
         >
-          {Object.keys(unHandleOrderDocs).map((key) =>{
-            const el = unHandleOrderDocs[key]
-            if(el.status !== "pending"){
-              return ""
+          {Object.keys(unHandleOrderDocs).map((key) => {
+            const el = unHandleOrderDocs[key];
+            if (el.status !== "pending") {
+              return "";
             }
 
-          return(
-            <CardComponent
-              setUnHandleOrderDocs={setUnHandleOrderDocs}
-              key={key}
-              el={el}
-              color="#1ec1fc"
-            />
-          )})}
+            return (
+              <CardComponent
+                setUnHandleOrderDocs={setUnHandleOrderDocs}
+                key={key}
+                el={el}
+                color="#1ec1fc"
+              />
+            );
+          })}
         </Box>
       </HalfBox>
 
@@ -79,20 +80,21 @@ if(unHandleList) console.log(unHandleList);
             },
           }}
         >
-          {Object.keys(unHandleOrderDocs).map((key) =>{
-            const el = unHandleOrderDocs[key]
-            if(el.status !== "inCoocked"){
-              return ""
+          {Object.keys(unHandleOrderDocs).map((key) => {
+            const el = unHandleOrderDocs[key];
+            if (el.status !== "inCoocked") {
+              return "";
             }
-            
-          return(
-            <CardComponent
-              setUnHandleOrderDocs={setUnHandleOrderDocs}
-              key={key}
-              el={el}
-              color="#1ec1fc"
-            />
-          )})}
+
+            return (
+              <CardComponent
+                setUnHandleOrderDocs={setUnHandleOrderDocs}
+                key={key}
+                el={el}
+                color="#1ec1fc"
+              />
+            );
+          })}
         </Box>
       </HalfBox>
 
@@ -106,20 +108,21 @@ if(unHandleList) console.log(unHandleList);
             },
           }}
         >
-          {Object.keys(unHandleOrderDocs).map((key) =>{
-            const el = unHandleOrderDocs[key]
-            if(el.status !== "picked"){
-              return ""
+          {Object.keys(unHandleOrderDocs).map((key) => {
+            const el = unHandleOrderDocs[key];
+            if (el.status !== "picked") {
+              return "";
             }
-            
-          return(
-            <CardComponent
-              setUnHandleOrderDocs={setUnHandleOrderDocs}
-              key={key}
-              el={el}
-              color="#1ec1fc"
-            />
-          )})}
+
+            return (
+              <CardComponent
+                setUnHandleOrderDocs={setUnHandleOrderDocs}
+                key={key}
+                el={el}
+                color="#1ec1fc"
+              />
+            );
+          })}
         </Box>
       </HalfBox>
     </CurrentOrdersContainer>

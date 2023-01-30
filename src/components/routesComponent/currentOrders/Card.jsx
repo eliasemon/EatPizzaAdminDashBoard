@@ -18,13 +18,13 @@ import OrderQuantity from "./OrderQuantity";
 import { getFirestore , doc , updateDoc} from "firebase/firestore";
 import { delteColloctionInstanceWithOutLoadingAnimation } from "../../../../utils";
 import PrintOrderDetails from "../../printComponent";
+import ConfirmationBox from "./../../UI/ConfirmationBox";
 
 const orderStatusChanged = {
-  pending : "inCoocked",
-  inCoocked : "picked",
-  picked : "compleate"
-
-}
+  pending: "inCoocked",
+  inCoocked: "picked",
+  picked: "compleate",
+};
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -48,61 +48,79 @@ const Header = ({ name, orderId, mobile }) => {
 };
 
 const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
-  const [isPrint , setIsprinting ] = useState(false);
-  const componentRef = useRef()
-  const [delayTime , setDelayTime] = useState(Date.now() - Number(el.creationTime))
-  const intervalID = useRef()
+  const [isPrint, setIsprinting] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  let [message, setMessage] = useState("");
+  const [agreeFunction, setAgreeFunction] = useState(null);
 
-  useEffect(()=>{
-    if(el.status != "compleate" && el.status != "cancel"){
-      intervalID.current = setInterval(()=>{
-        console.log("here")
-        setDelayTime(Date.now() - Number(el.creationTime))
-      }, 1000 * 60) 
+  const componentRef = useRef();
+  const [delayTime, setDelayTime] = useState(
+    Date.now() - Number(el.creationTime)
+  );
+  const intervalID = useRef();
+
+  useEffect(() => {
+    if (el.status != "compleate" && el.status != "cancel") {
+      intervalID.current = setInterval(() => {
+        console.log("here");
+        setDelayTime(Date.now() - Number(el.creationTime));
+      }, 1000 * 60);
     }
-    return () =>  clearInterval(intervalID.current);
-  },[delayTime])
+    return () => clearInterval(intervalID.current);
+  }, [delayTime]);
 
   const handelPrint = useReactToPrint({
-    content : () =>  componentRef.current,
-    documentTitle : `${el.id}`,
-    onAfterPrint : () => { alert('Print Success') ; setIsprinting(false)   } ,
-    onBeforePrint : () => {setIsprinting(true)},
-  })
-
-
+    content: () => componentRef.current,
+    documentTitle: `${el.id}`,
+    onAfterPrint: () => {
+      alert("Print Success");
+      setIsprinting(false);
+    },
+    onBeforePrint: () => {
+      setIsprinting(true);
+    },
+  });
 
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-
-  const db = getFirestore()
-  const colRef = doc(db, "ordersList" , `${el.id}` );
+  const db = getFirestore();
+  const colRef = doc(db, "ordersList", `${el.id}`);
   const onClickButtonHandler = async () => {
-    await updateDoc( colRef ,{status : orderStatusChanged[el.status]})
-    if(el.status === "picked"){
-      delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
-      setUnHandleOrderDocs((prv) =>{
-        delete prv[el.id]
-        return {...prv}
-      })
-    }else{
-      setUnHandleOrderDocs((prv) =>{
-        prv[el.id].status =  orderStatusChanged[el.status]
-        return {...prv}
-      })
+    await updateDoc(colRef, { status: orderStatusChanged[el.status] });
+    if (el.status === "picked") {
+      // delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
+      setUnHandleOrderDocs((prv) => {
+        delete prv[el.id];
+        return { ...prv };
+      });
+    } else {
+      setUnHandleOrderDocs((prv) => {
+        prv[el.id].status = orderStatusChanged[el.status];
+        return { ...prv };
+      });
     }
   };
-  const declineOrder = async (type) =>{
-     await updateDoc( colRef ,{status : type})
-      delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
-      setUnHandleOrderDocs((prv) =>{
-        delete prv[el.id]
-        return {...prv}
-      })
-  }
+  const declineOrder = async (type) => {
+    await updateDoc(colRef, { status: type });
+    // delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
+    setUnHandleOrderDocs((prv) => {
+      delete prv[el.id];
+      return { ...prv };
+    });
+  };
+
+  const handleCancel = (type) => {
+    setMessage(
+      "Are you sure you want to cancel the order ? You can not revert it after clicking agree"
+    );
+    setAgreeFunction(() => {
+      declineOrder(type);
+    });
+    setDialogOpen(true);
+  };
 
   return (
     <Card
@@ -113,13 +131,16 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
       }}
     >
       <Box>
-        <p>
-        {Math.round(delayTime / ( 1000*60 ))} minutes ago. 
+        <p style={{ color: "#fff" }}>
+          {Math.round(delayTime / (1000 * 60))} minutes ago.
         </p>
-        
       </Box>
-      <CardHeaderStyles onClick={handleExpandClick} sx={{cursor : "pointer"}} >
-        <Header name={el.userName} orderId={el.id} mobile={el?.userPhoneNumber} />
+      <CardHeaderStyles onClick={handleExpandClick} sx={{ cursor: "pointer" }}>
+        <Header
+          name={el.userName}
+          orderId={el.id}
+          mobile={el?.userPhoneNumber}
+        />
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -132,7 +153,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {Object.keys(el.items).map((key) => (
-          <OrderQuantity key ={key} product={el.items[key]} />
+          <OrderQuantity key={key} product={el.items[key]} />
         ))}
         <Box
           sx={{
@@ -169,8 +190,8 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
             <Typography color="white">{el.shipingAddress}</Typography>
           </Box>
         </Box>
-        <Button onClick={() => declineOrder("cancel")}>Cancel</Button>
-        <Button onClick={handelPrint }>Print</Button>
+        <Button onClick={() => handleCancel("cancel")}>Cancel</Button>
+        <Button onClick={handelPrint}>Print</Button>
         <Button
           onClick={onClickButtonHandler}
           mt={1}
@@ -180,19 +201,16 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
           PROCESS TO NEXT
         </Button>
       </Collapse>
-         
-          <Box sx={{
-            zIndex : -1,
-            position : "absolute",
-            top : 0,
-            left : 0
-          }} ref={componentRef}>
-              <PrintOrderDetails  el = {el} />
-           </Box>
-
-        
-  
-
+      <Box sx={{ position: "absolute", top: -1000, left: 0, zIndex: -100 }}>
+        <Box ref={componentRef}>
+          <PrintOrderDetails el={el} />
+        </Box>
+      </Box>
+      {dialogOpen && (
+        <ConfirmationBox
+          data={{ dialogOpen, setDialogOpen, message, agreeFunction }}
+        />
+      )}
     </Card>
   );
 };
