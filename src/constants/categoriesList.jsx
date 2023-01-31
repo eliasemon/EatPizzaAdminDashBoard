@@ -69,7 +69,7 @@ const categories = [
   },
   {
     id: 10,
-    title: "Banner",
+    title: "Brand Details",
     link: "/banner",
     icon: <DashboardIcon />,
   },

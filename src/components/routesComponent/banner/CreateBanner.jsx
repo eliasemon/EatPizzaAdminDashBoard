@@ -34,21 +34,17 @@ const options = [
 const dataModel = {
   homePageTittle : "",
   image : {},
-  backLinkType : "",
-  backLink : ""
+  ShopAddress : ""
+
 }
 const CreateBanner = () => {
   const { ui, uploadProcess, image, setImage } = useFileUploaderJSX(true , {propsWidth : "325" , propsHeight : "150"} );
   const [items, setItems] = useState(dataModel);
-  const [activeItem , setActiveItem]= useState(0);
-
 
   useEffect(() => {
     getSingleDataWithOutRealTimeUpdates("banner" , "banner1").then((data)=>{
       setItems(data)
-      console.log(data)
       setImage(data.image.imageDownloadUrl)
-      setActiveItem(Number(data?.backLinkType?.index))
     }).catch(()=>{
       setItems(dataModel)
     })
@@ -62,7 +58,6 @@ const CreateBanner = () => {
     }
     const data = { ...items };
     data.id = "banner1"
-    data.backLinkType = {title : options[activeItem].title ,  index : options[activeItem].index}
     if (image) {
       showLoading()
       uploadProcess("banner", "banner1").then((v) => {
@@ -94,25 +89,18 @@ const CreateBanner = () => {
           }
         />
       </Box>
-      <SelectOption
-        width="40%"
-        options={options}
-        activeItem={activeItem}
-        setActiveItem={(index)=> { setItems((prv) => ({ ...prv, backLink : "" , backLinkType : options[activeItem]  }))  ; setActiveItem(index)}}
-      />
-
-        <Box>
-        <LabelText>{options[activeItem]?.title}</LabelText>
-          <InputText
-            color="common"
-            id="filled-size-normal"
-            placeholder={`Enter the ${options[activeItem]?.title}`}
-            value={items.backLink}
-            onChange={(e) =>
-              setItems((prv) => ({ ...prv, backLink : e.target.value }))
-            }
-          />
-        </Box>
+      <Box>
+        <LabelText>Phycal Shop Address</LabelText>
+        <InputText
+          color="common"
+          id="filled-size-normal"
+          placeholder="Enter Phycal Shop Address"
+          value={items.ShopAddress}
+          onChange={(e) =>
+            setItems((prv) => ({ ...prv, ShopAddress : e.target.value }))
+          }
+        />
+      </Box>
 
       <Box
         sx={{

@@ -22,9 +22,9 @@ const RoutesComponent = ({ openingStatus }) => {
       <Route path="/addons" element={<Addons />} />
       <Route path="/banner" element={<Banner />} />
       <Route path="/categories" element={<Categories />} />
-      <Route path="/createitem" element={<CreateItem />} />
+      <Route path="/items/createitem" element={<CreateItem />} />
       <Route
-        path="/createitem/:itemsIdToBeUpdated"
+        path="/items/createitem/:itemsIdToBeUpdated"
         element={<CreateItem update={true} />}
       />
       <Route

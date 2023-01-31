@@ -61,7 +61,7 @@ if(unHandleList) console.log(unHandleList);
             return (
               <CardComponent
                 setUnHandleOrderDocs={setUnHandleOrderDocs}
-                key={key}
+                key={`${key}Pending`}
                 el={el}
                 color="#1ec1fc"
               />
@@ -89,7 +89,7 @@ if(unHandleList) console.log(unHandleList);
             return (
               <CardComponent
                 setUnHandleOrderDocs={setUnHandleOrderDocs}
-                key={key}
+                key={`${key}inCoocked`}
                 el={el}
                 color="#1ec1fc"
               />
@@ -117,7 +117,7 @@ if(unHandleList) console.log(unHandleList);
             return (
               <CardComponent
                 setUnHandleOrderDocs={setUnHandleOrderDocs}
-                key={key}
+                key={`${key}picked`}
                 el={el}
                 color="#1ec1fc"
               />

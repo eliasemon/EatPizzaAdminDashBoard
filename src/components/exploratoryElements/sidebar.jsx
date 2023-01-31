@@ -18,7 +18,7 @@ const SideBar = () => {
   return (
     <SidebarContainer>
       {categories.map((item) => (
-        <StyledLink to={item.link ? item.link : "/"}>
+        <StyledLink key={item.id} to={item.link ? item.link : "/"}>
           <ListButton
             selected={location.pathname.includes(item.link)}
             key={item.id}
