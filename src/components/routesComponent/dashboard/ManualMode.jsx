@@ -18,19 +18,17 @@ const ManualMode = ({forView , setForView}) => {
     }
 
   return (
-
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-       
       }}
     >
       <Typography variant="h5" align="center" mb={1}>
         Notice
       </Typography>
-      
+
       <TextField
         value={forView.notice}
         onChange={onTextFieldChange}
@@ -39,23 +37,24 @@ const ManualMode = ({forView , setForView}) => {
         placeholder="your notice..."
         // fullWidth
         sx={{
-          
           width: "400px",
-          border:'1px solid white',
-          height:'10vh',
+          border: "1px solid white",
+          // height: "10vh",
           input: {
-            color: "white",    
-            
-          }
-          
+            color: "white",
+          },
         }}
-        
       />
       {forView.manualModeResturentClosed == false ? (
         <Button
           onClick={closeTheResturent}
           fullWidth
-          sx={{ backgroundColor: "red", color: "#fff",marginTop:'10px',marginBottom:'5px' }}
+          sx={{
+            backgroundColor: "red",
+            color: "#fff",
+            marginTop: "10px",
+            marginBottom: "5px",
+          }}
         >
           Close The Resturent
         </Button>
