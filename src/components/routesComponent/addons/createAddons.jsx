@@ -94,7 +94,7 @@ const CreateAddons = ({ EditAbleItem, status, clearUi }) => {
           }
           type="number"
           sx={{
-            width: "25%",
+            width: "50%",
             "&:focus": {
               border: "none",
             },
