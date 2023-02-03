@@ -28,7 +28,7 @@ const promoCodeModel = {
 };
 
 const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
-  const [discountType, setDiscountType] = useState("%");
+  const [discountType, setDiscountType] = useState(EditAbleItem.discountType);
   const [items, setItems] = useState(EditAbleItem);
 
   const handleToggleChange = (event, value) => {
@@ -39,6 +39,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
   CreatePromoCode;
   useEffect(() => {
     setItems(EditAbleItem);
+    setDiscountType(EditAbleItem.discountType)
   }, [EditAbleItem]);
 
   const discardHandle = () => {

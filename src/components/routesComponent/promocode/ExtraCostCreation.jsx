@@ -26,7 +26,7 @@ const ExtraCostCodeModel = {
 };
 
 const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
-  const [costType, setCostType] = useState("%");
+  const [costType, setCostType] = useState(EditAbleItem.costType);
   const [items, setItems] = useState(EditAbleItem);
 
   const handleToggleChange = (event, value) => {
@@ -36,6 +36,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
 
   useEffect(() => {
     setItems(EditAbleItem);
+    setCostType(EditAbleItem.costType)
   }, [EditAbleItem]);
 
   const discardHandle = () => {
