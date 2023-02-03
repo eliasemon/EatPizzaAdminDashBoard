@@ -90,7 +90,7 @@ const CreateBanner = () => {
         />
       </Box>
       <Box>
-        <LabelText>Phycal Shop Address</LabelText>
+        <LabelText>Physical Shop Address</LabelText>
         <InputText
           color="common"
           id="filled-size-normal"
@@ -98,6 +98,18 @@ const CreateBanner = () => {
           value={items.ShopAddress}
           onChange={(e) =>
             setItems((prv) => ({ ...prv, ShopAddress : e.target.value }))
+          }
+        />
+      </Box>
+      <Box>
+        <LabelText>Help Line</LabelText>
+        <InputText
+          color="common"
+          id="filled-size-normal"
+          placeholder="Enter Help Line Number"
+          value={items.hotline}
+          onChange={(e) =>
+            setItems((prv) => ({ ...prv, hotline : e.target.value }))
           }
         />
       </Box>
