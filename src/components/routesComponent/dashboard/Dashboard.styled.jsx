@@ -7,7 +7,7 @@ export const DashboardContainer = styled("div")({
 });
 
 export const LeftContainer = styled("div")({
-  width: "35%",
+  width: "50%",
   padding: "2.5%",
   overflow: "hidden",
   display: "flex",
@@ -16,7 +16,7 @@ export const LeftContainer = styled("div")({
 });
 
 export const RightContainer = styled("div")(({ theme }) => ({
-  width: "65%",
+  width: "50%",
 
   padding: "1.5rem",
   position: "relative",

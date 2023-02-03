@@ -83,16 +83,10 @@ const UserDetails = ({ user }) => {
       });
   };
 
-  const restrictionHandle = async (id, initialState) => {
-    if (
-      window.confirm(
-        `Do You Wanna ${initialState ? "Unrestrict" : "Restrict"} The User`
-      )
-    ) {
-      const db = getFirestore();
-      const colRef = doc(db, "usersList", `${id}`);
-      await updateDoc(colRef, { isRestricted: !initialState });
-    }
+  const restrictionHandle = async (id) => {
+    const db = getFirestore();
+    const colRef = doc(db, "usersList", `${id}`);
+    await updateDoc(colRef, { isRestricted: !user.isRestricted });
   };
 
   const handleClickOpen = (messageString, onAgree) => {
@@ -145,7 +139,10 @@ const UserDetails = ({ user }) => {
                   </Box>
                   <Box sx={{ display: "flex", marginTop: ".25rem" }}>
                     <Typography sx={{ color: "#fff" }}>Status : </Typography>
-                    <Typography pl={1} sx={{ color: "#fff" }}>
+                    <Typography
+                      pl={1}
+                      sx={{ color: user.isRestricted ? "#FF0000" : "#fff" }}
+                    >
                       {user.isRestricted ? "Banned" : "Not Restricted"}
                     </Typography>
                   </Box>
@@ -186,14 +183,18 @@ const UserDetails = ({ user }) => {
                   sx={{ marginRight: ".5rem" }}
                   onClick={() => {
                     handleClickOpen(
-                      `Are you sure you want ban ${user.fullName} ? ${user.fullName} will not able to order anything`,
+                      `Are you sure you want ${
+                        user.isRestricted ? "unban" : "ban"
+                      } ${user.fullName} ? ${user.fullName} will ${
+                        user.isRestricted ? "be" : "not"
+                      } able to order`,
                       () => {
-                        console.log("Agree button clicked from BAN USER");
+                        restrictionHandle(user.id);
                       }
                     );
                   }}
                 >
-                  Ban User
+                  {user.isRestricted ? "Remove Ban" : "Ban User"}
                 </Button>
                 {/* <Button
                   variant="contained"
