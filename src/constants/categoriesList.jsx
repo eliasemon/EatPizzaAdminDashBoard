@@ -14,7 +14,7 @@ const categories = [
   {
     id: 1,
     title: "Dashboard",
-    link: "/",
+    link: undefined,
     icon: <DashboardIcon />,
   },
   {
@@ -69,7 +69,7 @@ const categories = [
   },
   {
     id: 10,
-    title: "Banner",
+    title: "Brand Details",
     link: "/banner",
     icon: <DashboardIcon />,
   },

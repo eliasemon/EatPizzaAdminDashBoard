@@ -22,7 +22,8 @@ const usePagination = ({totalPage}) => {
   return {
     ui , 
     activepage,
-    changeTheLocalTotal
+    changeTheLocalTotal,
+    localTotal
   }
 }
 

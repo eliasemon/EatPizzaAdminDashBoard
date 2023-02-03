@@ -19,6 +19,7 @@ import {
   shortUUID,
   getSingleDataWithOutRealTimeUpdates,
 } from "../../../../utils";
+import { showLoading , closeLoading } from "../../loading/loading";
 
 import useFileUploaderJSX from "../../../hooks/useFileUploader";
 import { toast } from "react-toastify";
@@ -32,15 +33,12 @@ const CreateItems = ({ update }) => {
   const [selectedAddons, setSelectedAddons] = useState([]);
   const { ui, uploadProcess, image, setImage } = useFileUploaderJSX(update);
 
-  const [defualtVariant, setDefualtVariant] = useState("");
-
   useEffect(() => {
     if (update) {
       getSingleDataWithOutRealTimeUpdates("productlist", itemsIdToBeUpdated)
         .then((data) => {
           setItems({ ...data });
           setVariants({ ...data.variants });
-          setDefualtVariant({ ...data.defualtVariant });
           setSelectedCatagories([...data.selectedCatagories]);
           setSelectedAddons([...data.selectedAddons]);
           setImage(data.image.imageDownloadUrl);
@@ -62,15 +60,38 @@ const CreateItems = ({ update }) => {
     const data = { ...items };
 
     data.variants = { ...variants };
+
+
+    let tempData;
+    Object.keys(variants).forEach((key) =>{
+      const item = variants[key];
+      console.log(item)
+      if(!tempData){
+        tempData = item
+      }else if(Number(item.sellingPrice) < Number(tempData.sellingPrice)){
+        tempData = item
+      }
+      return
+    })
+    
+    data.defualtVariant = tempData
+
+
+
+
+
+
     data.selectedCatagories = [...selectedCatagories];
     data.selectedAddons = [...selectedAddons];
-    data.defualtVariant = { ...defualtVariant };
-
+    
     if (image) {
+      showLoading()
       uploadProcess("product", items.id).then((v) => {
         data.image = { ...v };
         setDataToCollection(data, "productlist", false);
-        navigate("/items");
+      }).then(()=>{
+          closeLoading();
+          navigate("/items");
       });
     } else {
       data.image = {};
@@ -194,8 +215,6 @@ const CreateItems = ({ update }) => {
           <AddVariantsAndVariantsListLoader
             variants={variants}
             setVariants={setVariants}
-            defualtVariant={defualtVariant}
-            setDefualtVariant={setDefualtVariant}
           />
         </Box>
         {/* UpperBox End  */}

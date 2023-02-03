@@ -2,13 +2,10 @@ import { Box, Button } from "@material-ui/core";
 import { useState , useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
-import ItemList from "../../../constants/ItemsList";
-import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
-import { Chip } from "@mui/material";
-import { showDataWithPagination } from "../../../../utils";
+import { showDataWithPagination , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
 import { toast } from "react-toastify";
+import OrdersItemsCard from "./OrdersItemsCard";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -60,51 +57,56 @@ const ListHeader = styled(Box)`
   align-items: center;
 `;
 
-const ListBody = styled(Box)`
-  width: 100%;
-  /* min-height: 40px; */
-  color: #fff;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  background-color: #2f2e2e;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid #212020;
-`;
-
 const OrdersHistory = () => {
+  const [ordersList, setOrdersList] = useState("");
 
-  const [ordersList , setOrdersList] = useState("");
-  // const [open, setOpen] = useState(true);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
-
-  const [searchOrderId , setSearchOrderId] = useState("")
+  const [searchOrderId, setSearchOrderId] = useState("");
   const limitation = 8;
 
+  const onSearchButtonClick = () => {
+    getSingleDataWithOutRealTimeUpdates("ordersList", searchOrderId, true)
+      .then((data) => {
+        setOrdersList([data]);
+      })
+      .catch((error) => {
+        toast.error("No Data Found");
+      });
+  };
 
-  const onSearchButtonClick = () =>{
-          getSingleDataWithOutRealTimeUpdates("ordersList" , searchOrderId , true).then((data) => {
-            setOrdersList(data)
-          }).catch((error) =>{
-            toast.error("No Data Found");
-          })
-  }
+  console.log(ordersList);
 
+  useEffect(() => {
+    showDataWithPagination(
+      setOrdersList,
+      "ordersList",
+      0,
+      limitation,
+      false,
+      "creationTime"
+    );
+  }, []);
 
-console.log(ordersList)
-  useEffect(()=>{
-    showDataWithPagination(setOrdersList,  "ordersList" , 0 , limitation, false , "creationTime" )
-  },[])
-
-  const onPaginationHandle = (type) =>{
-    if(type){
-      showDataWithPagination(setOrdersList,  "ordersList" , 0 , limitation, false , "creationTime" )
-      return
+  const onPaginationHandle = (type) => {
+    if (type) {
+      showDataWithPagination(
+        setOrdersList,
+        "ordersList",
+        0,
+        limitation,
+        false,
+        "creationTime"
+      );
+      return;
     }
-    showDataWithPagination(setOrdersList,  "ordersList" , ordersList[limitation-1] , limitation, false , "creationTime" )
-  }
+    showDataWithPagination(
+      setOrdersList,
+      "ordersList",
+      ordersList[limitation - 1],
+      limitation,
+      false,
+      "creationTime"
+    );
+  };
 
   return (
     <Box
@@ -138,7 +140,7 @@ console.log(ordersList)
               <SearchIcon color="#" />
             </SearchIconWrapper>
             <StyledInputBase
-              onChange={(e)=> setSearchOrderId(e.target.value)}
+              onChange={(e) => setSearchOrderId(e.target.value)}
               value={searchOrderId}
               placeholder="Enter order ID"
               inputProps={{ "aria-label": "search" }}
@@ -169,52 +171,43 @@ console.log(ordersList)
             <ListHeader>Phone Number</ListHeader>
             <ListHeader>Time</ListHeader>
             <ListHeader>Status</ListHeader>
-            <ListHeader>Download</ListHeader>
+            <ListHeader>Print</ListHeader>
           </Box>
-          <Box sx={{
-              height: "35%",
-              width: "100%",
-              overflowY: "scroll",
-          }}>
-          {ordersList && ordersList.map((doc , index) =>{
-              const item = doc.data()
-              const creationDate = new Date(Number(item.creationTime))
-              return(
           <Box
-            key={item.id}
             sx={{
-              
-              flex: 1,
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
-              
+              // height: "35%",
+              width: "100%",
+              height: "100%",
+              overflowY: "auto",
             }}
           >
-                <ListBody>#751</ListBody>
-                <ListBody>{item.userName}</ListBody>
-                <ListBody>{item?.userPhoneNumber}</ListBody>
-                <ListBody>{creationDate.toLocaleString()}</ListBody>
-                <ListBody>
-                  <Chip
-                    label={index % 2 == 0 ? "Delivered" : "Cancelled"}
-                    color={index % 2 == 0 ? "success" : "error"}
-                  />
-                </ListBody>
-                <ListBody>
-                  <DownloadForOfflineIcon
-                    fontSize="large"
-                    sx={{
-                      "&:hover": {
-                        color: "secondary.light",
-                        cursor: "pointer",
-                      },
-                    }}
-                  />
-                </ListBody>
-              </Box>
-            )})}
-            <Button onClick={() => onPaginationHandle(false)} disabled={ordersList[limitation - 1] ? false : true}>Next</Button>
-          <Button onClick={() => onPaginationHandle (true)} >First page</Button>
+            {ordersList &&
+              ordersList.map((doc, index) => {
+                const item = doc.data();
+                item.id = doc.id;
+                const creationDate = new Date(Number(item.creationTime));
+                return (
+                  <>
+                    <OrdersItemsCard
+                      key={item.id}
+                      item={item}
+                      creationDate={creationDate}
+                    />
+                  </>
+                );
+              })}
+          </Box>
+          <Box>
+            <Button
+              color="primary"
+              onClick={() => onPaginationHandle(false)}
+              disabled={ordersList[limitation - 1] ? false : true}
+            >
+              Next
+            </Button>
+            <Button color="primary" onClick={() => onPaginationHandle(true)}>
+              First page
+            </Button>
           </Box>
         </Box>
       </Box>

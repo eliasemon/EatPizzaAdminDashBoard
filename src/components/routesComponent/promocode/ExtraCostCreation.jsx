@@ -8,24 +8,32 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 
 import { toast } from "react-toastify";
 
 import { addDataToCollection, setDataToCollection } from "../../../../utils";
-import { InputText, LabelText } from "../../UI/Forms.styled";
+import { HighlightText, InputText, LabelText } from "../../UI/Forms.styled";
 import SelectOption from "../../UI/SelectOption";
 
 const ExtraCostCodeModel = {
   name: "",
   description: "",
-  costType: "",
+  costType: "%",
   costValue: "",
 };
 
 const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
-  const [activeItem, setActiveItem] = useState(0);
+  const [costType, setCostType] = useState("%");
   const [items, setItems] = useState(EditAbleItem);
+
+  const handleToggleChange = (event, value) => {
+    setItems((prv) => ({ ...prv, costValue: "", costType: value }));
+    setCostType(value);
+  };
+
   useEffect(() => {
     setItems(EditAbleItem);
   }, [EditAbleItem]);
@@ -37,11 +45,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
     setItems(promoCodeModel);
   };
   const checkedCondition = (items) => {
-    if (
-      items.name == "" ||
-      items.costType == "" ||
-      items.costValue == ""
-    ) {
+    if (items.name == "" || items.costType == "" || items.costValue == "") {
       return true;
     }
     return false;
@@ -60,7 +64,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
       toast.error("Empty Field Can't added");
       return;
     }
-    const data = {...items , id : items.name}
+    const data = { ...items, id: items.name };
     await setDataToCollection(data, "extraCost");
     setItems(ExtraCostCodeModel);
   };
@@ -81,11 +85,11 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
   ];
   return (
     <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1.4rem",
-        }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1.4rem",
+      }}
     >
       {/* <Typography color="white" py={1}>
         {status
@@ -95,8 +99,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
       <Box>
         {status ? (
           <LabelText>
-            Update the <HighlightText>{items.name}</HighlightText> ExtraCost
-            item
+            Update <HighlightText>{items.name}</HighlightText> ExtraCost item
           </LabelText>
         ) : (
           <LabelText>Create ExtraCost</LabelText>
@@ -128,7 +131,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
         <LabelText>Description</LabelText>
         <InputText
           // color="white"
-          placeholder="Write your description here"
+          placeholder="Your description here"
           value={items.description}
           multiline
           row={4}
@@ -158,18 +161,48 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
           // }}
         />
       </Box>
-      <Box sx={{ display: "flex", width: "100%" }}>
-
-        <Box sx={{ width: "50%", marginRight: "5%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+          gap: 2,
+        }}
+      >
+        <Box sx={{ width: "50%" }}>
           <FormControl sx={{ width: "100%" }}>
             <LabelText>Cost type</LabelText>
             {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
-            <SelectOption
+            <ToggleButtonGroup
+              color="primary"
+              value={costType}
+              exclusive
+              onChange={handleToggleChange}
+              aria-label="Platform"
+            >
+              <ToggleButton
+                value="%"
+                sx={{
+                  color: "#fff",
+                }}
+              >
+                In Percentage
+              </ToggleButton>
+              <ToggleButton
+                value="taka"
+                sx={{
+                  color: "#fff",
+                }}
+              >
+                In Taka
+              </ToggleButton>
+            </ToggleButtonGroup>
+            {/* <SelectOption
               // width="100%"
               options={options}
               activeItem={activeItem}
               setActiveItem={setActiveItem}
-            />
+            /> */}
             {/* <Select
               // labelId="demo-simple-select-label"
               // id="demo-simple-select"
@@ -185,9 +218,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
             </Select> */}
           </FormControl>
         </Box>
-      </Box>
-      <Box sx={{ display: "flex", width: "100%" }}>
-        <Box sx={{ width: "50%", marginRight: "5%" }}>
+        <Box sx={{ width: "50%" }}>
           <LabelText>Cost Amount</LabelText>
           <InputText
             color="common"
@@ -216,11 +247,12 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
             // }}
           />
         </Box>
-
-        {/* <Typography>
+      </Box>
+      {/* <Box sx={{ display: "flex", width: "100%" }}> */}
+      {/* <Typography>
         {`This Promo-Code Will Be Valid In More Than ${items.conditionAmmount} Tk. Order  `}
       </Typography> */}
-      </Box>
+      {/* </Box> */}
       <Box sx={{ display: "flex", gap: "2%" }}>
         {status ? (
           <Button
