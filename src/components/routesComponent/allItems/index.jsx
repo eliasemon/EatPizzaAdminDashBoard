@@ -1,5 +1,5 @@
-import { Box, Button } from "@material-ui/core";
-import {useState, useEffect , useRef} from "react";
+import { Button, Box } from "@mui/material";
+import { useState, useEffect, useRef } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -9,7 +9,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import product from "../../../assets/images/product.jpg";
 import usePagination from "../../../hooks/usePagination";
-import { showDataWithPagination , delteColloctionInstance} from "../../../../utils";
+import {
+  showDataWithPagination,
+  delteColloctionInstance,
+} from "../../../../utils";
 import { Typography } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
