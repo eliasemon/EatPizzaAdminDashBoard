@@ -10,14 +10,18 @@ const usePagination = ({totalPage}) => {
         setLocalTotal(num)
     }
     const ui = (
-        <Box style={{width : "100%"}}>
-              <Pagination
-                count={localTotal}
-                onChange={(e, page) => setActivePage(Number(page))}
-                color="primary"
-              />
-        </Box>
-    )
+      <Box
+        style={{
+          width: "100%",
+        }}
+      >
+        <Pagination
+          count={localTotal}
+          onChange={(e, page) => setActivePage(Number(page))}
+          sx={{ color: "#fff" }}
+        />
+      </Box>
+    );
 
   return {
     ui , 

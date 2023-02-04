@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import product from "../../../assets/images/product.jpg";
 import usePagination from "../../../hooks/usePagination";
 import { showDataWithPagination , delteColloctionInstance} from "../../../../utils";
+import { Typography } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -69,39 +70,49 @@ const ListBody = styled(Box)`
   padding-bottom: 0.75rem;
   background-color: #2f2e2e;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   border-bottom: 1px solid #212020;
 `;
 
 const AllItems = () => {
   const navigate = useNavigate();
-  const [items , setItems] =  useState("");
+  const [items, setItems] = useState("");
   const itemDocsRefAll = useRef(null);
-  const {ui , activepage, changeTheLocalTotal  } = usePagination(1)
-  const limitation  = 7;
-  useEffect(()=>{
-    showDataWithPagination(setItems,  "productlist" , 0 , limitation, true).then((docs)=>{
-      itemDocsRefAll.current = docs;
-      changeTheLocalTotal( Math.ceil( Number(docs.length) / limitation));
-
-    })
-  },[])
-  useEffect(()=>{
-    if(itemDocsRefAll.current){
-      showDataWithPagination(setItems,  "productlist" ,(( activepage == 1 )?  0  : itemDocsRefAll.current[(limitation * (activepage - 1))] ), limitation , false)
+  const { ui, activepage, changeTheLocalTotal } = usePagination(1);
+  const limitation = 7;
+  useEffect(() => {
+    showDataWithPagination(setItems, "productlist", 0, limitation, true).then(
+      (docs) => {
+        itemDocsRefAll.current = docs;
+        changeTheLocalTotal(Math.ceil(Number(docs.length) / limitation));
+      }
+    );
+  }, []);
+  useEffect(() => {
+    if (itemDocsRefAll.current) {
+      showDataWithPagination(
+        setItems,
+        "productlist",
+        activepage == 1
+          ? 0
+          : itemDocsRefAll.current[limitation * (activepage - 1)],
+        limitation,
+        false
+      );
     }
-  },[activepage])
+  }, [activepage]);
 
-
-  const deleteItem = (id , collectionRef , imageRef , itemName) =>{
-
-    if(window.confirm(  `******************************************** \n\n Wait:= \n\n Do You Wanna Delete \n**"${itemName}"**\nCatagory Item!!! \n\n ********************************************`)){
-      delteColloctionInstance(id , collectionRef ,imageRef)
+  const deleteItem = (id, collectionRef, imageRef, itemName) => {
+    if (
+      window.confirm(
+        `******************************************** \n\n Wait:= \n\n Do You Wanna Delete \n**"${itemName}"**\nCatagory Item!!! \n\n ********************************************`
+      )
+    ) {
+      delteColloctionInstance(id, collectionRef, imageRef);
     }
-    return
-  } 
-
+    return;
+  };
 
   return (
     <Box
@@ -112,31 +123,30 @@ const AllItems = () => {
         width: "100%",
         height: "100%",
         padding: "1%",
-        
-        boxSizing:'border-box'
+
+        boxSizing: "border-box",
       }}
     >
       <Box
         sx={{
           backgroundColor: "#252525",
-          height: "100%",
-          width:'100%',
+          // overflow: "auto",
+          maxHeight: "100%",
+          width: "100%",
           borderRadius: "5px",
-       
         }}
       >
         <Box
           sx={{
             display: "flex",
             width: "100%",
-            height:'10%',
+            height: "10%",
             justifyContent: "space-between",
             alignItems: "start",
             // padding: "2% 1% 0",
-            padding:'2%'
+            padding: "2%",
           }}
         >
-          
           <Button
             onClick={() => navigate("/items/createitem")}
             variant="contained"
@@ -149,17 +159,17 @@ const AllItems = () => {
         <Box
           sx={{
             marginTop: "2%",
-            
-            height: "86%",
+            height: "80%",
             display: "flex",
             flexDirection: "column",
-            boxSizing:'border-box'
+            boxSizing: "border-box",
+            overflow: "auto",
           }}
         >
           <Box
             sx={{
               width: "100%",
-              height:'10%',
+              height: "3rem",
               display: "grid",
               gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr 1fr",
             }}
@@ -172,71 +182,82 @@ const AllItems = () => {
             <ListHeader>Delete Items</ListHeader>
           </Box>
           <Box
-              sx={{
+            sx={{
               height: "90%",
               width: "100%",
-              boxSizing : "border-box",
+              boxSizing: "border-box",
               flex: 1,
-              }}
-            >
-
-            
-          {items && items.map((doc) => {
-              const item = doc.data()
-              item.id = doc.id
-            return (
-          <Box
-            sx={{
-              // height: "35%",
-              // width: "35%",
-              // flex: 1,
-              display: "grid",
-              gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr 1fr",
             }}
-            key={item.id}
           >
-                <ListBody>{item.id}</ListBody>
-                <ListBody>
-                  <img
-                    src={item.image.imageDownloadUrl}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                      marginRight: "1rem",
-                    }}
-                  />
-                  {item.name}
-                </ListBody>
-                <ListBody>{item.defualtVariant.regularPrice}</ListBody>
-                <ListBody>{item.defualtVariant.sellingPrice}</ListBody>
-                <ListBody>
-                  <EditIcon
-                    onClick={() => navigate(`/items/createitem/${item.id}`)}
+            {items &&
+              items.map((doc) => {
+                const item = doc.data();
+                item.id = doc.id;
+                return (
+                  <Box
                     sx={{
-                      "&:hover": {
-                        color: "secondary.light",
-                        cursor: "pointer",
-                      },
+                      // height: "35%",
+                      // width: "35%",
+                      // flex: 1,
+                      display: "grid",
+                      gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr 1fr",
                     }}
-                  />
-                </ListBody>
-                <ListBody>
-                  <DeleteIcon
-                    onClick={() => deleteItem(item.id , "productlist" , item.image.imgRef , item.name)}
-                    sx={{
-                      "&:hover": {
-                        color: "secondary.light",
-                        cursor: "pointer",
-                      },
-                    }}
-                  />
-                </ListBody>
+                    key={item.id}
+                  >
+                    <ListBody sx={{ padding: "1rem" }}>{item.id}</ListBody>
+                    <ListBody sx={{ paddingLeft: "2rem" }}>
+                      <img
+                        src={item.image.imageDownloadUrl}
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "50%",
+                          marginRight: "1rem",
+                        }}
+                      />
+                      {item.name}
+                    </ListBody>
+                    <ListBody sx={{ textAlign: "center", paddingLeft: "3rem" }}>
+                      {item.defualtVariant.regularPrice}
+                    </ListBody>
+                    <ListBody sx={{ paddingLeft: "3rem" }}>
+                      {item.defualtVariant.sellingPrice}
+                    </ListBody>
+                    <ListBody sx={{ paddingLeft: "3rem" }}>
+                      <EditIcon
+                        onClick={() => navigate(`/items/createitem/${item.id}`)}
+                        sx={{
+                          "&:hover": {
+                            color: "secondary.light",
+                            cursor: "pointer",
+                          },
+                        }}
+                      />
+                    </ListBody>
+                    <ListBody sx={{ paddingLeft: "3rem" }}>
+                      <DeleteIcon
+                        onClick={() =>
+                          deleteItem(
+                            item.id,
+                            "productlist",
+                            item.image.imgRef,
+                            item.name
+                          )
+                        }
+                        sx={{
+                          "&:hover": {
+                            color: "secondary.light",
+                            cursor: "pointer",
+                          },
+                        }}
+                      />
+                    </ListBody>
+                  </Box>
+                );
+              })}
           </Box>
-          )})}
-          </Box>
-          {ui}
         </Box>
+        {ui}
       </Box>
     </Box>
   );
