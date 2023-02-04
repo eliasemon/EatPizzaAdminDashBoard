@@ -66,10 +66,10 @@ const PromoCode = () => {
       )
     ) {
       if (type === "extraCost") {
-        delteColloctionInstance(itemsID, "extraCost");
+        delteColloctionInstance(itemsID, "extraCost", false, false);
         return;
       }
-      delteColloctionInstance(itemsID, "promoCode");
+      delteColloctionInstance(itemsID, "promoCode", false, false);
     }
   };
   const clearUi = (type) => {

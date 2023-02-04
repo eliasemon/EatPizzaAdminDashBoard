@@ -88,11 +88,12 @@ const AllItems = () => {
     showDataWithPagination(setItems, "productlist", 0, limitation, true).then(
       (docs) => {
         itemDocsRefAll.current = docs;
-        changeTheLocalTotal(Math.ceil(Number(docs.length) / limitation));
+        changeTheLocalTotal(Math.ceil(Number(docs.length) / limitation + 1));
       }
     );
   }, []);
   useEffect(() => {
+    if (!activepage) return;
     if (itemDocsRefAll.current) {
       showDataWithPagination(
         setItems,

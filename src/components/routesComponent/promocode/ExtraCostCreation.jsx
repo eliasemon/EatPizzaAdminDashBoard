@@ -59,7 +59,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
       toast.error("Empty Field Can't added");
       return;
     }
-    await setDataToCollection(items, "extraCost", false);
+    await setDataToCollection(items, "extraCost", false, false);
     discardHandle();
   };
 
@@ -69,7 +69,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
       return;
     }
     const data = { ...items, id: items.name };
-    await setDataToCollection(data, "extraCost");
+    await setDataToCollection(data, "extraCost", true, false);
     setCostType(ExtraCostCodeModel.costType);
     setItems(ExtraCostCodeModel);
   };

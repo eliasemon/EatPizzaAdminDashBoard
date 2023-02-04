@@ -191,7 +191,7 @@ export const addDataToCollection = async (items, collectionRef) => {
 }
 
 
-export const setDataToCollection = async (items , collectionRef , isSingle = true) => {
+export const setDataToCollection = async (items, collectionRef, isSingle = true, forceRe = true) => {
   try {
     showLoading()
     console.log(items)
@@ -209,6 +209,7 @@ export const setDataToCollection = async (items , collectionRef , isSingle = tru
     closeLoading()
      toast.error("Server Connection Faild ");
   }
+  if (!forceRe) return;
   setDataforTotalSummery({random : shortUUID()} , updateByAdmin)
 }
 
@@ -229,7 +230,7 @@ import { getStorage, ref, deleteObject } from "firebase/storage";
 
 
 
-export const delteColloctionInstance = async (itemsID, collectionRef , isImageRef) => {
+export const delteColloctionInstance = async (itemsID, collectionRef, isImageRef, forceRe = true) => {
   try {
     showLoading()
     if(isImageRef){
@@ -244,6 +245,7 @@ export const delteColloctionInstance = async (itemsID, collectionRef , isImageRe
     closeLoading()
     toast.error("Server Connection Faild ");
   }
+  if (!forceRe) return;
   setDataforTotalSummery({random : shortUUID()} , updateByAdmin)
 }
 

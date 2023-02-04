@@ -32,7 +32,7 @@ const RightContainerMain = () => {
   useEffect(() => {
     showDataWithOutPagination(setData, "ResturentOpeningHr").then((length) => {
       if (length == 0) {
-        setDataToCollection(dataModel, "ResturentOpeningHr", false);
+        setDataToCollection(dataModel, "ResturentOpeningHr", false, false);
       }
     });
   }, []);
@@ -46,7 +46,7 @@ const RightContainerMain = () => {
   const openResturent = () => {
     const data = { ...forView };
     data.manualModeResturentClosed = false;
-    setDataToCollection(data, "ResturentOpeningHr", false);
+    setDataToCollection(data, "ResturentOpeningHr", false, false);
   };
 
   if (!forView) {

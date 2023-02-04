@@ -67,7 +67,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
       toast.error("Empty Field Can't added");
       return;
     }
-    await setDataToCollection(items, "promoCode", false);
+    await setDataToCollection(items, "promoCode", false, false);
     discardHandle();
   };
 
@@ -77,7 +77,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
       return;
     }
     const data = { ...items, id: items.name };
-    await setDataToCollection(data, "promoCode");
+    await setDataToCollection(data, "promoCode", true, false);
     setDiscountType(promoCodeModel.discountType);
     setItems(promoCodeModel);
   };
