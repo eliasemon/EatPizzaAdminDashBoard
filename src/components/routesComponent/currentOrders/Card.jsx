@@ -203,7 +203,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
       "Are you sure you want to cancel the order ? You can not revert it after clicking agree"
     );
     setAgreeFunction(() => {
-      declineOrder(type);
+      return () => declineOrder(type);
     });
     setDialogOpen(true);
   };
