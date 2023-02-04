@@ -217,7 +217,11 @@ const Users = () => {
             >
               Next
             </Button>
-            <Button variant="outlined" onClick={() => onPaginationHandle(true)}>
+            <Button
+              sx={{ marginLeft: "1rem" }}
+              variant="outlined"
+              onClick={() => onPaginationHandle(true)}
+            >
               First page
             </Button>
           </Box>

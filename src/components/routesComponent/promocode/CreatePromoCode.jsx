@@ -32,8 +32,10 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
   const [items, setItems] = useState(EditAbleItem);
 
   const handleToggleChange = (event, value) => {
-    setItems((prv) => ({ ...prv, discountValue: "", discountType: value }));
-    setDiscountType(value);
+    if (value !== null) {
+      setItems((prv) => ({ ...prv, discountValue: "", discountType: value }));
+      setDiscountType(value);
+    }
   };
 
   CreatePromoCode;
