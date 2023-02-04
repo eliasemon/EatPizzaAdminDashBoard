@@ -146,7 +146,7 @@ const Users = () => {
       <Box
         sx={{
           backgroundColor: "#252525",
-          height: "85%",
+          height: "95%",
           borderRadius: "5px",
         }}
       >
@@ -186,6 +186,7 @@ const Users = () => {
           <Box
             sx={{
               width: "100%",
+              height: "3rem",
               display: "grid",
               gridTemplateColumns: "1fr 1fr ",
             }}
@@ -207,7 +208,7 @@ const Users = () => {
                 return <UsersListCard key={item.id} item={item} />;
               })}
           </Box>
-          <Box>
+          <Box sx={{ paddingTop: "1rem" }}>
             <Button
               variant="outlined"
               onClick={() => onPaginationHandle(false)}

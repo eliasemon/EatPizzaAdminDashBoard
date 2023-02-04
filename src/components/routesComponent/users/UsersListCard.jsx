@@ -42,6 +42,10 @@ const UsersListCard = ({ item }) => {
       <ListBody
         onClick={handleOpen}
         sx={{
+          justifyContent: "flex-start",
+          padding: "1rem 0 1rem 10rem",
+
+          // justifyContent: "flex",
           "&:hover": {
             cursor: "pointer",
           },
