@@ -209,12 +209,15 @@ const Users = () => {
           </Box>
           <Box>
             <Button
+              variant="outlined"
               onClick={() => onPaginationHandle(false)}
               disabled={usersList[limitation - 1] ? false : true}
             >
               Next
             </Button>
-            <Button onClick={() => onPaginationHandle(true)}>First page</Button>
+            <Button variant="outlined" onClick={() => onPaginationHandle(true)}>
+              First page
+            </Button>
           </Box>
         </Box>
       </Box>
