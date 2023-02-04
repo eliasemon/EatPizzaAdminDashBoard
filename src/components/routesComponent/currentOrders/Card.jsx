@@ -255,11 +255,11 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
             <Typography color="white">৳ {el.subTottal}</Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography color="white">Delivery And Other Cost</Typography>
+            <Typography color="white">Delivery & Other Cost</Typography>
             <Typography color="white">৳ {el.totalExtraCost}</Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography color="white">- Discount</Typography>
+            <Typography color="white">Discount</Typography>
             <Typography color="white"> -{el.discountAmmount}</Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>

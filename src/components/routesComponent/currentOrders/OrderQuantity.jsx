@@ -30,19 +30,24 @@ const OrderQuantity = ({product}) => {
           <Typography color="white">X {itemCount}</Typography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography color="white">Variant:- {selectedVariant.name}</Typography>
-          <Typography color="#77DEFF">৳ {selectedVariant.regularPrice}</Typography>
+          <Typography color="white">Variant: {selectedVariant.name}</Typography>
+          <Typography color="#77DEFF">
+            ৳ {selectedVariant.regularPrice}
+          </Typography>
         </Box>
-        {Object.keys(selectedAddonsForCard).map((key)=>{
-          const item = selectedAddonsForCard[key]
-          return(
-            <Box key={key} sx={{ display: "flex", justifyContent: "space-between" }}>
+        {Object.keys(selectedAddonsForCard).map((key) => {
+          const item = selectedAddonsForCard[key];
+          return (
+            <Box
+              key={key}
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
               <Typography color="white">{item.name}</Typography>
-              <Typography color="white">price :- {item.price}</Typography>
+              <Typography color="white">৳ {item.price}</Typography>
             </Box>
-          )
+          );
         })}
-        
+
         {specialInstructions && (
           <Box
             sx={{
@@ -54,7 +59,9 @@ const OrderQuantity = ({product}) => {
               borderRadius: "5px",
             }}
           >
-            <Typography color="#cbcbcb">NOTE : {specialInstructions}</Typography>
+            <Typography color="#cbcbcb">
+              NOTE : {specialInstructions}
+            </Typography>
           </Box>
         )}
       </Box>
