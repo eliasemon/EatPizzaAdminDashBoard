@@ -20,6 +20,7 @@ import {firebaseApp} from '../../../../firebaseConfig'
 import { setDataforTotalSummery , delteColloctionInstanceWithOutLoadingAnimation , getDataForTotalSummery } from "../../../../utils";
 import PrintOrderDetails from "../../printComponent";
 import ConfirmationBox from "./../../UI/ConfirmationBox";
+import PrintIcon from "@mui/icons-material/Print";
 
 const orderStatusChanged = {
   pending: "inCoocked",
@@ -92,67 +93,95 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
     await updateDoc(colRef, { status: orderStatusChanged[el.status] });
     if (el.status === "picked") {
       // delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
-      
+
       const orderCompleateRef = doc(db, "totalSummery", "compleatedOrder");
       const TotalSell = doc(db, "totalSummery", "TotalSells");
       const TotalExtraCost = doc(db, "totalSummery", "TotalExtraCost");
       const todaySell = doc(db, "totalSummery", "todaySell");
       const monthlYSell = doc(db, "totalSummery", "monthlYSell");
 
-      const totalSummeryData = await getDataForTotalSummery()
-      console.log(totalSummeryData)
-      if(!totalSummeryData.compleatedOrder || !totalSummeryData.TotalSells || !totalSummeryData.TotalExtraCost || !totalSummeryData.todaySell || !totalSummeryData.monthlYSell){
-        await setDataforTotalSummery( {count : 1} , orderCompleateRef)
-        await setDataforTotalSummery( {count : el.TotalOrderAmmount} , TotalSell)
-        await setDataforTotalSummery( {count : el.totalExtraCost} , TotalExtraCost)
-        const date =  new Date().toDateString()
+      const totalSummeryData = await getDataForTotalSummery();
+      console.log(totalSummeryData);
+      if (
+        !totalSummeryData.compleatedOrder ||
+        !totalSummeryData.TotalSells ||
+        !totalSummeryData.TotalExtraCost ||
+        !totalSummeryData.todaySell ||
+        !totalSummeryData.monthlYSell
+      ) {
+        await setDataforTotalSummery({ count: 1 }, orderCompleateRef);
+        await setDataforTotalSummery(
+          { count: el.TotalOrderAmmount },
+          TotalSell
+        );
+        await setDataforTotalSummery(
+          { count: el.totalExtraCost },
+          TotalExtraCost
+        );
+        const date = new Date().toDateString();
         const todaySellItem = {
-          date : date,
-          count : el.TotalOrderAmmount
-        }
-        await setDataforTotalSummery( todaySellItem , todaySell )
+          date: date,
+          count: el.TotalOrderAmmount,
+        };
+        await setDataforTotalSummery(todaySellItem, todaySell);
 
-        const dateSplitArray = date.split(" ")
+        const dateSplitArray = date.split(" ");
         const monthlYSellItem = {
-          date :  `${dateSplitArray[1]} ${dateSplitArray[3]}`,
-          count : el.TotalOrderAmmount
-        }
-        await setDataforTotalSummery( monthlYSellItem , monthlYSell )
-
-      }else{
-        await updateDoc(orderCompleateRef , {count : (Number(totalSummeryData.compleatedOrder.count) + 1) })
-        await updateDoc(TotalSell , {count : (Number(totalSummeryData.TotalSells.count) +  Number(el.TotalOrderAmmount))})
-        await updateDoc(TotalExtraCost , {count : (Number(totalSummeryData.TotalExtraCost.count) + Number(el.totalExtraCost || 0))})
-        const dateStr =  new Date().toDateString();
-        if(totalSummeryData.todaySell.date  === dateStr){
-          await updateDoc(todaySell , {count : (Number(totalSummeryData.todaySell.count) + Number(el.TotalOrderAmmount))})
-        }else{
+          date: `${dateSplitArray[1]} ${dateSplitArray[3]}`,
+          count: el.TotalOrderAmmount,
+        };
+        await setDataforTotalSummery(monthlYSellItem, monthlYSell);
+      } else {
+        await updateDoc(orderCompleateRef, {
+          count: Number(totalSummeryData.compleatedOrder.count) + 1,
+        });
+        await updateDoc(TotalSell, {
+          count:
+            Number(totalSummeryData.TotalSells.count) +
+            Number(el.TotalOrderAmmount),
+        });
+        await updateDoc(TotalExtraCost, {
+          count:
+            Number(totalSummeryData.TotalExtraCost.count) +
+            Number(el.totalExtraCost || 0),
+        });
+        const dateStr = new Date().toDateString();
+        if (totalSummeryData.todaySell.date === dateStr) {
+          await updateDoc(todaySell, {
+            count:
+              Number(totalSummeryData.todaySell.count) +
+              Number(el.TotalOrderAmmount),
+          });
+        } else {
           const todaySellItem = {
-            date :  new Date().toDateString(),
-            count : el.TotalOrderAmmount
-          }
-          await setDataforTotalSummery(todaySellItem , todaySell)
+            date: new Date().toDateString(),
+            count: el.TotalOrderAmmount,
+          };
+          await setDataforTotalSummery(todaySellItem, todaySell);
         }
 
-        const dateSplitStr = dateStr.split(" ")
-        if(totalSummeryData.monthlYSell.date  === `${dateSplitStr[1]} ${dateSplitStr[3]}`){
-          await updateDoc(monthlYSell , {count : (Number(totalSummeryData.monthlYSell.count) + Number(el.TotalOrderAmmount))})
-        }else{
+        const dateSplitStr = dateStr.split(" ");
+        if (
+          totalSummeryData.monthlYSell.date ===
+          `${dateSplitStr[1]} ${dateSplitStr[3]}`
+        ) {
+          await updateDoc(monthlYSell, {
+            count:
+              Number(totalSummeryData.monthlYSell.count) +
+              Number(el.TotalOrderAmmount),
+          });
+        } else {
           const monthlYSellItem = {
-            date :  `${dateSplitStr[1]} ${dateSplitStr[3]}`,
-            count : el.TotalOrderAmmount
-          }
-          await setDataforTotalSummery( monthlYSellItem , monthlYSell )
+            date: `${dateSplitStr[1]} ${dateSplitStr[3]}`,
+            count: el.TotalOrderAmmount,
+          };
+          await setDataforTotalSummery(monthlYSellItem, monthlYSell);
         }
-
-
-
       }
       setUnHandleOrderDocs((prv) => {
         delete prv[el.id];
         return { ...prv };
       });
-
     } else {
       setUnHandleOrderDocs((prv) => {
         prv[el.id].status = orderStatusChanged[el.status];
@@ -247,8 +276,23 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
             <Typography color="white">{el.shipingAddress}</Typography>
           </Box>
         </Box>
-        <Button onClick={() => handleCancel("cancel")}>Cancel</Button>
-        <Button onClick={handelPrint}>Print</Button>
+        <Box sx={{ marginBottom: ".5rem" }}>
+          <Button
+            sx={{ marginRight: ".5rem" }}
+            variant="outlined"
+            color="error"
+            onClick={() => handleCancel("cancel")}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="outlined"
+            endIcon={<PrintIcon />}
+            onClick={handelPrint}
+          >
+            Print
+          </Button>
+        </Box>
         <Button
           onClick={onClickButtonHandler}
           mt={1}
