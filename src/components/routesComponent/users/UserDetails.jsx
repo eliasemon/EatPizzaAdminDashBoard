@@ -17,6 +17,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material/";
+
 // import Box from '@mui/material/Box';
 // import Typography from '@mui/material/Typography';
 // import Button from '@mui/material/Button';
@@ -232,16 +233,20 @@ const UserDetails = ({ user }) => {
       >
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
-            <IconButton
+            {/* <IconButton
               edge="start"
-              color="inherit"
-              onClick={handleClickFullClose}
+              color="error"
+              
               aria-label="close"
               sx={{ marginLeft: "auto" }}
-            >
-              <Typography>Close</Typography>
-              <CloseIcon />
-            </IconButton>
+            > */}
+            {/* <Typography>Close</Typography> */}
+            <CloseIcon
+              fontSize="large"
+              color="error"
+              onClick={handleClickFullClose}
+            />
+            {/* </IconButton> */}
           </Toolbar>
         </AppBar>
         <Box
