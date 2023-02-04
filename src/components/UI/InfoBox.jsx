@@ -17,7 +17,7 @@ const InfoBox = ({ title, amount, children, halfWidth }) => {
   return (
     <InfoBoxStyle halfWidth={halfWidth}>
       {children}
-      <Typography>{amount}</Typography>
+      <Typography sx={{ fontSize: "1.5rem" }}>{amount}</Typography>
       <Typography sx={{ fontSize: "1.1rem" }}>{title}</Typography>
     </InfoBoxStyle>
   );
