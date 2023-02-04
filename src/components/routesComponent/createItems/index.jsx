@@ -139,7 +139,7 @@ const CreateItems = ({ update }) => {
         {/* DescripTion  */}
 
         {/* Catagories Select Option  */}
-        <Box>
+        <Box sx={{ marginTop: "1rem" }}>
           <LabelText>Please Select Catagory</LabelText>
           <SelectedCatagories
             setSelectedCatagories={setSelectedCatagories}
@@ -158,7 +158,7 @@ const CreateItems = ({ update }) => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              marginTop: "1%",
+              marginTop: "1rem",
               justifyContent: "space-between",
             }}
           >
@@ -174,18 +174,20 @@ const CreateItems = ({ update }) => {
             placeholder="Enter description here"
             inputProps={{
               style: {
-                height: "175px",
+                height: "3rem",
+                // height: "175px",
                 color: "#fff",
               },
             }}
             sx={{
+              width: "100%",
               ".MuiInputBase-root": {
                 backgroundColor: "secondary",
                 border: "1px solid grey",
               },
             }}
             multiline
-            row={4}
+            row={2}
             onChange={(e) =>
               setItems((prv) => ({ ...prv, descriptions: e.target.value }))
             }
