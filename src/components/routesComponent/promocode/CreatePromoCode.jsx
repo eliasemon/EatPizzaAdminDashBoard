@@ -48,6 +48,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
     if (clearUi) {
       clearUi();
     }
+    setDiscountType(promoCodeModel.discountType);
     setItems(promoCodeModel);
   };
   const checkedCondition = (items) => {
@@ -77,6 +78,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
     }
     const data = { ...items, id: items.name };
     await setDataToCollection(data, "promoCode");
+    setDiscountType(promoCodeModel.discountType);
     setItems(promoCodeModel);
   };
 

@@ -64,9 +64,8 @@ const UsersListCard = ({ item }) => {
       </ListBody>
       <ListBody>{item.phoneNumber}</ListBody>
       <ListBody>
-        <Typography sx={{ color: "#fff" }}>
-          {/* {console.log(item.isRestricted)} */}
-        </Typography>
+        {item.isRestricted ? "Banned" : "Not Restricted"}
+        {/* {console.log(item.isRestricted)} */}
       </ListBody>
 
       <Modal

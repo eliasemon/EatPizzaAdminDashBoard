@@ -30,20 +30,23 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
   const [items, setItems] = useState(EditAbleItem);
 
   const handleToggleChange = (event, value) => {
-    setItems((prv) => ({ ...prv, costValue: "", costType: value }));
-    setCostType(value);
+    if (value !== null) {
+      setItems((prv) => ({ ...prv, costValue: "", costType: value }));
+      setCostType(value);
+    }
   };
 
   useEffect(() => {
     setItems(EditAbleItem);
-    setCostType(EditAbleItem.costType)
+    setCostType(EditAbleItem.costType);
   }, [EditAbleItem]);
 
   const discardHandle = () => {
     if (clearUi) {
       clearUi("extraCost");
     }
-    setItems(promoCodeModel);
+    setCostType(ExtraCostCodeModel.costType);
+    setItems(ExtraCostCodeModel);
   };
   const checkedCondition = (items) => {
     if (items.name == "" || items.costType == "" || items.costValue == "") {
@@ -67,6 +70,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
     }
     const data = { ...items, id: items.name };
     await setDataToCollection(data, "extraCost");
+    setCostType(ExtraCostCodeModel.costType);
     setItems(ExtraCostCodeModel);
   };
 

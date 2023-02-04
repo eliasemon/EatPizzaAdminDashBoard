@@ -19,8 +19,6 @@ import { PromocodeContainer } from "./Promocode.styled";
 import { CategoryList, HalfBox, ListElement } from "./../../UI/Shape.styled";
 import TitleBar from "./../../UI/TitleBar";
 import { FilterSection } from "../addons/Addons.styled";
-import FilterView from "./../../UI/FilterView";
-import CreateAddons from "./../banner/CreateBanner";
 import ExtraCostCreation from "./ExtraCostCreation";
 
 const promoCodeModel = {
@@ -102,6 +100,8 @@ const PromoCode = () => {
     );
   };
 
+  const newDate = new Date(outputObject.validity);
+
   // code stolen from addons
 
   return (
@@ -157,12 +157,20 @@ const PromoCode = () => {
                             borderRadius: "5px",
                           }}
                         >
-                          <ListItemText
+                          <Box
+                            sx={{ flex: 1 }}
                             onClick={() => {
                               handleOpen(item);
                             }}
-                            primary={item.name}
-                          />
+                          >
+                            <ListItemText primary={item.name} />
+                            <Typography>
+                              Status :{" "}
+                              {Date.now() < Date.parse(item.validity)
+                                ? "Available"
+                                : "Expired"}
+                            </Typography>
+                          </Box>
                           <Box sx={{ display: "flex", gap: "10px" }}>
                             <Box>
                               <EditIcon
@@ -306,7 +314,6 @@ const PromoCode = () => {
             }}
           >
             {outputObject.name}
-            {console.log(outputObject)}
           </Typography>
           <Typography
             id="modal-modal-description"
@@ -334,7 +341,7 @@ const PromoCode = () => {
             id="modal-modal-description"
             sx={{ mt: 2, fontSize: "1.2rem", color: "#fff" }}
           >
-            Validity : {outputObject.validity}
+            Validity : {newDate.toLocaleString()}
           </Typography>
           {outputObject.discountType && (
             <Typography
