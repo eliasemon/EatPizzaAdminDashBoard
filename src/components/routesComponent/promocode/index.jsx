@@ -290,8 +290,9 @@ const PromoCode = () => {
           sx={{
             width: "400px",
             padding: "2rem",
-            backgroundColor: "secondary.dark",
+            backgroundColor: "#252525",
             border: "none",
+            borderRadius: "15px",
           }}
         >
           <Typography
@@ -301,6 +302,7 @@ const PromoCode = () => {
             sx={{
               fontWeight: "bold",
               textAlign: "center",
+              color: "#fff",
             }}
           >
             {outputObject.name}
@@ -308,13 +310,13 @@ const PromoCode = () => {
           </Typography>
           <Typography
             id="modal-modal-description"
-            sx={{ mt: 2, fontSize: "1.2rem" }}
+            sx={{ mt: 2, fontSize: "1.2rem", color: "#fff" }}
           >
             Description : {outputObject.description}
           </Typography>
           <Typography
             id="modal-modal-description"
-            sx={{ mt: 2, fontSize: "1.2rem" }}
+            sx={{ mt: 2, fontSize: "1.2rem", color: "#fff" }}
           >
             {outputObject.discountValue ? "Discount" : "Cost"} Value :{" "}
             {outputObject.discountValue ?? outputObject.costValue}{" "}
@@ -323,21 +325,21 @@ const PromoCode = () => {
           {outputObject.discountType && (
             <Typography
               id="modal-modal-description"
-              sx={{ mt: 2, fontSize: "1.2rem" }}
+              sx={{ mt: 2, fontSize: "1.2rem", color: "#fff" }}
             >
               Condition Amount : {outputObject.conditionAmmount}
             </Typography>
           )}
           <Typography
             id="modal-modal-description"
-            sx={{ mt: 2, fontSize: "1.2rem" }}
+            sx={{ mt: 2, fontSize: "1.2rem", color: "#fff" }}
           >
             Validity : {outputObject.validity}
           </Typography>
           {outputObject.discountType && (
             <Typography
               id="modal-modal-description"
-              sx={{ mt: 2, fontSize: "1.2rem" }}
+              sx={{ mt: 2, fontSize: "1.2rem", color: "#fff" }}
             >
               Used : {outputObject.howManyTimesUsed} times
             </Typography>
