@@ -52,8 +52,10 @@ const Header = ({ name, orderId, mobile }) => {
 const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
   const [isPrint, setIsprinting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  let [message, setMessage] = useState("");
-  const [agreeFunction, setAgreeFunction] = useState(null);
+  const message = useRef("");
+  // let [message, setMessage] = useState("");
+  const agreeFunction = useRef(null);
+  // const [agreeFunction, setAgreeFunction] = useState(null);
 
   const componentRef = useRef();
   const [delayTime, setDelayTime] = useState(
@@ -199,12 +201,15 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
   };
 
   const handleCancel = (type) => {
-    setMessage(
-      "Are you sure you want to cancel the order ? You can not revert it after clicking agree"
-    );
-    setAgreeFunction(() => {
-      return () => declineOrder(type);
-    });
+    message.current =
+      "Are you sure you want to cancel the order ? You can not revert it after clicking agree";
+    // setMessage(
+    //   "Are you sure you want to cancel the order ? You can not revert it after clicking agree"
+    // );
+    agreeFunction.current = () => declineOrder(type);
+    // setAgreeFunction(() => {
+    //   return () => declineOrder(type);
+    // });
     setDialogOpen(true);
   };
 
