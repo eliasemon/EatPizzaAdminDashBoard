@@ -78,14 +78,14 @@ const ShowAddonsList = ({
         <Button onClick={() => ViewChange("filtered")}>Default Filtered</Button>
         <Button onClick={ViewChange}>All</Button>
       </Box> */}
-      <LabelText>Please Select Addons </LabelText>
+
       {selectedCatagories.length !== 0 && (
         <SelectOption
           width={"60%"}
           options={options}
           activeItem={activeItem}
           setActiveItem={setActiveItem}
-          sx={{ fontSize: ".8rem" }}
+          sx={{ height: "100%", fontSize: ".8rem" }}
         />
       )}
       <Box>

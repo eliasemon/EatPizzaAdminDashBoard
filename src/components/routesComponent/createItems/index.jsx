@@ -61,38 +61,34 @@ const CreateItems = ({ update }) => {
 
     data.variants = { ...variants };
 
-
     let tempData;
-    Object.keys(variants).forEach((key) =>{
+    Object.keys(variants).forEach((key) => {
       const item = variants[key];
-      console.log(item)
-      if(!tempData){
-        tempData = item
-      }else if(Number(item.sellingPrice) < Number(tempData.sellingPrice)){
-        tempData = item
+      console.log(item);
+      if (!tempData) {
+        tempData = item;
+      } else if (Number(item.sellingPrice) < Number(tempData.sellingPrice)) {
+        tempData = item;
       }
-      return
-    })
-    
-    data.defualtVariant = tempData
+      return;
+    });
 
-
-
-
-
+    data.defualtVariant = tempData;
 
     data.selectedCatagories = [...selectedCatagories];
     data.selectedAddons = [...selectedAddons];
-    
+
     if (image) {
-      showLoading()
-      uploadProcess("product", items.id).then((v) => {
-        data.image = { ...v };
-        setDataToCollection(data, "productlist", false);
-      }).then(()=>{
+      showLoading();
+      uploadProcess("product", items.id)
+        .then((v) => {
+          data.image = { ...v };
+          setDataToCollection(data, "productlist", false);
+        })
+        .then(() => {
           closeLoading();
           navigate("/items");
-      });
+        });
     } else {
       data.image = {};
       setDataToCollection(data, "productlist", false);
@@ -109,7 +105,8 @@ const CreateItems = ({ update }) => {
           padding: "1%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
+          overflowY: "auto",
+          // justifyContent: "space-between",
         }}
       >
         {/* <Box>
@@ -169,32 +166,32 @@ const CreateItems = ({ update }) => {
             {ui}
           </Box>
           {/* Description Here */}
-          <InputWrapper>
-            <LabelText>Description</LabelText>
-            <TextField
-              color="common"
-              placeholder="Enter description here"
-              inputProps={{
-                style: {
-                  height: "175px",
-                  color: "#fff",
-                },
-              }}
-              sx={{
-                ".MuiInputBase-root": {
-                  backgroundColor: "secondary",
-                  border: "1px solid grey",
-                },
-              }}
-              multiline
-              row={4}
-              onChange={(e) =>
-                setItems((prv) => ({ ...prv, descriptions: e.target.value }))
-              }
-              value={items.descriptions || ""}
-            />
-          </InputWrapper>
         </Box>
+        <InputWrapper>
+          <LabelText>Description</LabelText>
+          <TextField
+            color="common"
+            placeholder="Enter description here"
+            inputProps={{
+              style: {
+                height: "175px",
+                color: "#fff",
+              },
+            }}
+            sx={{
+              ".MuiInputBase-root": {
+                backgroundColor: "secondary",
+                border: "1px solid grey",
+              },
+            }}
+            multiline
+            row={4}
+            onChange={(e) =>
+              setItems((prv) => ({ ...prv, descriptions: e.target.value }))
+            }
+            value={items.descriptions || ""}
+          />
+        </InputWrapper>
       </Box>
       {/* LeftConTainer End  */}
 
@@ -206,12 +203,13 @@ const CreateItems = ({ update }) => {
           padding: "2%",
           display: "flex",
           flexDirection: "column",
-          gap: "2%",
-          position: "relative",
+          // overflowY: "auto",
+          // gap: "2%",
+          // position: "relative",
         }}
       >
         {/* UpperBox Start  */}
-        <Box>
+        <Box sx={{ height: "40%" }}>
           <AddVariantsAndVariantsListLoader
             variants={variants}
             setVariants={setVariants}
@@ -220,7 +218,8 @@ const CreateItems = ({ update }) => {
         {/* UpperBox End  */}
 
         {/* DownBox Start  */}
-        <Box>
+        <LabelText>Please Select Addons </LabelText>
+        <Box sx={{ height: "55%", overflowY: "auto" }}>
           {/* showing Addons Section  */}
           <ShowAddonsList
             selectedAddons={selectedAddons}
@@ -233,14 +232,15 @@ const CreateItems = ({ update }) => {
         {/* Compleate And DisCard Actions  */}
         <Box
           sx={{
-            marginTop: "3%",
+            marginTop: "auto",
+            marginLeft: "auto",
             display: "flex",
             gap: "5%",
             // justifySelf: "flex-end",
             // alignSelf: "flex-end",
-            position: "absolute",
-            right: 0,
-            bottom: 0,
+            // position: "absolute",
+            // right: 0,
+            // bottom: 0,
           }}
         >
           <Button onClick={createProduct} variant="contained" size="large">

@@ -43,7 +43,6 @@ const VariantsItemsLoader = ({
   deleteVariantsHandle,
   setVariantUI,
 }) => {
-
   return (
     <>
       <Box
@@ -51,7 +50,6 @@ const VariantsItemsLoader = ({
           display: "flex",
           flexDirection: "column",
           height: "100%",
-          overflowY : "scroll"
         }}
       >
         <Box
@@ -68,20 +66,19 @@ const VariantsItemsLoader = ({
           <ListHeader>Edit</ListHeader>
           <ListHeader>Delete</ListHeader>
         </Box>
-        
+        <Box sx={{ overflowY: "auto" }}>
           {Object.keys(variants).map((id) => {
             const item = variants[`${id}`];
             return (
               <Box
-          sx={{
-            height: "auto",
-            width: "100%",
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
-          }}
-          key={id}
-        >
-
+                sx={{
+                  height: "auto",
+                  width: "100%",
+                  display: "grid",
+                  gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
+                }}
+                key={id}
+              >
                 <ListBody>{item.name}</ListBody>
                 <ListBody>{item.regularPrice}</ListBody>
                 <ListBody>{item.sellingPrice}</ListBody>
@@ -115,10 +112,9 @@ const VariantsItemsLoader = ({
                   />
                 </ListBody>
               </Box>
-            
-              );
+            );
           })}
-        
+        </Box>
       </Box>
     </>
   );
@@ -132,9 +128,9 @@ const AddVariantsAndVariantsListLoader = ({
 }) => {
   const [AddvarinatUI, setVariantUI] = useState("");
 
-  const onVariantStateLift =  (type, liftedState) => {
+  const onVariantStateLift = (type, liftedState) => {
     if (type) {
-        setVariants((prv) => {
+      setVariants((prv) => {
         prv[`${liftedState.id}`] = liftedState;
         return { ...prv };
       });
@@ -149,16 +145,16 @@ const AddVariantsAndVariantsListLoader = ({
     });
   };
 
-
   return (
-    <Box>
+    <Box sx={{ height: "100%" }}>
       {/* UpperBox for Items Load With Scroll View  */}
 
       {Object.keys(variants).length > 0 ? (
         <Box
           sx={{
             width: "100%",
-            height: "300px",
+            height: "75%",
+            // height: "300px",
             backgroundColor: "rgba(255,255,255, 0.08)",
           }}
         >
@@ -174,7 +170,8 @@ const AddVariantsAndVariantsListLoader = ({
           <Box
             sx={{
               width: "100%",
-              height: "300px",
+              // height: "300px",
+              height: "100%",
               backgroundColor: "rgba(255,255,255, 0.08)",
               overflowY: "scroll",
               display: "flex",
@@ -197,7 +194,6 @@ const AddVariantsAndVariantsListLoader = ({
             setVariantUI(<AddVariants onStateLift={onVariantStateLift} />)
           }
           variant="contained"
-          sx={{ marginTop: "16px", marginBottom: "10px" }}
         >
           {" "}
           Add Variants{" "}
