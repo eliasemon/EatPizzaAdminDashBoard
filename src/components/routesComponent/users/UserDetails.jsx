@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   AppBar,
   Avatar,
@@ -71,8 +71,10 @@ const UserDetails = ({ user }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [fullDialogOpen, setFullDialogOpen] = useState(false);
 
-  let [message, setMessage] = useState("");
-  const [agreeFunction, setAgreeFunction] = useState(null);
+  // let [message, setMessage] = useState("");
+  const message = useRef("");
+  const agreeFunction = useRef(null);
+  // const [agreeFunction, setAgreeFunction] = useState(null);
 
   const handelOrdersList = () => {
     findDataWithQuries("ordersList", "userID", user.uid)
@@ -88,11 +90,14 @@ const UserDetails = ({ user }) => {
     const db = getFirestore();
     const colRef = doc(db, "usersList", `${id}`);
     await updateDoc(colRef, { isRestricted: !user.isRestricted });
+    console.log("Done !");
   };
 
   const handleClickOpen = (messageString, onAgree) => {
-    setMessage(messageString);
-    setAgreeFunction(onAgree);
+    message.current = messageString;
+    // setMessage(messageString);
+    agreeFunction.current = onAgree;
+    // setAgreeFunction(onAgree);
     setDialogOpen(true);
   };
 
@@ -189,9 +194,7 @@ const UserDetails = ({ user }) => {
                       } ${user.fullName} ? ${user.fullName} will ${
                         user.isRestricted ? "be" : "not"
                       } able to order`,
-                      () => {
-                        restrictionHandle(user.id);
-                      }
+                      () => restrictionHandle(user.id)
                     );
                   }}
                 >
