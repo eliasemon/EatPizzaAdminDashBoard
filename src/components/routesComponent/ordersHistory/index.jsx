@@ -1,9 +1,12 @@
-import { Box, Button } from "@material-ui/core";
-import { useState , useEffect } from "react";
+import { Box, Button } from "@mui/material";
+import { useState, useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { showDataWithPagination , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
+import {
+  showDataWithPagination,
+  getSingleDataWithOutRealTimeUpdates,
+} from "../../../../utils";
 import { toast } from "react-toastify";
 import OrdersItemsCard from "./OrdersItemsCard";
 
@@ -33,7 +36,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  // color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -148,8 +151,14 @@ const OrdersHistory = () => {
                 color: "#fff",
               }}
             />
+            <Button
+              variant="contained"
+              sx={{ margin: ".25rem" }}
+              onClick={onSearchButtonClick}
+            >
+              Search
+            </Button>
           </Search>
-          <Button onClick={onSearchButtonClick}>Search</Button>
         </Box>
         <Box
           sx={{
@@ -196,18 +205,23 @@ const OrdersHistory = () => {
                   </>
                 );
               })}
-          </Box>
-          <Box>
-            <Button
-              color="primary"
-              onClick={() => onPaginationHandle(false)}
-              disabled={ordersList[limitation - 1] ? false : true}
-            >
-              Next
-            </Button>
-            <Button color="primary" onClick={() => onPaginationHandle(true)}>
-              First page
-            </Button>
+            <Box sx={{ paddingTop: "1rem" }}>
+              <Button
+                sx={{ marginLeft: "1rem" }}
+                variant="outlined"
+                onClick={() => onPaginationHandle(false)}
+                disabled={ordersList[limitation - 1] ? false : true}
+              >
+                Next
+              </Button>
+              <Button
+                sx={{ marginLeft: "1rem" }}
+                variant="outlined"
+                onClick={() => onPaginationHandle(true)}
+              >
+                First page
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Box>
