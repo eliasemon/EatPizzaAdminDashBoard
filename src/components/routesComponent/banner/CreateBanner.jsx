@@ -110,9 +110,11 @@ const CreateBanner = () => {
           id="filled-size-normal"
           placeholder="Enter Help Line Number"
           value={items.hotline}
-          onChange={(e) =>
-            setItems((prv) => ({ ...prv, hotline: e.target.value }))
-          }
+          onChange={(e) => {
+            if (e.target.value.length <= 14) {
+              setItems((prv) => ({ ...prv, hotline: e.target.value }));
+            }
+          }}
         />
       </Box>
 
