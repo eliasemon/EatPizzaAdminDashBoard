@@ -168,7 +168,7 @@ const UserDetails = ({ user }) => {
                 <Button
                   variant="contained"
                   endIcon={<HistoryIcon />}
-                  sx={{ marginRight: ".5rem" }}
+                  sx={{ marginRight: ".5rem", color: "#fff" }}
                   onClick={() => {
                     setFullDialogOpen(true);
                     // setIsOrdersListShown(true);
@@ -180,7 +180,7 @@ const UserDetails = ({ user }) => {
                 <Button
                   variant="contained"
                   endIcon={<PersonOffIcon />}
-                  sx={{ marginRight: ".5rem" }}
+                  sx={{ marginRight: ".5rem", color: "#fff" }}
                   onClick={() => {
                     handleClickOpen(
                       `Are you sure you want ${
