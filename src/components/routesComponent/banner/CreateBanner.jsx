@@ -84,9 +84,11 @@ const CreateBanner = () => {
           id="filled-size-normal"
           placeholder="Enter Home Page Tittle"
           value={items.homePageTittle}
-          onChange={(e) =>
-            setItems((prv) => ({ ...prv, homePageTittle : e.target.value }))
-          }
+          onChange={(e) => {
+            if (e.target.value.length <= 25) {
+              setItems((prv) => ({ ...prv, homePageTittle: e.target.value }));
+            }
+          }}
         />
       </Box>
       <Box>
@@ -97,7 +99,7 @@ const CreateBanner = () => {
           placeholder="Enter Phycal Shop Address"
           value={items.ShopAddress}
           onChange={(e) =>
-            setItems((prv) => ({ ...prv, ShopAddress : e.target.value }))
+            setItems((prv) => ({ ...prv, ShopAddress: e.target.value }))
           }
         />
       </Box>
@@ -109,7 +111,7 @@ const CreateBanner = () => {
           placeholder="Enter Help Line Number"
           value={items.hotline}
           onChange={(e) =>
-            setItems((prv) => ({ ...prv, hotline : e.target.value }))
+            setItems((prv) => ({ ...prv, hotline: e.target.value }))
           }
         />
       </Box>
@@ -125,7 +127,7 @@ const CreateBanner = () => {
         {ui}
       </Box>
       <ButtonGroup>
-        <Button onClick= {updataHandle} variant="contained" size="large">
+        <Button onClick={updataHandle} variant="contained" size="large">
           Update
         </Button>
       </ButtonGroup>
