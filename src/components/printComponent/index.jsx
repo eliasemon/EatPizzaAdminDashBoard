@@ -57,7 +57,9 @@ const PrintOrderDetails = ({el}) => {
         {/*Row*/}
         <Box
           sx={{
-            display: "flex",
+            // display: "flex",
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr 1fr 1fr",
             width: "100%",
             border: "1px solid black",
             padding: ".25rem",
@@ -78,94 +80,137 @@ const PrintOrderDetails = ({el}) => {
           {/*Column*/}
           <Box sx={{ flex: 1 }}>
             <Typography sx={{ textAlign: "center", fontWeight: "bold" }}>
+              Unit Price
+            </Typography>
+          </Box>
+          {/*Column*/}
+          <Box sx={{ flex: 1 }}>
+            <Typography sx={{ textAlign: "center", fontWeight: "bold" }}>
               Total
             </Typography>
           </Box>
         </Box>
-        {Object.keys(el.items).map((key) => (
-          <Box
-            key={key}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              width: "100%",
-              border: "1px solid #353535",
-              padding: ".25rem",
-            }}
-          >
+        {Object.keys(el.items).map((key) => {
+          let itemName = el.items[key].name;
+          let variantName = el.items[key].selectedVariant.name;
+          let itemCount = parseInt(el.items[key].itemCount);
+          let itemPrice = parseInt(el.items[key].selectedVariant.regularPrice);
+          let totalItemPrice = itemCount * itemPrice;
+
+          return (
             <Box
-              key={key + 100}
+              key={key}
               sx={{
                 display: "flex",
+                flexDirection: "column",
                 width: "100%",
                 border: "1px solid #353535",
-                padding: ".25rem 2rem",
+                padding: ".25rem",
               }}
             >
-              {/*Column*/}
-              <Box sx={{ flex: 1 }}>
-                <Typography sx={{ marginLeft: ".5rem", textAlign: "left" }}>
-                  {el.items[key].name} {el.items[key].selectedVariant.name}
-                </Typography>
-              </Box>
-              {/*Column*/}
-              <Box sx={{ flex: 1 }}>
-                <Typography sx={{ marginLeft: ".5rem", textAlign: "center" }}>
-                  x{el.items[key].itemCount}
-                </Typography>
-              </Box>
-              {/*Column*/}
-              <Box sx={{ flex: 1 }}>
-                <Typography sx={{ marginRight: ".5rem", textAlign: "right" }}>
-                  ৳ {el.items[key].selectedVariant.regularPrice}
-                </Typography>
-              </Box>
-            </Box>
-
-            {Object.keys(el.items[key].selectedAddonsForCard).map(
-              (childrenkey) => {
-                const item = el.items[key].selectedAddonsForCard[childrenkey];
-                return (
-                  <Box
-                    key={key + 100}
-                    sx={{
-                      display: "flex",
-                      width: "100%",
-                      border: "1px solid #353535",
-                      padding: ".25rem 2rem",
-                    }}
+              <Box
+                key={key + 100}
+                sx={{
+                  // display: "flex",
+                  display: "grid",
+                  gridTemplateColumns: "2fr 1fr 1fr 1fr",
+                  width: "100%",
+                  border: "1px solid #353535",
+                  padding: ".25rem 2rem",
+                }}
+              >
+                {/*Column*/}
+                <Box sx={{ flex: 1 }}>
+                  <Typography sx={{ marginLeft: ".5rem", textAlign: "left" }}>
+                    {itemName} {variantName}
+                  </Typography>
+                </Box>
+                {/*Column*/}
+                <Box sx={{ flex: 1 }}>
+                  <Typography sx={{ marginLeft: ".5rem", textAlign: "center" }}>
+                    x{itemCount}
+                  </Typography>
+                </Box>
+                {/*Column*/}
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    sx={{ marginRight: ".5rem", textAlign: "center" }}
                   >
-                    {/*Column*/}
-                    <Box sx={{ flex: 1 }}>
-                      <Typography
-                        sx={{ marginLeft: ".5rem", textAlign: "left" }}
-                      >
-                        {item.name}
-                      </Typography>
+                    ৳ {itemPrice}
+                  </Typography>
+                </Box>
+                {/*Column*/}
+                <Box sx={{ flex: 1 }}>
+                  <Typography
+                    sx={{ marginRight: ".5rem", textAlign: "center" }}
+                  >
+                    ৳ {totalItemPrice}
+                  </Typography>
+                </Box>
+              </Box>
+
+              {Object.keys(el.items[key].selectedAddonsForCard).map(
+                (childrenkey) => {
+                  const addonName =
+                    el.items[key].selectedAddonsForCard[childrenkey].name;
+                  const addonCount = parseInt(
+                    el.items[key].selectedAddonsForCard.itemCount
+                  );
+                  const addonPrice = parseInt(
+                    el.items[key].selectedAddonsForCard[childrenkey].price
+                  );
+                  return (
+                    <Box
+                      key={key + 100}
+                      sx={{
+                        // display: "flex",
+                        display: "grid",
+                        gridTemplateColumns: "2fr 1fr 1fr 1fr",
+                        width: "100%",
+                        border: "1px solid #353535",
+                        padding: ".25rem 2rem",
+                      }}
+                    >
+                      {/*Column*/}
+                      <Box sx={{ flex: 1 }}>
+                        <Typography
+                          sx={{ marginLeft: ".5rem", textAlign: "left" }}
+                        >
+                          {addonName}
+                        </Typography>
+                      </Box>
+                      {/*Column*/}
+                      <Box sx={{ flex: 1 }}>
+                        <Typography
+                          sx={{ marginLeft: ".5rem", textAlign: "center" }}
+                        >
+                          x{itemCount}
+                        </Typography>
+                      </Box>
+                      {/*Column*/}
+                      <Box sx={{ flex: 1 }}>
+                        <Typography
+                          sx={{ marginRight: ".5rem", textAlign: "center" }}
+                        >
+                          ৳ {addonPrice}
+                        </Typography>
+                      </Box>
+                      {/*Column*/}
+                      <Box sx={{ flex: 1 }}>
+                        <Typography
+                          sx={{ marginRight: ".5rem", textAlign: "center" }}
+                        >
+                          ৳ {itemCount * addonPrice}
+                        </Typography>
+                      </Box>
                     </Box>
-                    {/*Column*/}
-                    <Box sx={{ flex: 1 }}>
-                      <Typography
-                        sx={{ marginLeft: ".5rem", textAlign: "center" }}
-                      >
-                        x1
-                      </Typography>
-                    </Box>
-                    {/*Column*/}
-                    <Box sx={{ flex: 1 }}>
-                      <Typography
-                        sx={{ marginRight: ".5rem", textAlign: "right" }}
-                      >
-                        ৳ {item.price}
-                      </Typography>
-                    </Box>
-                  </Box>
-                  // </Box>
-                );
-              }
-            )}
-          </Box>
-        ))}
+                    // </Box>
+                  );
+                }
+              )}
+            </Box>
+          );
+        })}
       </Box>
 
       <Box
