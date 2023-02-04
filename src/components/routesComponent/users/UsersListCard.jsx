@@ -1,5 +1,5 @@
-import { Box} from "@mui/material";
-import  { useState, useEffect } from "react";
+import { Box, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 
@@ -36,7 +36,7 @@ const UsersListCard = ({ item }) => {
         // width: "35%",
         flex: 1,
         display: "grid",
-        gridTemplateColumns: "1fr 1fr",
+        gridTemplateColumns: "2fr 2fr 1fr",
       }}
     >
       <ListBody
@@ -63,6 +63,11 @@ const UsersListCard = ({ item }) => {
         {item.fullName}
       </ListBody>
       <ListBody>{item.phoneNumber}</ListBody>
+      <ListBody>
+        <Typography sx={{ color: "#fff" }}>
+          {/* {console.log(item.isRestricted)} */}
+        </Typography>
+      </ListBody>
 
       <Modal
         open={open}
@@ -76,10 +81,8 @@ const UsersListCard = ({ item }) => {
     </Box>
   );
 };
-export default UsersListCard
-
-
+export default UsersListCard;
 
 // <ListBody>
-//                   
+//
 //                 </ListBody>

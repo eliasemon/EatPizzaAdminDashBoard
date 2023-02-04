@@ -188,11 +188,12 @@ const Users = () => {
               width: "100%",
               height: "3rem",
               display: "grid",
-              gridTemplateColumns: "1fr 1fr ",
+              gridTemplateColumns: "2fr 2fr 1fr",
             }}
           >
             <ListHeader>Username</ListHeader>
             <ListHeader>Phone Number</ListHeader>
+            <ListHeader>Block Status</ListHeader>
           </Box>
           <Box
             sx={{
