@@ -1,5 +1,4 @@
-import { toast } from "react-toastify";
-import infocardArray from "./../../../constants/dashboardInfoArray";
+
 import InfoBox from "../../UI/InfoBox";
 import PeopleIcon from "@material-ui/icons/People";
 import { DashboardContainer, LeftContainer } from "./Dashboard.styled";
@@ -7,6 +6,9 @@ import RightContainerMain from "./RightContainerMain";
 import { useState } from "react";
 import { useEffect } from "react";
 import { lengthOfCollection , getDataForTotalSummery} from "../../../../utils";
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+import PaidIcon from '@mui/icons-material/Paid';
 
 const Dashboard = () => {
   const [toatalSummery , setTotalSummery] = useState("")
@@ -44,7 +46,7 @@ const Dashboard = () => {
               halfWidth={true}
               key={"TotalOrder"}
             >
-              {<PeopleIcon fontSize="large" />}
+              {<ListAltIcon fontSize="large" />}
             </InfoBox>
             <InfoBox
               title={"Total Completed Order"}
@@ -52,7 +54,7 @@ const Dashboard = () => {
               halfWidth={true}
               key={"TotalCompletedOrder"}
             >
-              {<PeopleIcon fontSize="large" />}
+              {<FactCheckIcon fontSize="large" />}
             </InfoBox>
             <InfoBox
               title={"Total Sells In Tk"}
@@ -60,7 +62,7 @@ const Dashboard = () => {
               halfWidth={true}
               key={"TotalSellsInTk"}
             >
-              {<PeopleIcon fontSize="large" />}
+              {<PaidIcon fontSize="large" />}
             </InfoBox>
 
             <InfoBox
@@ -69,7 +71,7 @@ const Dashboard = () => {
               halfWidth={true}
               key={"TotalOthersCostInTk"}
             >
-              {<PeopleIcon fontSize="large" />}
+              {<PaidIcon fontSize="large" />}
             </InfoBox>
 
             <InfoBox
@@ -82,7 +84,7 @@ const Dashboard = () => {
               halfWidth={true}
               key={"TodaysSellsInTk"}
             >
-              {<PeopleIcon fontSize="large" />}
+              {<PaidIcon fontSize="large" />}
             </InfoBox>
 
             <InfoBox
@@ -95,7 +97,7 @@ const Dashboard = () => {
               halfWidth={true}
               key={"MonthlySellsInTk"}
             >
-              {<PeopleIcon fontSize="large" />}
+              {<PaidIcon fontSize="large" />}
             </InfoBox>
           </>
         )}
