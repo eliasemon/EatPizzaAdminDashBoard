@@ -5,6 +5,7 @@ export const CurrentOrdersContainer = styled("div")({
   height: "100%",
   paddingTop: "1%",
   display: "flex",
+  position : 'relative' 
 });
 export const CardHeaderStyles = styled(Box)({
   color: 'white',

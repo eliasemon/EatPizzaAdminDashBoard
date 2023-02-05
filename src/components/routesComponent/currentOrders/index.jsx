@@ -38,9 +38,15 @@ const CurrentOrders = () => {
     }
   },[unHandleList])
 
-if(unHandleList) console.log(unHandleList);
   return (
     <CurrentOrdersContainer>
+
+      {(Object.keys(unHandleOrderDocs).length === 0 ) && (
+        <Box sx={{top : "10%" , display : "flex" , justifyContent : "center"  , width : "100%" ,position : "absolute" , color : "#fff"}}>
+            <Typography sx={{ fontSize : 40 , padding : "10px" , borderRadius : "10px" , backgroundColor : "rgba(0,0,0,0.5)" }}>No Current Orders To Handel </Typography>
+        </Box>
+      )}
+      
       <HalfBox color="blue">
         <TitleBar title="PENDING" color="blue" />
         <Box
@@ -51,6 +57,7 @@ if(unHandleList) console.log(unHandleList);
             },
           }}
         >
+
           {Object.keys(unHandleOrderDocs).map((key) => {
             const el = unHandleOrderDocs[key];
             if (el.status !== "pending") {
