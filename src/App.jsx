@@ -1,6 +1,6 @@
 import { useState , useEffect, useRef } from "react";
 
-import { BrowserRouter } from "react-router-dom";
+import {  MemoryRouter, } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Layout from "./Layout";
@@ -21,9 +21,9 @@ const App = () => {
     auth.onAuthStateChanged(user=>{
       if(user){
         setUi(
-          <BrowserRouter>
+          <MemoryRouter>
             <Layout />
-          </BrowserRouter>
+          </MemoryRouter>
         )
       }else{
         setUi(<Login />)

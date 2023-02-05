@@ -12,7 +12,6 @@ import { useLocation } from "react-router-dom";
 const SideBar = () => {
  
   const  location = useLocation();
-  console.log(location)
 
 
   return (
@@ -20,7 +19,7 @@ const SideBar = () => {
       {categories.map((item) => (
         <StyledLink key={item.id} to={item.link ? item.link : "/"}>
           <ListButton
-            selected={location.pathname.includes(item.link)}
+            selected={ location.pathname !== `/` ? (location.pathname.includes(item.link)) : item.link === undefined}
             key={item.id}
           >
             <ListItemIcon sx={{ color: "#fff" }}>{item.icon}</ListItemIcon>

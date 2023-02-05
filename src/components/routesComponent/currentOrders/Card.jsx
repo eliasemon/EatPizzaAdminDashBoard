@@ -234,7 +234,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {Object.keys(el.items).map((key) => (
-          <OrderQuantity key={key} product={el.items[key]} />
+          <OrderQuantity key={`${Math.random()}${key}`} product={el.items[key]} />
         ))}
         <Box
           sx={{
@@ -246,29 +246,29 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
           }}
         >
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography color="white">Subtotal</Typography>
+            <Typography sx={{color : "yellow"}} color="white">Subtotal :</Typography>
             <Typography color="white">৳ {el.subTottal}</Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography color="white">Delivery & Other Cost</Typography>
+            <Typography sx={{color : "yellow"}} color="white">Delivery & Other Cost :</Typography>
             <Typography color="white">৳ {el.totalExtraCost}</Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography color="white">Discount</Typography>
+            <Typography sx={{color : "yellow"}} color="white">Discount :</Typography>
             <Typography color="white"> -{el.discountAmmount}</Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography color="white">Total</Typography>
+            <Typography sx={{color : "yellow"}} color="white">Total :</Typography>
             <Typography color="white">৳ {el.TotalOrderAmmount}</Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography color="white">Payment Method</Typography>
+            <Typography sx={{color : "yellow"}} color="white">Payment Method :</Typography>
             <Typography color="white">{el.paymentType}</Typography>
           </Box>
 
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography color="white">Shiping Address</Typography>
-            <Typography color="white">{el.shipingAddress}</Typography>
+            <Typography color="white">{<span style={{color : "yellow"}}>Shinping</span>} : {el.shipingAddress}</Typography>
+           
           </Box>
         </Box>
         <Box sx={{ marginBottom: ".5rem" }}>

@@ -1,19 +1,13 @@
-import { Box, Button } from "@mui/material";
+import { Box} from "@mui/material";
 import { useEffect, useState } from "react";
 import { HalfBox } from "../../UI/Shape.styled";
 import TitleBar from "../../UI/TitleBar";
-import { CurrentOrdersContainer,CardHeaderStyles } from "./CurrentOrders.styled";
+import { CurrentOrdersContainer} from "./CurrentOrders.styled";
 
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import OrderQuantity from "./OrderQuantity";
+
 import CardComponent from "./Card";
-import { showDataWithOutPagination , getSingleDataWithOutRealTimeUpdates , showDataForCurrentOrder } from "../../../../utils";
+import {showDataForCurrentOrder } from "../../../../utils";
 
 
 
@@ -41,7 +35,7 @@ const CurrentOrders = () => {
   return (
     <CurrentOrdersContainer>
 
-      {(Object.keys(unHandleOrderDocs).length === 0 ) && (
+      {( (unHandleList !== "" )&& ( Object.keys(unHandleOrderDocs).length === 0 )) && (
         <Box sx={{top : "10%" , display : "flex" , justifyContent : "center"  , width : "100%" ,position : "absolute" , color : "#fff"}}>
             <Typography sx={{ fontSize : 40 , padding : "10px" , borderRadius : "10px" , backgroundColor : "rgba(0,0,0,0.5)" }}>No Current Orders To Handel </Typography>
         </Box>

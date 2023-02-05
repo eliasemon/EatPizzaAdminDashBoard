@@ -98,7 +98,7 @@ const PrintOrderDetails = ({el}) => {
 
           return (
             <Box
-              key={key}
+              key={`Print${key}`}
               sx={{
                 display: "flex",
                 flexDirection: "column",
