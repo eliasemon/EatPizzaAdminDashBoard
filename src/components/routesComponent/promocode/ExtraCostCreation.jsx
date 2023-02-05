@@ -96,11 +96,6 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
         gap: "1.4rem",
       }}
     >
-      {/* <Typography color="white" py={1}>
-        {status
-          ? `Update The ***"${items.name}"*** promoCode Item`
-          : `Create new PromoCode`}
-      </Typography> */}
       <Box>
         {status ? (
           <LabelText>
@@ -116,26 +111,12 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
           onChange={(e) =>
             setItems((prv) => ({ ...prv, name: e.target.value }))
           }
-          // sx={{
-          //   ".MuiInputBase-root": {
-          //     backgroundColor: "secondary",
-          //     border: "1px solid grey",
-          //     width: "100%",
-          //   },
-          //   input: {
-          //     color: "white",
-          //     width: "480px",
-          //   },
-          //   label: {
-          //     color: "white",
-          //   },
-          // }}
         />
       </Box>
       <Box>
         <LabelText>Description</LabelText>
         <InputText
-          // color="white"
+
           placeholder="Your description here"
           value={items.description}
           multiline
@@ -148,22 +129,6 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
               color: "#fff",
             },
           }}
-          // sx={{
-          //   ".MuiInputBase-root": {
-          //     backgroundColor: "secondary",
-          //     border: "1px solid grey",
-          //     width: "100%",
-          //     // marginTop: "10px",
-          //   },
-          //   input: {
-          //     color: "white",
-          //     width: "480px",
-          //     height: "80px",
-          //   },
-          //   label: {
-          //     color: "white",
-          //   },
-          // }}
         />
       </Box>
       <Box
@@ -177,7 +142,7 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
         <Box sx={{ width: "50%" }}>
           <FormControl sx={{ width: "100%" }}>
             <LabelText>Cost type</LabelText>
-            {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
+
             <ToggleButtonGroup
               color="primary"
               value={costType}
@@ -202,25 +167,6 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
                 In Taka
               </ToggleButton>
             </ToggleButtonGroup>
-            {/* <SelectOption
-              // width="100%"
-              options={options}
-              activeItem={activeItem}
-              setActiveItem={setActiveItem}
-            /> */}
-            {/* <Select
-              // labelId="demo-simple-select-label"
-              // id="demo-simple-select"
-              autoWidth={false}
-              value={items.discountType}
-              // label="Discount Type"
-              onChange={(e) =>
-                setItems((prv) => ({ ...prv, discountType: e.target.value }))
-              }
-            >
-              <MenuItem value={"%"}>In Percentage</MenuItem>
-              <MenuItem value={"tk"}>In Taka</MenuItem>
-            </Select> */}
           </FormControl>
         </Box>
         <Box sx={{ width: "50%" }}>
@@ -237,30 +183,14 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
               }
               setItems((prv) => ({ ...prv, costValue: e.target.value }));
             }}
-            // sx={{
-            //   ".MuiInputBase-root": {
-            //     backgroundColor: "secondary",
-            //     border: "1px solid grey",
-            //     width: "100%",
-            //   },
-            //   input: {
-            //     color: "white",
-            //   },
-            //   label: {
-            //     color: "white",
-            //   },
-            // }}
+
           />
         </Box>
       </Box>
-      {/* <Box sx={{ display: "flex", width: "100%" }}> */}
-      {/* <Typography>
-        {`This Promo-Code Will Be Valid In More Than ${items.conditionAmmount} Tk. Order  `}
-      </Typography> */}
-      {/* </Box> */}
       <Box sx={{ display: "flex", gap: "2%" }}>
         {status ? (
           <Button
+          sx={{color : "#ffff"}}
             onClick={updateFireStoreValue}
             variant="contained"
             size="large"
@@ -268,11 +198,11 @@ const ExtraCostCreation = ({ EditAbleItem, status, clearUi }) => {
             Update
           </Button>
         ) : (
-          <Button onClick={creatHandle} variant="contained" size="large">
+          <Button  sx={{color : "#ffff"}} onClick={creatHandle} variant="contained" size="large">
             Create
           </Button>
         )}
-        <Button onClick={discardHandle} variant="outlined" size="large">
+        <Button color="error" onClick={discardHandle} variant="outlined" size="large">
           Discard
         </Button>
       </Box>

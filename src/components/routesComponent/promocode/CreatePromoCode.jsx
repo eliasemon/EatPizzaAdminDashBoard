@@ -104,11 +104,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
         gap: ".3rem",
       }}
     >
-      {/* <Typography color="white" py={1}>
-        {status
-          ? `Update The ***"${items.name}"*** promoCode Item`
-          : `Create new PromoCode`}
-      </Typography> */}
+
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
           {status ? (
@@ -157,7 +153,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
         <Box>
           <LabelText>Description</LabelText>
           <InputText
-            // color="white"
+
             placeholder="Your description here"
             value={items.description}
             multiline
@@ -205,7 +201,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
         <Box sx={{ width: "50%", marginRight: "5%" }}>
           <FormControl sx={{ width: "100%" }}>
             <LabelText>Discount type</LabelText>
-            {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
+ 
             <ToggleButtonGroup
               color="primary"
               value={discountType}
@@ -230,25 +226,6 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
                 In Taka
               </ToggleButton>
             </ToggleButtonGroup>
-            {/* <SelectOption
-              // width="100%"
-              options={options}
-              activeItem={activeItem}
-              setActiveItem={setActiveItem}
-            /> */}
-            {/* <Select
-              // labelId="demo-simple-select-label"
-              // id="demo-simple-select"
-              autoWidth={false}
-              value={items.discountType}
-              // label="Discount Type"
-              onChange={(e) =>
-                setItems((prv) => ({ ...prv, discountType: e.target.value }))
-              }
-            >
-              <MenuItem value={"%"}>In Percentage</MenuItem>
-              <MenuItem value={"tk"}>In Taka</MenuItem>
-            </Select> */}
           </FormControl>
         </Box>
         <Box sx={{ width: "50%", marginRight: "5%" }}>
@@ -269,25 +246,22 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
         </Box>
       </Box>
 
-      {/* <Typography>
-        {`This Promo-Code Will Be Valid In More Than ${items.conditionAmmount} Tk. Order  `}
-      </Typography> */}
-
       <Box sx={{ display: "flex", gap: 2, marginTop: "1rem" }}>
         {status ? (
           <Button
             onClick={updateFireStoreValue}
             variant="contained"
+            sx={{color : "#ffff"}}
             size="large"
           >
             Update
           </Button>
         ) : (
-          <Button onClick={creatHandle} variant="contained" size="large">
+          <Button  sx={{color : "#ffff"}} onClick={creatHandle} variant="contained" size="large">
             Create
           </Button>
         )}
-        <Button onClick={discardHandle} variant="outlined" size="large">
+        <Button color="error" onClick={discardHandle} variant="outlined" size="large">
           Discard
         </Button>
       </Box>

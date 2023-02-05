@@ -57,7 +57,6 @@ const PrintOrderDetails = ({el}) => {
         {/*Row*/}
         <Box
           sx={{
-            // display: "flex",
             display: "grid",
             gridTemplateColumns: "2fr 1fr 1fr 1fr",
             width: "100%",
@@ -111,7 +110,6 @@ const PrintOrderDetails = ({el}) => {
               <Box
                 key={key + 100}
                 sx={{
-                  // display: "flex",
                   display: "grid",
                   gridTemplateColumns: "2fr 1fr 1fr 1fr",
                   width: "100%",
@@ -163,7 +161,6 @@ const PrintOrderDetails = ({el}) => {
                     <Box
                       key={key + 100}
                       sx={{
-                        // display: "flex",
                         display: "grid",
                         gridTemplateColumns: "2fr 1fr 1fr 1fr",
                         width: "100%",
@@ -204,7 +201,6 @@ const PrintOrderDetails = ({el}) => {
                         </Typography>
                       </Box>
                     </Box>
-                    // </Box>
                   );
                 }
               )}

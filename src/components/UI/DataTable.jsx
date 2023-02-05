@@ -1,4 +1,4 @@
-// dataHeader = ["Name", "Price", "Sale Price", "Edit", "Delete"]
+
 
 import { Box } from "@mui/material";
 import { DeleteIcon } from "@mui/icons-material/Delete";
@@ -27,11 +27,7 @@ const DataTable = ({
         {dataHeader.map((data) => (
           <ListHeader>{data}</ListHeader>
         ))}
-        {/* <ListHeader>Name</ListHeader>
-        <ListHeader>Price</ListHeader>
-        <ListHeader>Sale Price</ListHeader>
-        <ListHeader>Edit</ListHeader>
-        <ListHeader>Delete</ListHeader> */}
+
       </Box>
       <Box
         sx={{
@@ -39,7 +35,7 @@ const DataTable = ({
           width: "100%",
           display: "grid",
           gridTemplateColumns: `${dataHeader.map(() => "1fr ")}`,
-          //   gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
+
           overflowY: "scroll",
         }}
       >
@@ -80,12 +76,7 @@ const DataTable = ({
                 />
               </ListBody>
             </>
-            // {defualtVariant.id == id && (
-            //   <ListItemText
-            //     primary={"Defualt"}
-            //     sx={{ color: "green" }}
-            //   />
-            // )}
+
           );
         })}
       </Box>

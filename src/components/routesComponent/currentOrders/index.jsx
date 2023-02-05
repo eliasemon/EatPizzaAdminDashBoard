@@ -15,7 +15,6 @@ import OrderQuantity from "./OrderQuantity";
 import CardComponent from "./Card";
 import { showDataWithOutPagination , getSingleDataWithOutRealTimeUpdates , showDataForCurrentOrder } from "../../../../utils";
 
-// const item =  data.variants[`${rawData.selectedVariant.id}`];
 
 
 

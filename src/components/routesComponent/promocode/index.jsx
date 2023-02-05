@@ -116,11 +116,9 @@ const PromoCode = () => {
               sx={{
                 marginTop: "1rem",
                 width: "100%",
-                // maxWidth: "50%",
+
                 maxHeight: "25vh",
-                // marginTop: "-6%",
-                // marginLeft: "50%",
-                // marginBottom: "10%",
+
                 bgcolor: "secondary",
                 position: "absolute",
                 overflowY: "scroll",
@@ -128,17 +126,6 @@ const PromoCode = () => {
                 // maxHeight: 300,
                 "& ul": { padding: 0 },
 
-                //  width: "100%",
-                //  maxWidth: 400,
-                //  maxHeight: 220,
-                //  marginTop: "-6%",
-                //  marginLeft:'250px',
-                //  marginBottom:'100px',
-                //  bgcolor: "secondary",
-                //  position: "absolute",
-                //  overflowY: "scroll",
-                //  color: "common.white",
-                //  "& ul": { padding: 0 },
               }}
               subheader={<li />}
             >
@@ -158,7 +145,7 @@ const PromoCode = () => {
                           }}
                         >
                           <Box
-                            sx={{ flex: 1 }}
+                            sx={{ flex: 1 ,  marginRight : "10px" , cursor : "pointer" }}
                             onClick={() => {
                               handleOpen(item);
                             }}
@@ -213,18 +200,13 @@ const PromoCode = () => {
                 boxSizing: "border-box",
                 width: "100%",
                 height: "24vh",
-                // maxWidth: "50%",
-                // maxHeight: "20vh",
-                // height: "10%",
-                // marginTop: "-6%",
-                // marginLeft: "50%",
-                // marginBottom: "10%",
+
                 marginTop: "1rem",
                 bgcolor: "secondary",
-                // position: "absolute",
+             
                 overflowY: "auto",
                 color: "common.white",
-                // maxHeight: 300,
+            
                 "& ul": { padding: 0 },
               }}
               subheader={<li />}
@@ -245,6 +227,7 @@ const PromoCode = () => {
                           }}
                         >
                           <ListItemText
+                             sx={{ flex: 1 ,  marginRight : "10px" , cursor : "pointer" }}
                             onClick={() => {
                               handleOpen(item);
                             }}
@@ -337,99 +320,17 @@ const PromoCode = () => {
               Condition Amount : {outputObject.conditionAmmount}
             </Typography>
           )}
-          <Typography
-            id="modal-modal-description"
-            sx={{ mt: 2, fontSize: "1.2rem", color: "#fff" }}
-          >
-            Validity : {newDate.toLocaleString()}
-          </Typography>
           {outputObject.discountType && (
             <Typography
               id="modal-modal-description"
               sx={{ mt: 2, fontSize: "1.2rem", color: "#fff" }}
             >
-              Used : {outputObject.howManyTimesUsed} times
+              Validity : {newDate.toLocaleString()}
             </Typography>
           )}
         </Box>
       </Modal>
     </>
-    // <Box
-    //   sx={{
-    //     display: "flex",
-    //     flexDirection: "column",
-    //     // gridTemplateColumns: "17.9vw auto",
-    //     width: "100%",
-    //     height: "100%",
-    //     padding: "3%",
-    //   }}
-    // >
-
-    //   {
-    //     createDtaUI
-    //   }
-    //   <Box>
-    //     <List
-    //       sx={{
-    //         width: "100%",
-    //         maxWidth: 400,
-    //         marginTop: "5%",
-    //         bgcolor: "secondary",
-    //         position: "relative",
-    //         overflow: "auto",
-    //         color: "common.white",
-    //         // maxHeight: 300,
-    //         "& ul": { padding: 0 },
-    //       }}
-    //       subheader={<li />}
-    //     >
-    //       {
-    //         <ul>
-    //           {showData && showData.map((doc) =>
-    //           {
-    //           const item = doc.data()
-    //           item.id = doc.id ;
-    //           return(
-    //             <ListItem
-    //               key={doc.id}
-    //               sx={{
-    //                 backgroundColor: "secondary.dark",
-    //                 marginBottom: "5px",
-    //                 borderRadius: "5px",
-    //               }}
-    //             >
-    //               <ListItemText primary={item.name} />
-    //               <Box sx={{ display: "flex", gap: "10px" }}>
-    //                 <Box>
-    //                   <EditIcon
-    //                     onClick = {()=> handelEditDataUi(item)}
-    //                     sx={{
-    //                       "&:hover": {
-    //                         color: "secondary.light",
-    //                         cursor: "pointer",
-    //                       },
-    //                     }}
-    //                   />
-    //                 </Box>
-    //                 <Box>
-    //                   <DeleteIcon
-    //                     onClick={() => deleteItems(doc.id , item.name)}
-    //                     sx={{
-    //                       "&:hover": {
-    //                         color: "secondary.light",
-    //                         cursor: "pointer",
-    //                       },
-    //                     }}
-    //                   />
-    //                 </Box>
-    //               </Box>
-    //             </ListItem>
-    //           )})}
-    //         </ul>
-    //       }
-    //     </List>
-    //   </Box>
-    // </Box>
   );
 };
 export default PromoCode;

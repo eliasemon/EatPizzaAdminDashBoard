@@ -13,7 +13,6 @@ const ShowAddonsList = ({
   setSelectedAddons,
   selectedCatagories,
 }) => {
-  // const [selectedCatagories , setSelectedCatagories] = useState([])
   const [activeItem, setActiveItem] = useState(0);
   const [items, setItems] = useState("");
   const options = [
@@ -61,23 +60,6 @@ const ShowAddonsList = ({
   }, [selectedCatagories]);
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
-      {/* for Addons Filtering  */}
-      {/* <Box>
-                      <FilterView  
-                          selectedCatagories={selectedCatagories}
-                          setSelectedCatagories={setSelectedCatagories}
-                          clearFilterfun = {clearFilterfun}
-                          heading = "Filter The Addons List By Catagories"
-                        />
-                    </Box> */}
-
-      {/* itemsLoader */}
-
-      {/* Naviagate Button  */}
-      {/* <Box sx={{ display: "flex" }}>
-        <Button onClick={() => ViewChange("filtered")}>Default Filtered</Button>
-        <Button onClick={ViewChange}>All</Button>
-      </Box> */}
 
       {selectedCatagories.length !== 0 && (
         <SelectOption

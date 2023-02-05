@@ -1,12 +1,6 @@
 import { styled } from "@mui/system";
 
 export const BannerContainer = styled("div")({
-  // width: "100%",
-  // height: "100vh",
-  // display: "flex",
-  // justifyContent:'center',
-  // alignItems:'center',
-  // boxSizing: 'border-box'
   width: "100%",
   height: "98%",
   display: "flex",

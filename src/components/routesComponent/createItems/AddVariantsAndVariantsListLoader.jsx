@@ -154,7 +154,6 @@ const AddVariantsAndVariantsListLoader = ({
           sx={{
             width: "100%",
             height: "75%",
-            // height: "300px",
             backgroundColor: "rgba(255,255,255, 0.08)",
           }}
         >
@@ -170,7 +169,6 @@ const AddVariantsAndVariantsListLoader = ({
           <Box
             sx={{
               width: "100%",
-              // height: "300px",
               height: "100%",
               backgroundColor: "rgba(255,255,255, 0.08)",
               overflowY: "scroll",
@@ -201,7 +199,6 @@ const AddVariantsAndVariantsListLoader = ({
       </Box>
     </Box>
   );
-  // <Box>{AddvarinatUI}</Box>;
 };
 
 export default AddVariantsAndVariantsListLoader;

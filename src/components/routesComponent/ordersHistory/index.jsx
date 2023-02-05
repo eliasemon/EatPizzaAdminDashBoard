@@ -36,10 +36,9 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  // color: "inherit",
+
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -116,7 +115,6 @@ const OrdersHistory = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        // gridTemplateColumns: "17.9vw auto",
         width: "100%",
         height: "100%",
         padding: "1.5%",

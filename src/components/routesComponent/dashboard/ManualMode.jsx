@@ -33,13 +33,12 @@ const ManualMode = ({forView , setForView}) => {
         value={forView.notice}
         onChange={onTextFieldChange}
         type="text"
-        // focusColor='none'
+
         placeholder="your notice..."
-        // fullWidth
+
         sx={{
           width: "400px",
           border: "1px solid white",
-          // height: "10vh",
           input: {
             color: "white",
           },

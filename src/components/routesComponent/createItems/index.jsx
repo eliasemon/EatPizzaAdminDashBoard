@@ -106,15 +106,8 @@ const CreateItems = ({ update }) => {
           display: "flex",
           flexDirection: "column",
           overflowY: "auto",
-          // justifyContent: "space-between",
         }}
       >
-        {/* <Box>
-          <Typography color="white">
-            {" "}
-            {update ? "Update The Items Information" : "Create New Items"}
-          </Typography>
-        </Box> */}
         <Box>
           <Box
             sx={{
@@ -175,7 +168,6 @@ const CreateItems = ({ update }) => {
             inputProps={{
               style: {
                 height: "3rem",
-                // height: "175px",
                 color: "#fff",
               },
             }}
@@ -205,9 +197,6 @@ const CreateItems = ({ update }) => {
           padding: "2%",
           display: "flex",
           flexDirection: "column",
-          // overflowY: "auto",
-          // gap: "2%",
-          // position: "relative",
         }}
       >
         {/* UpperBox Start  */}
@@ -238,11 +227,6 @@ const CreateItems = ({ update }) => {
             marginLeft: "auto",
             display: "flex",
             gap: "5%",
-            // justifySelf: "flex-end",
-            // alignSelf: "flex-end",
-            // position: "absolute",
-            // right: 0,
-            // bottom: 0,
           }}
         >
           <Button onClick={createProduct} variant="contained" size="large">

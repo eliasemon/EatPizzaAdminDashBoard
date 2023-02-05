@@ -27,8 +27,7 @@ export const SidebarContainer = styled("div")(({ theme }) => ({
   height: "100%",
   backgroundColor: theme.palette.surface.dp01,
   zIndex: 1,
-  // display: "flex",
-  // flexDirection: "column",
+
   overflow: "scroll",
 
   "&::-webkit-scrollbar": {
@@ -37,14 +36,10 @@ export const SidebarContainer = styled("div")(({ theme }) => ({
 }));
 
 export const ListButton = styled("div")(({ theme, selected }) => ({
-  // margin: "5% 15%",
-  // margin: "2.5%",
-  // padding: "5%",
-  // margin: "2.5% 5%",
+
   flex: 1,
   alignItems: "center",
-  //  margin: "30px",
-  //  padding: "10px",
+
   borderRadius: "5px",
   padding: ".5rem",
   marginBottom: ".25rem",
@@ -60,25 +55,6 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   display: "flex",
   textDecoration: "none",
   alignItems: "center",
-  // padding: "10px",
-  // borderRadius: "5px",
-  // "&:hover": {
-  //   backgroundColor: theme.palette.primary.main,
-  //   transitionDuration: ".5s",
-    
-  // },
+
   
 }));
-
-// export const StyledLink = styled(Link)(({ theme }) => ({
-//   display: "flex",
-//   textDecoration: "none",
-//   alignItems: "center",
-//   padding: "0 5px",
-//   "&:hover": {
-//     backgroundColor: theme.palette.primary.main,
-//     transitionDuration: ".5s",
-    
-//   },
-  
-// }));

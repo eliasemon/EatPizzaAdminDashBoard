@@ -59,6 +59,15 @@ export const showDataForCurrentOrder = (setState , collectionRef , queryArray , 
 
 
 
+export const showDataWithPaginationForItems = async (setState, collectionRef) => {
+  onSnapshot((collection(db, `${collectionRef}`)), (snapshot)=>{
+    setState(snapshot.docs)
+  })
+}
+
+
+
+
 export const showDataWithPagination = async (setState, collectionRef, startingPoint, limitation, fristAttemp , orderByFilter ) => {
   const q = query(collection(db, `${collectionRef}`),orderBy(orderByFilter ? orderByFilter : "name")  , startAfter(startingPoint) , limit(limitation) );
   if (fristAttemp) {

@@ -1,19 +1,15 @@
 import { Button, Box } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
-import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { useNavigate } from "react-router-dom";
-import ItemList from "../../../constants/ItemsList";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import product from "../../../assets/images/product.jpg";
 import usePagination from "../../../hooks/usePagination";
 import {
-  showDataWithPagination,
+  showDataWithPaginationForItems,
   delteColloctionInstance,
 } from "../../../../utils";
-import { Typography } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -81,31 +77,34 @@ const ListBody = styled(Box)`
 const AllItems = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState("");
-  const itemDocsRefAll = useRef(null);
+  const [itemDocsRefAll , setItemsDocsRefAll ] = useState("");
   const { ui, activepage, changeTheLocalTotal } = usePagination(1);
   const limitation = 7;
+
+
   useEffect(() => {
-    showDataWithPagination(setItems, "productlist", 0, limitation, true).then(
-      (docs) => {
-        itemDocsRefAll.current = docs;
-        changeTheLocalTotal(Math.ceil(Number(docs.length) / limitation + 1));
-      }
-    );
+    showDataWithPaginationForItems(setItemsDocsRefAll, "productlist")
   }, []);
+
+  useEffect(()=>{
+    changeTheLocalTotal(Math.ceil(Number(itemDocsRefAll.length) / limitation));
+  },[itemDocsRefAll])
+
   useEffect(() => {
-    if (!activepage) return;
-    if (itemDocsRefAll.current) {
-      showDataWithPagination(
-        setItems,
-        "productlist",
-        activepage == 1
-          ? 0
-          : itemDocsRefAll.current[limitation * (activepage - 1)],
-        limitation,
-        false
-      );
+    const data = []
+    const startIndex =  limitation * (activepage - 1)
+    for(let i = startIndex ; i < startIndex+7 ; i++ ){
+      console.log( itemDocsRefAll[i]?.data())
+      const item = itemDocsRefAll[i]?.data()
+      if(!item){
+        continue;
+      }
+      item.id = itemDocsRefAll[i].id
+      data.push(item)
     }
-  }, [activepage]);
+    setItems([...data])
+  }, [activepage, itemDocsRefAll]);
+
 
   const deleteItem = (id, collectionRef, imageRef, itemName) => {
     if (
@@ -123,7 +122,6 @@ const AllItems = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        // gridTemplateColumns: "17.9vw auto",
         width: "100%",
         height: "100%",
         padding: "1%",
@@ -134,7 +132,6 @@ const AllItems = () => {
       <Box
         sx={{
           backgroundColor: "#252525",
-          // overflow: "auto",
           maxHeight: "100%",
           width: "100%",
           borderRadius: "5px",
@@ -147,7 +144,6 @@ const AllItems = () => {
             height: "10%",
             justifyContent: "space-between",
             alignItems: "start",
-            // padding: "2% 1% 0",
             padding: "2%",
           }}
         >
@@ -194,15 +190,11 @@ const AllItems = () => {
             }}
           >
             {items &&
-              items.map((doc) => {
-                const item = doc.data();
-                item.id = doc.id;
+              items.map((item) => {
+               
                 return (
                   <Box
                     sx={{
-                      // height: "35%",
-                      // width: "35%",
-                      // flex: 1,
                       display: "grid",
                       gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr 1fr",
                     }}

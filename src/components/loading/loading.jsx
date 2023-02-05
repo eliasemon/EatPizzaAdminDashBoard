@@ -44,4 +44,3 @@ export const showLoading = () => {
 };
 
 export const closeLoading = () => toast.done("LoadingSc");
-// export const closeLoading = () =>console.log("Sss")

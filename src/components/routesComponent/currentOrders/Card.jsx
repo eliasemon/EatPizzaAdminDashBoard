@@ -53,9 +53,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
   const [isPrint, setIsprinting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const message = useRef("");
-  // let [message, setMessage] = useState("");
   const agreeFunction = useRef(null);
-  // const [agreeFunction, setAgreeFunction] = useState(null);
 
   const componentRef = useRef();
   const [delayTime, setDelayTime] = useState(
@@ -94,7 +92,6 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
   const onClickButtonHandler = async () => {
     await updateDoc(colRef, { status: orderStatusChanged[el.status] });
     if (el.status === "picked") {
-      // delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
 
       const orderCompleateRef = doc(db, "totalSummery", "compleatedOrder");
       const TotalSell = doc(db, "totalSummery", "TotalSells");
@@ -193,7 +190,6 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
   };
   const declineOrder = async (type) => {
     await updateDoc(colRef, { status: type });
-    // delteColloctionInstanceWithOutLoadingAnimation(el.id , "unHandleOrdersIds")
     setUnHandleOrderDocs((prv) => {
       delete prv[el.id];
       return { ...prv };
@@ -203,13 +199,7 @@ const CardComponent = ({ el, setUnHandleOrderDocs, color }) => {
   const handleCancel = (type) => {
     message.current =
       "Are you sure you want to cancel the order ? You can not revert it after clicking agree";
-    // setMessage(
-    //   "Are you sure you want to cancel the order ? You can not revert it after clicking agree"
-    // );
     agreeFunction.current = () => declineOrder(type);
-    // setAgreeFunction(() => {
-    //   return () => declineOrder(type);
-    // });
     setDialogOpen(true);
   };
 
