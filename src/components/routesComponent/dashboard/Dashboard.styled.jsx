@@ -7,7 +7,7 @@ export const DashboardContainer = styled("div")({
 });
 
 export const LeftContainer = styled("div")({
-  width: "30%",
+  width: "50%",
   padding: "2.5%",
   overflow: "hidden",
   display: "flex",
@@ -16,7 +16,7 @@ export const LeftContainer = styled("div")({
 });
 
 export const RightContainer = styled("div")(({ theme }) => ({
-  width: "70%",
+  width: "50%",
 
   padding: "1.5rem",
   position: "relative",
@@ -24,7 +24,6 @@ export const RightContainer = styled("div")(({ theme }) => ({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-
 }));
 
 export const Section = styled("div")((props) => ({

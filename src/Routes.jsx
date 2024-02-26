@@ -12,6 +12,8 @@ import {
   Users,
   PromoCode,
 } from "./components/routesComponent";
+// import Settings from "./components/routesComponent/settings";
+
 
 const RoutesComponent = ({ openingStatus }) => {
   return (
@@ -20,9 +22,9 @@ const RoutesComponent = ({ openingStatus }) => {
       <Route path="/addons" element={<Addons />} />
       <Route path="/banner" element={<Banner />} />
       <Route path="/categories" element={<Categories />} />
-      <Route path="/createitem" element={<CreateItem />} />
+      <Route path="/items/createitem" element={<CreateItem />} />
       <Route
-        path="/createitem/:itemsIdToBeUpdated"
+        path="/items/createitem/:itemsIdToBeUpdated"
         element={<CreateItem update={true} />}
       />
       <Route
@@ -34,6 +36,7 @@ const RoutesComponent = ({ openingStatus }) => {
       <Route path="/users" element={<Users />} />
       <Route path="/banner" element={<Banner />} />
       <Route path="/promocode" element={<PromoCode />} />
+      {/* <Route path="/Settings" element={<Settings />} /> */}
     </Routes>
   );
 };

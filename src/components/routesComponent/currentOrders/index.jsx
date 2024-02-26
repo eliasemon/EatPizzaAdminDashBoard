@@ -13,93 +13,33 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OrderQuantity from "./OrderQuantity";
 import CardComponent from "./Card";
-import { showDataWithOutPagination , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
+import { showDataWithOutPagination , getSingleDataWithOutRealTimeUpdates , showDataForCurrentOrder } from "../../../../utils";
 
 // const item =  data.variants[`${rawData.selectedVariant.id}`];
 
-const validateData = async (rawData , extraCostDocs) =>{
-  if(rawData.isChecked){
-    return rawData.isValided
-  }
-  let subTottal = 0
-  let exTraCost = 0
-  const keys =  Object.keys(rawData.items);
-  
-  const itemsPromise = keys.map( async (v)=>{
-    const doc = rawData.items[`${v}`]
-    const data = await getSingleDataWithOutRealTimeUpdates("productlist" , doc.id )
-    const item =  data.variants[`${doc.selectedVariant.id}`];
-    subTottal +=  Number(item.sellingPrice)
-    const AddonsIds = Object.keys(doc.selectedAddonsForCard)
-    const AddonsPromise = AddonsIds.map( async (id)=>{
-      const data = await getSingleDataWithOutRealTimeUpdates("Addons" , id )
-      subTottal +=  Number(data.price)
-    })
-    await Promise.all(AddonsPromise).then(() => {
-      subTottal = (Number(subTottal) * Number(doc.itemCount))
-    })
-  })
-  await Promise.all (itemsPromise).then(()=>{
-    extraCostDocs.map((doc) => {
-      const data = doc.data()
-      if(data.costType === "taka" ){
-        exTraCost+= Number(data.costValue)
-      }else{
-        const temp =  (subTottal / 100) * Number(data.costValue)
-        exTraCost+= temp
-      }
-    })
-  })
-  let discount = 0
-  if(rawData.promoCode){
-  const promoData = await  getSingleDataWithOutRealTimeUpdates("promoCode" , rawData.promoCode)
-  if(promoData.discountType === "%" && promoData.conditionAmmount <=  subTottal){
-    discount = (subTottal / 100) * Number(promoData.discountValue)
-  }else if(promoData.discountType === "taka" && promoData.conditionAmmount <=  subTottal){
-    discount = Number(promoData.conditionAmmount)
-  }
-}
-
-  if(Number(rawData.TotalOrderAmmount) === (subTottal + exTraCost - discount)){
-    console.log(subTottal + exTraCost - discount)
-    return true
-  }else{
-    return false
-  }
-
-  
-
-
- 
-}
 
 
 const CurrentOrders = () => {
-  const [forceRender,setForceRender]=useState(false)
   const [unHandleList , setUnHandleList] = useState("")
   const [unHandleOrderDocs , setUnHandleOrderDocs] = useState({})
-  const [extraCostDocs , setExtraCostDocs] = useState("")
   useEffect(()=>{
-    showDataWithOutPagination(setUnHandleList , "unHandleOrdersIds")
-    showDataWithOutPagination(setExtraCostDocs , "extraCost")
+    showDataForCurrentOrder(setUnHandleList , "ordersList" , ["pending" , "inCoocked" , "picked" ] , "status" )
   },[])
 
   useEffect(()=>{
-    if(unHandleList && extraCostDocs){
-      unHandleList.forEach(async (v) => {
-        const data = await getSingleDataWithOutRealTimeUpdates("ordersList" , v.id)
-        data.isValided = await validateData(data , extraCostDocs )
-        data.isChecked = true;
-        console.log("SomeThings WentWorg")
-        setUnHandleOrderDocs((prv) => {
-            prv[`${data.id}`] = data
-            return {...prv}
-        })
-      });
-      
+    if(unHandleList){
+      const data = unHandleList.reduce(( acc , doc) => {
+        const data = doc.data()
+        data.id = doc.id;
+        acc[`${data.id}`] = data
+        return acc
+      },{});
+
+      setUnHandleOrderDocs((prv) => ({...prv , ...data}))
     }
-  },[unHandleList , extraCostDocs])
-if(unHandleOrderDocs) console.log(unHandleOrderDocs);
+  },[unHandleList])
+
+if(unHandleList) console.log(unHandleList);
   return (
     <CurrentOrdersContainer>
       <HalfBox color="blue">
@@ -112,20 +52,21 @@ if(unHandleOrderDocs) console.log(unHandleOrderDocs);
             },
           }}
         >
-          {Object.keys(unHandleOrderDocs).map((key) =>{
-            const el = unHandleOrderDocs[key]
-            if(el.status !== "pending"){
-              return ""
+          {Object.keys(unHandleOrderDocs).map((key) => {
+            const el = unHandleOrderDocs[key];
+            if (el.status !== "pending") {
+              return "";
             }
 
-          return(
-            <CardComponent
-              setUnHandleOrderDocs={setUnHandleOrderDocs}
-              key={key}
-              el={el}
-              color="#1ec1fc"
-            />
-          )})}
+            return (
+              <CardComponent
+                setUnHandleOrderDocs={setUnHandleOrderDocs}
+                key={`${key}Pending`}
+                el={el}
+                color="#1ec1fc"
+              />
+            );
+          })}
         </Box>
       </HalfBox>
 
@@ -139,20 +80,21 @@ if(unHandleOrderDocs) console.log(unHandleOrderDocs);
             },
           }}
         >
-          {Object.keys(unHandleOrderDocs).map((key) =>{
-            const el = unHandleOrderDocs[key]
-            if(el.status !== "inCoocked"){
-              return ""
+          {Object.keys(unHandleOrderDocs).map((key) => {
+            const el = unHandleOrderDocs[key];
+            if (el.status !== "inCoocked") {
+              return "";
             }
-            
-          return(
-            <CardComponent
-              setUnHandleOrderDocs={setUnHandleOrderDocs}
-              key={key}
-              el={el}
-              color="#1ec1fc"
-            />
-          )})}
+
+            return (
+              <CardComponent
+                setUnHandleOrderDocs={setUnHandleOrderDocs}
+                key={`${key}inCoocked`}
+                el={el}
+                color="#1ec1fc"
+              />
+            );
+          })}
         </Box>
       </HalfBox>
 
@@ -166,20 +108,21 @@ if(unHandleOrderDocs) console.log(unHandleOrderDocs);
             },
           }}
         >
-          {Object.keys(unHandleOrderDocs).map((key) =>{
-            const el = unHandleOrderDocs[key]
-            if(el.status !== "picked"){
-              return ""
+          {Object.keys(unHandleOrderDocs).map((key) => {
+            const el = unHandleOrderDocs[key];
+            if (el.status !== "picked") {
+              return "";
             }
-            
-          return(
-            <CardComponent
-              setUnHandleOrderDocs={setUnHandleOrderDocs}
-              key={key}
-              el={el}
-              color="#1ec1fc"
-            />
-          )})}
+
+            return (
+              <CardComponent
+                setUnHandleOrderDocs={setUnHandleOrderDocs}
+                key={`${key}picked`}
+                el={el}
+                color="#1ec1fc"
+              />
+            );
+          })}
         </Box>
       </HalfBox>
     </CurrentOrdersContainer>

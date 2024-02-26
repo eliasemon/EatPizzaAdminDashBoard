@@ -42,8 +42,8 @@ const VariantsItemsLoader = ({
   onVariantStateLift,
   deleteVariantsHandle,
   setVariantUI,
-  defualtVariant,
 }) => {
+
   return (
     <>
       <Box
@@ -51,6 +51,7 @@ const VariantsItemsLoader = ({
           display: "flex",
           flexDirection: "column",
           height: "100%",
+          overflowY : "scroll"
         }}
       >
         <Box
@@ -67,20 +68,20 @@ const VariantsItemsLoader = ({
           <ListHeader>Edit</ListHeader>
           <ListHeader>Delete</ListHeader>
         </Box>
-        <Box
+        
+          {Object.keys(variants).map((id) => {
+            const item = variants[`${id}`];
+            return (
+              <Box
           sx={{
             height: "auto",
             width: "100%",
             display: "grid",
             gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
-            overflowY: "scroll",
           }}
+          key={id}
         >
-          {Object.keys(variants).map((id) => {
-            const item = variants[`${id}`];
-            console.log("item", item);
-            return (
-              <>
+
                 <ListBody>{item.name}</ListBody>
                 <ListBody>{item.regularPrice}</ListBody>
                 <ListBody>{item.sellingPrice}</ListBody>
@@ -113,16 +114,11 @@ const VariantsItemsLoader = ({
                     }}
                   />
                 </ListBody>
-              </>
-              // {defualtVariant.id == id && (
-              //   <ListItemText
-              //     primary={"Defualt"}
-              //     sx={{ color: "green" }}
-              //   />
-              // )}
-            );
+              </Box>
+            
+              );
           })}
-        </Box>
+        
       </Box>
     </>
   );
@@ -136,23 +132,12 @@ const AddVariantsAndVariantsListLoader = ({
 }) => {
   const [AddvarinatUI, setVariantUI] = useState("");
 
-  const onVariantStateLift = async (type, liftedState) => {
+  const onVariantStateLift =  (type, liftedState) => {
     if (type) {
-      if (!defualtVariant) {
-        setDefualtVariant({ ...liftedState });
-      }
-      if (
-        defualtVariant &&
-        defualtVariant.sellingPrice > liftedState.sellingPrice
-      ) {
-        setDefualtVariant({ ...liftedState });
-      }
-      await setVariants((prv) => {
+        setVariants((prv) => {
         prv[`${liftedState.id}`] = liftedState;
         return { ...prv };
       });
-
-      // return;
     }
     setVariantUI("");
   };
@@ -164,16 +149,7 @@ const AddVariantsAndVariantsListLoader = ({
     });
   };
 
-  // useEffect(() => {
-  //   setVariantUI(
-  //     <VariantsItemsLoader
-  //       variants={variants}
-  //       onVariantStateLift={onVariantStateLift}
-  //       setVariantUI={setVariantUI}
-  //       deleteVariantsHandle={deleteVariantsHandle}
-  //     />
-  //   );
-  // }, [variants]);
+
   return (
     <Box>
       {/* UpperBox for Items Load With Scroll View  */}
@@ -187,7 +163,6 @@ const AddVariantsAndVariantsListLoader = ({
           }}
         >
           <VariantsItemsLoader
-            defualtVariant={defualtVariant}
             variants={variants}
             onVariantStateLift={onVariantStateLift}
             deleteVariantsHandle={deleteVariantsHandle}

@@ -23,7 +23,7 @@ const AddVariants = ({onStateLift , incomingItem}) => {
         if(data.sellingPrice == ""){
           data.sellingPrice = data.regularPrice
         }
-        onStateLift( true ,data)
+        onStateLift( true , data)
         setVariantsItem(VariantsModel)
 
     }

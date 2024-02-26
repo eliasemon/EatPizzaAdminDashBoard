@@ -7,10 +7,11 @@ const fileTypes = ["JPG", "PNG", "GIF"];
 import { getStorage, ref, uploadString , getDownloadURL} from "firebase/storage";
 import {firebaseApp} from "../../firebaseConfig"
 
-const useFileUploaderJSX = (update) => {
+const useFileUploaderJSX = (update , length) => {
   const [breakUpdate , setBreakUpdate] = useState(!update)
   const [image,setImage]=useState('')
-    const Width = "1000";
+    const Width = length ? `${length.propsWidth}` : "600";
+    const Height =  length ? `${length.propsHeight}` : "350";
     const handleChange = (file) => {
       setBreakUpdate(true)
       let image_file = file[0]
@@ -23,7 +24,7 @@ const useFileUploaderJSX = (update) => {
             myImage.onload=(el)=>{
               const canvas = document.createElement('canvas');
                     canvas.width = Width;
-                    canvas.height = "700";
+                    canvas.height = Height;
               const context = canvas.getContext('2d')
               context.drawImage(myImage,0,0,canvas.width,canvas.height)
              const newImageUrl = context.canvas.toDataURL('image/jpeg',60)

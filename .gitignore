@@ -23,5 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
+firebaseConfig.js
 jsconfig.json
 yarn.lock
+.env

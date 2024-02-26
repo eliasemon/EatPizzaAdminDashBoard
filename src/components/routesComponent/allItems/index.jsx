@@ -82,17 +82,25 @@ const AllItems = () => {
   const limitation  = 7;
   useEffect(()=>{
     showDataWithPagination(setItems,  "productlist" , 0 , limitation, true).then((docs)=>{
-      itemDocsRefAll.current = docs
-      changeTheLocalTotal( Math.ceil( Number(docs.length) / limitation))
+      itemDocsRefAll.current = docs;
+      changeTheLocalTotal( Math.ceil( Number(docs.length) / limitation));
 
-      showDataWithPagination(setItems,  "productlist" , 0 , limitation)
     })
   },[])
   useEffect(()=>{
     if(itemDocsRefAll.current){
-      showDataWithPagination(setItems,  "productlist" , itemDocsRefAll.current[(limitation * (activepage - 1))] , limitation)
+      showDataWithPagination(setItems,  "productlist" ,(( activepage == 1 )?  0  : itemDocsRefAll.current[(limitation * (activepage - 1))] ), limitation , false)
     }
   },[activepage])
+
+
+  const deleteItem = (id , collectionRef , imageRef , itemName) =>{
+
+    if(window.confirm(  `******************************************** \n\n Wait:= \n\n Do You Wanna Delete \n**"${itemName}"**\nCatagory Item!!! \n\n ********************************************`)){
+      delteColloctionInstance(id , collectionRef ,imageRef)
+    }
+    return
+  } 
 
 
   return (
@@ -130,7 +138,7 @@ const AllItems = () => {
         >
           
           <Button
-            onClick={() => navigate("/createitem")}
+            onClick={() => navigate("/items/createitem")}
             variant="contained"
             size="large"
             color="primary"
@@ -204,7 +212,7 @@ const AllItems = () => {
                 <ListBody>{item.defualtVariant.sellingPrice}</ListBody>
                 <ListBody>
                   <EditIcon
-                    onClick={() => navigate(`/createitem/${item.id}`)}
+                    onClick={() => navigate(`/items/createitem/${item.id}`)}
                     sx={{
                       "&:hover": {
                         color: "secondary.light",
@@ -215,7 +223,7 @@ const AllItems = () => {
                 </ListBody>
                 <ListBody>
                   <DeleteIcon
-                    onClick={() => delteColloctionInstance(item.id , "productlist" , item.image.imgRef)}
+                    onClick={() => deleteItem(item.id , "productlist" , item.image.imgRef , item.name)}
                     sx={{
                       "&:hover": {
                         color: "secondary.light",

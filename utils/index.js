@@ -12,20 +12,65 @@ import {
   onSnapshot,
   query,
   orderBy,
-  startAt,
   startAfter,
-  endAt,
   limit,
   getCountFromServer } from "firebase/firestore";
 import { db , firebaseApp } from "../firebaseConfig";
 import { closeLoading, showLoading } from '../src/components/loading/loading';
 
-export const showDataWithPagination = async (setState, collectionRef, startingPoint, limitation, fristAttemp , orderByFilter , descSorting) => {
+
+export const lengthOfCollection = async (collref) =>{
+  const coll = collection(db, `${collref}`);
+  const snapshot = await getCountFromServer(coll);
+  return snapshot.data().count
+}
+
+
+
+export const findDataWithQuries = async (collectionRef , quriesField , qurieskey) => {
+  const q = query(collection(db, `${collectionRef}`), where(`${quriesField}` , "==" , `${qurieskey}`) );
+  const docSnap = await getDocs(q);
+  return new Promise((resolve , reject)=>{
+    if (docSnap.docs.length > 0) {
+        resolve(docSnap.docs)
+    }else{
+      reject("SomeThings went worng don't do piracy")
+    }
+  })
+   
+}
+
+
+
+
+
+
+
+export const showDataForCurrentOrder = (setState , collectionRef , queryArray , queryField ) => {
+  const q = query(collection(db, `${collectionRef}`), where(`${queryField}`, 'in', queryArray));
+  onSnapshot(q, (snapshot) => {  
+    setState(() => {
+      return snapshot.docs
+    })
+  })
+
+}
+
+
+
+
+export const showDataWithPagination = async (setState, collectionRef, startingPoint, limitation, fristAttemp , orderByFilter ) => {
   const q = query(collection(db, `${collectionRef}`),orderBy(orderByFilter ? orderByFilter : "name")  , startAfter(startingPoint) , limit(limitation) );
   if (fristAttemp) {
     // const snapshot = await getCountFromServer(collection(db, `${collectionRef}`))
+    
+    onSnapshot(q, (snapshot)=>{
+      setState(snapshot.docs)
+    })
+
     const snapshot = await getDocs(collection(db, `${collectionRef}`))
     return snapshot.docs
+    
   }
   else{
     onSnapshot(q, (snapshot)=>{
@@ -33,6 +78,42 @@ export const showDataWithPagination = async (setState, collectionRef, startingPo
     })
   }
 }
+
+
+
+
+
+export const getDataForTotalSummery =  async () => {
+
+  const q = query(collection(db, "totalSummery"));
+  const rawDoc = await getDocs(q)
+  if(rawDoc.docs.length == 0){
+    return false;
+  }
+  const data = {} 
+  rawDoc.docs.map((doc)=>{
+    data[`${doc.id}`] = doc.data()
+  })
+  return data
+}
+
+
+
+export const setDataforTotalSummery = async (items , collectionRef ) => {
+  try {
+    // delete items["id"]
+    await setDoc( collectionRef ,  {...items});
+
+  } catch (e) {
+
+    toast.error("Server Connection Faild ");
+  
+  }
+}
+
+
+
+
 
 
 
@@ -52,53 +133,7 @@ export const showDataWithOutPagination =  (setState, collectionRef) => {
   return returnPromise
 }
 
-                              export const showDataWithOutPaginationForCreation = async (collectionRef) => {
-
-                                const q = query(collection(db, `${collectionRef}`));
-                                const returnPromise = new Promise((resolve , reject)=>{
-                                    onSnapshot(q, (snapshot) => {
-                                    resolve(snapshot.docs)
-                                      // //   .forEach(doc => console.log(doc.data()))
-                                  })
-                                })
-                                return returnPromise
-                              }
-
-
-
-                              export const createProductDumy = () =>{
-                                showDataWithOutPaginationForCreation("productlist").then((docs)=>{
-                                  docs.forEach(  (doc) => {
-                                    const data = doc.data()
-                                    data.id = `EatPizza-${shortUUID()}`
-                                    setDataToCollection(data , "productlist" , false)
-                                    
-                                  });
-                                })
-                              }
-
-
-                              export const FixedProductDumy = () =>{
-                                showDataWithOutPaginationForCreation("productlist").then((docs)=>{
-                                  docs.forEach(  (doc) => {
-                                    const data = doc.data()
-                                    // data.id = `EatPizza-${shortUUID()}`
-                                    let lowestPrice = 100000000000;
-                                    let defualtVariant = {}
-                                    Object.keys(data.variants).forEach((key)=>{
-                                      const variant  =  data.variants[key]
-                                      if(lowestPrice > variant.sellingPrice){
-                                        lowestPrice = variant.sellingPrice
-                                        defualtVariant = {...variant}
-                                      }
-                                    })
-                                    delete data["defualtPrice"]
-                                    data.defualtVariant = defualtVariant
-                                    setDataToCollection(data , "productlist" , false)
-                                    
-                                  });
-                                })
-                              }
+                              
 
 export const getSingleDataWithOutRealTimeUpdates = async (collectionRef , idRef , search) => {
   const docRef = doc(db, `${collectionRef}`, `${idRef}`);
@@ -113,8 +148,6 @@ export const getSingleDataWithOutRealTimeUpdates = async (collectionRef , idRef 
     }else{
       reject("SomeThings went worng don't do piracy")
     }
-
-
   })
    
 }
@@ -132,6 +165,9 @@ export const showDataByArrayQuers = (setState , collectionRef , queryArray , que
   })
 
 }
+
+const updateByAdmin = doc(db, "totalSummery", "updateByAdmin");
+
 
 export const addDataToCollection = async (items, collectionRef) => {
 
@@ -151,13 +187,15 @@ export const addDataToCollection = async (items, collectionRef) => {
     closeLoading()
     toast.error("Server Connection Faild ");
   }
+  setDataforTotalSummery({random : shortUUID()} , updateByAdmin)
 }
 
 
 export const setDataToCollection = async (items , collectionRef , isSingle = true) => {
   try {
     showLoading()
-    if(isSingle && await isExist(collection(db, `${collectionRef}`) , items.name)){
+    console.log(items)
+    if(isSingle && await isExist(collection(db, `${collectionRef}`) , items?.name)){
       closeLoading()
       toast.error("Data Is Already In the Store");
       return
@@ -171,6 +209,7 @@ export const setDataToCollection = async (items , collectionRef , isSingle = tru
     closeLoading()
      toast.error("Server Connection Faild ");
   }
+  setDataforTotalSummery({random : shortUUID()} , updateByAdmin)
 }
 
 
@@ -205,7 +244,7 @@ export const delteColloctionInstance = async (itemsID, collectionRef , isImageRe
     closeLoading()
     toast.error("Server Connection Faild ");
   }
-  
+  setDataforTotalSummery({random : shortUUID()} , updateByAdmin)
 }
 
 export const delteColloctionInstanceWithOutLoadingAnimation = async (itemsID, collectionRef , isImageRef) => {
@@ -222,7 +261,7 @@ export const delteColloctionInstanceWithOutLoadingAnimation = async (itemsID, co
   } catch (e) {
     toast.error("Server Connection Faild ");
   }
-  
+  setDataforTotalSummery({random : shortUUID()} , updateByAdmin)
 }
 
 
@@ -250,3 +289,56 @@ export const shortUUID =   () => {
   });
   return uuid;
 }
+
+
+
+
+
+
+// export const showDataWithOutPaginationForCreation = async (collectionRef) => {
+
+//   const q = query(collection(db, `${collectionRef}`));
+//   const returnPromise = new Promise((resolve , reject)=>{
+//       onSnapshot(q, (snapshot) => {
+//       resolve(snapshot.docs)
+//         // //   .forEach(doc => console.log(doc.data()))
+//     })
+//   })
+//   return returnPromise
+// }
+
+
+
+// export const createProductDumy = () =>{
+//   showDataWithOutPaginationForCreation("productlist").then((docs)=>{
+//     docs.forEach(  (doc) => {
+//       const data = doc.data()
+//       data.id = `EatPizza-${shortUUID()}`
+//       setDataToCollection(data , "productlist" , false)
+      
+//     });
+//   })
+// }
+
+
+// export const FixedProductDumy = () =>{
+//   showDataWithOutPaginationForCreation("productlist").then((docs)=>{
+//     docs.forEach(  (doc) => {
+//       const data = doc.data()
+//       // data.id = `EatPizza-${shortUUID()}`
+//       let lowestPrice = 100000000000;
+//       let defualtVariant = {}
+//       Object.keys(data.variants).forEach((key)=>{
+//         const variant  =  data.variants[key]
+//         if(lowestPrice > variant.sellingPrice){
+//           lowestPrice = variant.sellingPrice
+//           defualtVariant = {...variant}
+//         }
+//       })
+//       delete data["defualtPrice"]
+//       data.defualtVariant = defualtVariant
+//       setDataToCollection(data , "productlist" , false)
+      
+//     });
+//   })
+// }

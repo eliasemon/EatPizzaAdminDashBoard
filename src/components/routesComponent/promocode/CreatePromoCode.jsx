@@ -8,18 +8,19 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
-
 import { toast } from "react-toastify";
 
 import { addDataToCollection, setDataToCollection } from "../../../../utils";
-import { InputText, LabelText } from "../../UI/Forms.styled";
+import { HighlightText, InputText, LabelText } from "../../UI/Forms.styled";
 import SelectOption from "../../UI/SelectOption";
 
 const promoCodeModel = {
   name: "",
   description: "",
-  discountType: "",
+  discountType: "%",
   discountValue: "",
   validity: "",
   howManyTimesUsed: "",
@@ -27,11 +28,18 @@ const promoCodeModel = {
 };
 
 const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
-  const [activeItem, setActiveItem] = useState(0);
+  const [discountType, setDiscountType] = useState(EditAbleItem.discountType);
   const [items, setItems] = useState(EditAbleItem);
+
+  const handleToggleChange = (event, value) => {
+    setItems((prv) => ({ ...prv, discountValue: "", discountType: value }));
+    setDiscountType(value);
+  };
+
   CreatePromoCode;
   useEffect(() => {
     setItems(EditAbleItem);
+    setDiscountType(EditAbleItem.discountType)
   }, [EditAbleItem]);
 
   const discardHandle = () => {
@@ -65,7 +73,7 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
       toast.error("Empty Field Can't added");
       return;
     }
-    const data = {...items , id : items.name}
+    const data = { ...items, id: items.name };
     await setDataToCollection(data, "promoCode");
     setItems(promoCodeModel);
   };
@@ -74,13 +82,13 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
     {
       title: "in Percentage",
       cb: () => {
-        setItems((prv) => ({ ...prv, discountValue : 0 , discountType: "%" }));
+        setItems((prv) => ({ ...prv, discountValue: 0, discountType: "%" }));
       },
     },
     {
       title: "in Taka",
       cb: () => {
-        setItems((prv) => ({ ...prv, discountValue : 0 , discountType: "taka" }));
+        setItems((prv) => ({ ...prv, discountValue: 0, discountType: "taka" }));
       },
     },
   ];
@@ -97,74 +105,25 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
           ? `Update The ***"${items.name}"*** promoCode Item`
           : `Create new PromoCode`}
       </Typography> */}
-      <Box>
-        {status ? (
-          <LabelText>
-            Update the <HighlightText>{items.name}</HighlightText> promocode
-            item
-          </LabelText>
-        ) : (
-          <LabelText>Create new promocode</LabelText>
-        )}
-        <InputText
-          color="common"
-          placeholder="Enter a code"
-          value={items.name}
-          onChange={(e) =>
-            setItems((prv) => ({ ...prv, name: e.target.value }))
-          }
-          // sx={{
-          //   ".MuiInputBase-root": {
-          //     backgroundColor: "secondary",
-          //     border: "1px solid grey",
-          //     width: "100%",
-          //   },
-          //   input: {
-          //     color: "white",
-          //     width: "480px",
-          //   },
-          //   label: {
-          //     color: "white",
-          //   },
-          // }}
-        />
-      </Box>
-      <Box>
-        <LabelText>Description</LabelText>
-        <InputText
-          // color="white"
-          placeholder="Write your description here"
-          value={items.description}
-          multiline
-          row={4}
-          onChange={(e) =>
-            setItems((prv) => ({ ...prv, description: e.target.value }))
-          }
-          sx={{
-            ".MuiInputBase-root": {
-              color: "#fff",
-            },
-          }}
-          // sx={{
-          //   ".MuiInputBase-root": {
-          //     backgroundColor: "secondary",
-          //     border: "1px solid grey",
-          //     width: "100%",
-          //     // marginTop: "10px",
-          //   },
-          //   input: {
-          //     color: "white",
-          //     width: "480px",
-          //     height: "80px",
-          //   },
-          //   label: {
-          //     color: "white",
-          //   },
-          // }}
-        />
-      </Box>
-      <Box sx={{ display: "flex", width: "100%" }}>
-        <Box sx={{ width: "50%", marginRight: "5%" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box>
+          {status ? (
+            <LabelText>
+              Update <HighlightText>{items.name}</HighlightText> promocode item
+            </LabelText>
+          ) : (
+            <LabelText>Create new promocode</LabelText>
+          )}
+          <InputText
+            color="common"
+            placeholder="Enter a code"
+            value={items.name}
+            onChange={(e) =>
+              setItems((prv) => ({ ...prv, name: e.target.value }))
+            }
+          />
+        </Box>
+        <Box sx={{ width: "50%" }}>
           <LabelText>Validity</LabelText>
           <TextField
             color="common"
@@ -189,68 +148,27 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
             }}
           />
         </Box>
-
-        <Box sx={{ width: "50%", marginRight: "5%" }}>
-          <FormControl sx={{ width: "100%" }}>
-            <LabelText>Discount type</LabelText>
-            {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
-            <SelectOption
-              // width="100%"
-              options={options}
-              activeItem={activeItem}
-              setActiveItem={setActiveItem}
-            />
-            {/* <Select
-              // labelId="demo-simple-select-label"
-              // id="demo-simple-select"
-              autoWidth={false}
-              value={items.discountType}
-              // label="Discount Type"
-              onChange={(e) =>
-                setItems((prv) => ({ ...prv, discountType: e.target.value }))
-              }
-            >
-              <MenuItem value={"%"}>In Percentage</MenuItem>
-              <MenuItem value={"tk"}>In Taka</MenuItem>
-            </Select> */}
-          </FormControl>
-        </Box>
       </Box>
-      <Box sx={{ display: "flex", width: "100%" }}>
-        <Box sx={{ width: "50%", marginRight: "5%" }}>
-          <LabelText>Discount amount</LabelText>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box>
+          <LabelText>Description</LabelText>
           <InputText
-            color="common"
-            type="number"
-            disabled={items.discountType ? false : true}
-            value={items.discountValue}
-            onChange={(e) => {
-              if (items.discountType == "%" && e.target.value > 100) {
-                toast.error("You Can't Provide More then 100% discount");
-                return;
-              }
-              setItems((prv) => ({ ...prv, discountValue: e.target.value }));
+            // color="white"
+            placeholder="Your description here"
+            value={items.description}
+            multiline
+            row={4}
+            onChange={(e) =>
+              setItems((prv) => ({ ...prv, description: e.target.value }))
+            }
+            sx={{
+              ".MuiInputBase-root": {
+                color: "#fff",
+              },
             }}
-            // sx={{
-            //   ".MuiInputBase-root": {
-            //     backgroundColor: "secondary",
-            //     border: "1px solid grey",
-            //     width: "100%",
-            //   },
-            //   input: {
-            //     color: "white",
-            //   },
-            //   label: {
-            //     color: "white",
-            //   },
-            // }}
           />
         </Box>
-
-        {/* <Typography>
-        {`This Promo-Code Will Be Valid In More Than ${items.conditionAmmount} Tk. Order  `}
-      </Typography> */}
-        <Box sx={{ width: "50%", marginLeft: "5%" }}>
+        <Box sx={{ width: "50%", marginLeft: ".5rem" }}>
           <LabelText>Order amount condition</LabelText>
           <InputText
             color="common"
@@ -276,11 +194,82 @@ const CreatePromoCode = ({ EditAbleItem, status, clearUi }) => {
         </Box>
       </Box>
       <LabelText>
-        This Promo-Code Will Be Valid In More Than {items.conditionAmmount} Tk.
-        Order
+        <span style={{ color: "yellow" }}>Note: </span>This Promo-Code Will Be
+        Valid In More Than {items.conditionAmmount} Tk. Order
       </LabelText>
-  
- <Box sx={{ display: "flex", gap: "2%" }}>
+      <Box sx={{ display: "flex", width: "100%" }}>
+        <Box sx={{ width: "50%", marginRight: "5%" }}>
+          <FormControl sx={{ width: "100%" }}>
+            <LabelText>Discount type</LabelText>
+            {/* <InputLabel id="demo-simple-select-label">Discount Type</InputLabel> */}
+            <ToggleButtonGroup
+              color="primary"
+              value={discountType}
+              exclusive
+              onChange={handleToggleChange}
+              aria-label="Platform"
+            >
+              <ToggleButton
+                value="%"
+                sx={{
+                  color: "#fff",
+                }}
+              >
+                In Percentage
+              </ToggleButton>
+              <ToggleButton
+                value="taka"
+                sx={{
+                  color: "#fff",
+                }}
+              >
+                In Taka
+              </ToggleButton>
+            </ToggleButtonGroup>
+            {/* <SelectOption
+              // width="100%"
+              options={options}
+              activeItem={activeItem}
+              setActiveItem={setActiveItem}
+            /> */}
+            {/* <Select
+              // labelId="demo-simple-select-label"
+              // id="demo-simple-select"
+              autoWidth={false}
+              value={items.discountType}
+              // label="Discount Type"
+              onChange={(e) =>
+                setItems((prv) => ({ ...prv, discountType: e.target.value }))
+              }
+            >
+              <MenuItem value={"%"}>In Percentage</MenuItem>
+              <MenuItem value={"tk"}>In Taka</MenuItem>
+            </Select> */}
+          </FormControl>
+        </Box>
+        <Box sx={{ width: "50%", marginRight: "5%" }}>
+          <LabelText>Discount amount</LabelText>
+          <InputText
+            color="common"
+            type="number"
+            disabled={items.discountType ? false : true}
+            value={items.discountValue}
+            onChange={(e) => {
+              if (items.discountType == "%" && e.target.value > 100) {
+                toast.error("You Can't Provide More then 100% discount");
+                return;
+              }
+              setItems((prv) => ({ ...prv, discountValue: e.target.value }));
+            }}
+          />
+        </Box>
+      </Box>
+
+      {/* <Typography>
+        {`This Promo-Code Will Be Valid In More Than ${items.conditionAmmount} Tk. Order  `}
+      </Typography> */}
+
+      <Box sx={{ display: "flex", gap: 2, marginTop: "1rem" }}>
         {status ? (
           <Button
             onClick={updateFireStoreValue}

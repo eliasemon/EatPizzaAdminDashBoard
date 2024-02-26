@@ -10,10 +10,11 @@ import PersonOffIcon from "@mui/icons-material/PersonOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Modal } from "@mui/material";
 import UserDetails from "./UserDetails";
-import { showDataWithPagination , getSingleDataWithOutRealTimeUpdates } from "../../../../utils";
-import { getFirestore , doc , updateDoc} from "firebase/firestore";
+import { showDataWithPagination , findDataWithQuries } from "../../../../utils";
 import { toast } from "react-toastify";
-
+import UsersListCard from "./UsersListCard";
+// import { httpsCallable } from "firebase/functions";
+// import { functions } from "../../../../firebaseConfig";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -64,20 +65,12 @@ const ListHeader = styled(Box)`
   align-items: center;
 `;
 
-const ListBody = styled(Box)`
-  width: 100%;
-  /* min-height: 40px; */
-  color: #fff;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  background-color: #2f2e2e;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid #212020;
-`;
+
 
 const inputValidate = (state) => {
+    if(state.length > 14){
+      return false
+    }
     if(state == ""){
       return ""
     }
@@ -96,15 +89,10 @@ const inputValidate = (state) => {
 
 
 const Users = () => {
-  const navigate = useNavigate();
-  const [usersList , setUserList] = useState("");
-  const [open, setOpen] = useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
+  const [usersList , setUserList] = useState("");
   const [searchPhone , setSearchPhone] = useState("")
   const limitation = 8;
-
   const searchHandle = (e) =>{
     const data = inputValidate(e.target.value)
     if(data === ""){
@@ -120,8 +108,8 @@ const Users = () => {
 
 
   useEffect(()=>{
-    if(searchPhone.length === 14){
-      getSingleDataWithOutRealTimeUpdates("usersList" , searchPhone , true).then((data) => {
+    if(searchPhone.length == 14){
+      findDataWithQuries("usersList" ,"phoneNumber" ,`${searchPhone}`).then((data)=>{
         setUserList(data)
       }).catch((error) =>{
         toast.error("No Data Found");
@@ -143,11 +131,7 @@ const Users = () => {
   }
 
 
-  const restrictionHandle = async (id , initialState) =>{
-    const db = getFirestore()
-    const colRef = doc(db, "usersList" , `${id}` );
-    await updateDoc( colRef ,{isRestricted :  !initialState})
-  }
+
   return (
     <Box
       sx={{
@@ -192,8 +176,9 @@ const Users = () => {
         </Box>
         <Box
           sx={{
-            marginTop: "3%",
+            // marginTop: "3%",
             height: "100%",
+            boxSizing: "border-box",
             display: "flex",
             flexDirection: "column",
           }}
@@ -202,87 +187,35 @@ const Users = () => {
             sx={{
               width: "100%",
               display: "grid",
-              gridTemplateColumns: "1fr 2fr 2fr 1fr 1fr",
+              gridTemplateColumns: "1fr 1fr ",
             }}
           >
-            <ListHeader>User ID</ListHeader>
             <ListHeader>Username</ListHeader>
             <ListHeader>Phone Number</ListHeader>
-            <ListHeader>Restriction</ListHeader>
-            <ListHeader>Delete User</ListHeader>
           </Box>
-          <Box sx={{
-            width : "100%",
-            height : "100%",
-            boxSizing : "border-box"
-          }}>
-
-
-          {usersList && usersList.map((doc, index) =>
-          { 
-            const item =  doc.data()
-          return (
           <Box
-            key = {item.id}
             sx={{
-              // height: "35%",
-              // width: "35%",
-              flex: 1,
-              display: "grid",
-              gridTemplateColumns: "1fr 2fr 2fr 1fr 1fr",
+              width: "100%",
+              height: "100%",
+              overflowY: "auto",
             }}
           >
-                <ListBody>{item.uid}</ListBody>
-                <ListBody
-                  onClick={handleOpen}
-                  sx={{
-                    "&:hover": {
-                      cursor: "pointer",
-                    },
-                  }}
-                >
-                  <img
-                    src={product}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      borderRadius: "50%",
-                      marginRight: "1rem",
-                    }}
-                  />
-                  {item.fullName}
-                </ListBody>
-                <ListBody>{item.phoneNumber}</ListBody>
-                <ListBody>
-                  <PersonOffIcon
-                  onClick={() => restrictionHandle(item.id , item.isRestricted)}
-                    fontSize="large"
-                    sx={{
-                      color : `${item.isRestricted ? "red" : "white"}`,
-                      "&:hover": {
-                        color: "secondary.light",
-                        cursor: "pointer",
-                      },
-                    }}
-                  />
-                </ListBody>
-                <ListBody>
-                  <DeleteIcon
-                    fontSize="large"
-                    sx={{
-                      "&:hover": {
-                        color: "secondary.light",
-                        cursor: "pointer",
-                      },
-                    }}
-                  />
-                </ListBody>   
+            {usersList &&
+              usersList.map((doc, index) => {
+                const item = doc.data();
+                item.id = doc.id;
+                return <UsersListCard key={item.id} item={item} />;
+              })}
           </Box>
-          )})}
-          <Button onClick={() => onPaginationHandle(false)} disabled={usersList[limitation - 1] ? false : true}>Next</Button>
-          <Button onClick={() => onPaginationHandle (true)} >First page</Button>
-        </Box>
-        
+          <Box>
+            <Button
+              onClick={() => onPaginationHandle(false)}
+              disabled={usersList[limitation - 1] ? false : true}
+            >
+              Next
+            </Button>
+            <Button onClick={() => onPaginationHandle(true)}>First page</Button>
+          </Box>
         </Box>
       </Box>
       {/* <Modal
